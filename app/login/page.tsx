@@ -6,19 +6,20 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
+
   const router = useRouter();
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post("https://localhost:44323/api/Auth/login", {
+      const response = await axios.post("https://localhost:44323/api/Auth/login", {
         email,
-        senha: password,
+        password,
       });
 
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("token", response.data.token);
       router.push("/products");
     } catch (err) {
       setError("Usuário ou senha inválidos.");

@@ -4,20 +4,11 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
-
-interface Product {
-    id: string;
-    tenantId: string;
-    name: string;
-    description?: string;
-    amount: number;
-    quantity: number;
-    unitMeasure: string;
-    createDateTime: string;
-}
+import { Product } from "@/types/Product/types";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
+
   const router = useRouter();
 
   useAuth();
@@ -32,11 +23,11 @@ export default function ProductsPage() {
       }
 
       try {
-        const res = await axios.get("https://localhost:44323/api/Product", {
+        const response = await axios.get("https://localhost:44323/api/Product", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        setProducts(res.data);
+        setProducts(response.data);
       } catch (err) {
         router.push("/login");
       }
@@ -58,7 +49,7 @@ export default function ProductsPage() {
       </Button>
       <ul className="space-y-2">
         {products.length === 0 ? (
-          <p>Carregando produtos...</p>
+          <p>Loading...</p>
         ) : (
           products.map((product) => (
             <li key={product.id} className="p-2 border rounded-lg shadow">
