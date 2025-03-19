@@ -1,43 +1,42 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { validateInputs } from "@/lib/utils";
 
 export default function LoginPage() {
   const router = useRouter();
 
-  const [email, setEmail] = useState<string>("")
-  const [password, setPassword] = useState<string>("")
-  const [response, setResponse] = useState<any>(null)
-  const [error, setError] = useState<string>("")
-  const [isLoading, setIsLoading] = useState(false)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSetError = (errorMessage: string) => setError(errorMessage)
 
   const handleLogin = async () => {
-    try {
-      setIsLoading(true)
+    if (!validateInputs(email,password,handleSetError)) return;
+    
+    setIsLoading(true);
+    setError("");
 
+    try {
       const response = await axios.post("https://localhost:44323/api/Auth/login", {
         email,
         senha: password,
       });
 
-      setResponse(response?.data)
-    } catch (err) {
-      setError("Usuário ou senha inválidos.")
-      setIsLoading(false)
-    }
-  };
-
-  useEffect(() => {
-    if (response) {
-      setIsLoading(false)
       localStorage.setItem("token", response.data.token);
       router.push("/products");
+    } catch {
+      setError("Usuário ou senha inválidos.");
+    } finally {
+      setIsLoading(false);
     }
-  }, [response])
+  };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
@@ -57,12 +56,13 @@ export default function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
           className="mb-4"
         />
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-        <Button className="w-full hover:cursor-pointer" onClick={handleLogin}>
-          {isLoading ?
-            <Loader2 className={'animate-spin'} />
-            : <>Entrar</>
-          }
+        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
+        <Button
+          className="w-full hover:cursor-pointer"
+          onClick={handleLogin}
+          disabled={isLoading}
+        >
+          {isLoading ? <Loader2 className="animate-spin" /> : "Entrar"}
         </Button>
       </div>
     </div>
