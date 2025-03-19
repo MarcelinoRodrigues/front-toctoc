@@ -8,3 +8,7 @@ export type Product = {
     unitMeasure: string;
     createDateTime: string;
 }
+
+export type ProductTableProps = {
+    products: Product[]
+}

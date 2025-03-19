@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { Product } from "@/types/Product/types";
 import Sidebar from "@/components/side-bar/content";
+import { ProductTable } from "@/components/products/table";
+import { Loader2 } from "lucide-react";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -39,17 +41,11 @@ export default function ProductsPage() {
       <Sidebar />
       <main className="flex-1 p-4">
         <h2 className="text-2xl font-bold mb-4">Lista de Produtos</h2>
-        <ul className="space-y-2">
-          {products.length === 0 ? (
-            <p>Loading...</p>
+        {products.length === 0 ? (
+            <Loader2 className="animate-spin" />
           ) : (
-            products.map((product) => (
-              <li key={product.id} className="p-2 border rounded-lg shadow">
-                {product.name} - R$ {product.amount.toFixed(2)}
-              </li>
-            ))
+            <ProductTable products={products}/>
           )}
-        </ul>
       </main>
     </div>
   );
