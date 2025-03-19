@@ -30,7 +30,7 @@ export default function LoginPage() {
       });
 
       localStorage.setItem("token", response.data.token);
-      router.push("/products");
+      router.replace("/products");
     } catch {
       setError("Usuário ou senha inválidos.");
     } finally {
