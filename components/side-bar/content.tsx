@@ -4,7 +4,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Home, Package, Menu } from "lucide-react";
+import { Home, Package, Menu, Settings, DollarSign, Boxes, ArrowRightFromLine  } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -48,11 +48,20 @@ const NavLinks = ({ onClick, handleLogout }: { onClick?: () => void; handleLogou
             <Link href="/products" onClick={onClick} className={linkClass()}>
                 <Package className="w-5 h-5" /> Produtos
             </Link>
+            <Link href="/products" onClick={onClick} className={linkClass()}>
+                <DollarSign  className="w-5 h-5" /> Venda
+            </Link>
+            <Link href="/products" onClick={onClick} className={linkClass()}>
+                <Boxes  className="w-5 h-5" /> Estoque
+            </Link>
+            <Link href="/products" onClick={onClick} className={linkClass()}>
+                <Settings className="w-5 h-5" /> Configuração
+            </Link>
         </div>
 
         <div className="mt-auto">
             <Button onClick={handleLogout} className="w-full bg-red-500 hover:bg-red-600 cursor-pointer">
-                Sair
+                Sair<ArrowRightFromLine/>
             </Button>
         </div>
     </nav>
