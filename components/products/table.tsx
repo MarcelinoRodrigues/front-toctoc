@@ -157,6 +157,7 @@ export const ProductTable: FC<ProductTableProps> = ({
                         <li>
                             <Button
                                 variant="outline"
+                                className="hover:cursor-pointer"
                                 onClick={() => paginate(currentPage - 1)}
                                 disabled={currentPage === 1}
                             >
@@ -168,7 +169,7 @@ export const ProductTable: FC<ProductTableProps> = ({
                                 <Button
                                     variant="outline"
                                     onClick={() => paginate(number)}
-                                    className={currentPage === number ? 'bg-blue-500 text-white' : ''}
+                                    className={`hover:cursor-pointer ${currentPage === number ? 'bg-gray-900 text-white hover:bg-gray-900 hover:text-white' : ''}`}
                                 >
                                     {number}
                                 </Button>
@@ -177,6 +178,7 @@ export const ProductTable: FC<ProductTableProps> = ({
                         <li>
                             <Button
                                 variant="outline"
+                                className="hover:cursor-pointer"
                                 onClick={() => paginate(currentPage + 1)}
                                 disabled={currentPage === pageNumbers.length}
                             >
