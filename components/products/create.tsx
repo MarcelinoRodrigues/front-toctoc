@@ -12,21 +12,13 @@ import { Input } from "../ui/input"
 import { Plus } from "lucide-react"
 import { createProduct } from "@/services/products/createProduct"
 import { getProducts } from "@/services/products/getProducts"
-import { Product } from "@/types/Product/types"
+import { Product, ProductState } from "@/types/Product/types"
 import { ValidatorError } from "../common/validator-error"
 
 type CreateProps = {
   disableLoading: () => void
   enableLoading: () => void
   handleSetProduct: (products: Product[]) => void
-}
-
-interface ProductState {
-  name: string
-  quantity: number
-  description: string
-  unitMeasure: string
-  amount: number
 }
 
 export const Create: FC<CreateProps> = ({

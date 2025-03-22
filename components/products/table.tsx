@@ -14,6 +14,7 @@ import { Product } from "@/types/Product/types"
 import { getProducts } from "@/services/products/getProducts"
 import { Loader2, Edit, Eye, Trash } from "lucide-react"
 import { Error } from "../common/error"
+import { Delete } from "./delete"
 
 type ProductTableProps = {
     products: Product[]
@@ -109,9 +110,7 @@ export const ProductTable: FC<ProductTableProps> = ({
                                             <Button variant="outline" size="icon">
                                                 <Eye className="text-lg" />
                                             </Button>
-                                            <Button variant="destructive" size="icon">
-                                                <Trash className="text-lg" />
-                                            </Button>
+                                            <Delete id={item.id} enableLoading={enableLoading} disableLoading={disableLoading} handleSetProduct={handleSetProduct}/>
                                         </div>
                                     </TableCell>
                                 </TableRow>
@@ -142,9 +141,7 @@ export const ProductTable: FC<ProductTableProps> = ({
                                     <Button variant="outline" size="icon">
                                         <Eye className="text-lg" />
                                     </Button>
-                                    <Button variant="destructive" size="icon">
-                                        <Trash className="text-lg" />
-                                    </Button>
+                                    <Delete id={item.id} enableLoading={enableLoading} disableLoading={disableLoading} handleSetProduct={handleSetProduct}/>
                                 </div>
                             </div>
                         ))}

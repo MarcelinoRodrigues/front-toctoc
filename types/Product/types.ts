@@ -9,6 +9,14 @@ export type Product = {
     createDateTime: string;
 }
 
+export type ProductState = {
+  name: string
+  quantity: number
+  description: string
+  unitMeasure: string
+  amount: number
+}
+
 export type ProductTableProps = {
     products: Product[]
 }
