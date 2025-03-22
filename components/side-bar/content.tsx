@@ -1,22 +1,22 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Home, Package, Menu, Settings, DollarSign, Boxes, ArrowRightFromLine  } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useState } from "react"
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Home, Package, Menu, Settings, DollarSign, Boxes, ArrowRightFromLine  } from "lucide-react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 
 const Sidebar = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const router = useRouter();
+    const [isOpen, setIsOpen] = useState(false)
+    const router = useRouter()
 
     const handleLogout = () => {
-        localStorage.removeItem("token");
-        router.replace("/login");
-    };
+        localStorage.removeItem("token")
+        router.replace("/login")
+    }
 
     return (
         <div className="flex">
@@ -36,10 +36,10 @@ const Sidebar = () => {
                 <NavLinks handleLogout={handleLogout} />
             </aside>
         </div>
-    );
-};
+    )
+}
 
-const NavLinks = ({ onClick, handleLogout }: { onClick?: () => void; handleLogout: () => void }) => (
+const NavLinks = ({ onClick, handleLogout }: { onClick?: () => void, handleLogout: () => void }) => (
     <nav className="flex flex-col h-full">
         <div className="flex flex-col space-y-4">
             <Link href="/dashboard" onClick={onClick} className={linkClass()}>
@@ -65,8 +65,8 @@ const NavLinks = ({ onClick, handleLogout }: { onClick?: () => void; handleLogou
             </Button>
         </div>
     </nav>
-);
+)
 
-const linkClass = () => cn("flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-700 transition hover:text-white");
+const linkClass = () => cn("flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-700 transition hover:text-white")
 
-export default Sidebar;
+export default Sidebar
