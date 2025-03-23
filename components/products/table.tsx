@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button"
 import { FC, useEffect, useState } from "react"
 import { Product } from "@/types/Product/types"
 import { getProducts } from "@/services/products/getProducts"
-import { Loader2, Edit, Eye, Trash } from "lucide-react"
+import { Loader2, Edit, Eye } from "lucide-react"
 import { Error } from "../common/error"
 import { Delete } from "./delete"
 
@@ -54,7 +54,7 @@ export const ProductTable: FC<ProductTableProps> = ({
         }
 
         fetchProducts()
-    }, [])
+    }, [enableLoading, disableLoading, handleSetProduct])
 
     const pageNumbers = []
     for (let i = 1; i <= Math.ceil(products.length / itemsPerPage); i++) {
@@ -110,7 +110,7 @@ export const ProductTable: FC<ProductTableProps> = ({
                                             <Button variant="outline" size="icon">
                                                 <Eye className="text-lg" />
                                             </Button>
-                                            <Delete id={item.id} enableLoading={enableLoading} disableLoading={disableLoading} handleSetProduct={handleSetProduct}/>
+                                            <Delete id={item.id} enableLoading={enableLoading} disableLoading={disableLoading} handleSetProduct={handleSetProduct} />
                                         </div>
                                     </TableCell>
                                 </TableRow>
@@ -141,7 +141,7 @@ export const ProductTable: FC<ProductTableProps> = ({
                                     <Button variant="outline" size="icon">
                                         <Eye className="text-lg" />
                                     </Button>
-                                    <Delete id={item.id} enableLoading={enableLoading} disableLoading={disableLoading} handleSetProduct={handleSetProduct}/>
+                                    <Delete id={item.id} enableLoading={enableLoading} disableLoading={disableLoading} handleSetProduct={handleSetProduct} />
                                 </div>
                             </div>
                         ))}

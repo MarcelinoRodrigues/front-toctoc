@@ -48,7 +48,7 @@ export const Create: FC<CreateProps> = ({
   }
 
   const validateRequiredFields = (product: ProductState) => {
-    let errors: { [key: string]: string } = {}
+    const errors: { [key: string]: string } = {}
 
     const requiredFields = ['name', 'quantity', 'amount']
 
