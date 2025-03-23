@@ -1,12 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { Create } from "./create"
 import { ProductTable } from "./table"
 import { useAuth } from "@/hooks/useAuth"
 import { Product } from "@/types/Product/types"
 import { useTimeOutLoad } from "@/hooks/useTimeOutLoad"
 import { Button } from "../ui/button"
+import { Table, LayoutGrid  } from 'lucide-react'
 
 export const Content = () => {
     useAuth()
@@ -15,9 +16,11 @@ export const Content = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [isCardView, setIsCardView] = useState(false)
 
-    const disableLoading = () => setIsLoading(false)
-    const enableLoading = () => setIsLoading(true)
-    const handleSetProduct = (product: Product[]) => setProducts(product)
+    const enableLoading = useCallback(() => setIsLoading(true), []);
+    const disableLoading = useCallback(() => setIsLoading(false), []);
+    const handleSetProduct = useCallback((products: Product[]) => {
+        setProducts(products);
+    }, []);
 
     useTimeOutLoad(isLoading, disableLoading)
 
@@ -36,7 +39,7 @@ export const Content = () => {
                         onClick={() => setIsCardView(!isCardView)}
                         className="w-full md:w-auto"
                     >
-                        {isCardView ? 'Ver como Tabela' : 'Ver como Cartões'}
+                        {isCardView ? <Table/> : <LayoutGrid/>}
                     </Button>
                 </div>
             </div>

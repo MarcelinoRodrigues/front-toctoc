@@ -37,29 +37,34 @@ export const ProductTable: FC<ProductTableProps> = ({
     const fields: (keyof Product)[] = ['name', 'quantity', 'description', 'unitMeasure', 'amount']
 
     const [currentPage, setCurrentPage] = useState(1)
-    const [itemsPerPage] = useState(6)
+    const itemsPerPage = 6
 
     const indexOfLastItem = currentPage * itemsPerPage
     const indexOfFirstItem = indexOfLastItem - itemsPerPage
     const currentItems = products.slice(indexOfFirstItem, indexOfLastItem)
 
-    const paginate = (pageNumber: number) => setCurrentPage(pageNumber)
+    const paginate = (pageNumber: number) => {
+        if (pageNumber >= 1 && pageNumber <= Math.ceil(products.length / itemsPerPage)) {
+            setCurrentPage(pageNumber)
+        }
+    }
 
     useEffect(() => {
         const fetchProducts = async () => {
-            enableLoading()
-            const productList = await getProducts()
-            handleSetProduct(productList || [])
-            disableLoading()
-        }
+            enableLoading();
+            try {
+                const productList = await getProducts();
+                handleSetProduct(productList || []);
+            } finally {
+                disableLoading();
+            }
+        };
+    
+        fetchProducts();
+    }, [enableLoading, disableLoading, handleSetProduct]); 
+    
 
-        fetchProducts()
-    }, [enableLoading, disableLoading, handleSetProduct])
-
-    const pageNumbers = []
-    for (let i = 1; i <= Math.ceil(products.length / itemsPerPage); i++) {
-        pageNumbers.push(i)
-    }
+    const pageNumbers = Array.from({ length: Math.ceil(products.length / itemsPerPage) }, (_, i) => i + 1)
 
     return (
         <div className="flex flex-col gap-6 p-1 h-[31rem]">
@@ -76,7 +81,7 @@ export const ProductTable: FC<ProductTableProps> = ({
                             </TableRow>
                         </TableHeader>
                         <TableBody className="bg-white">
-                            {isLoading && (
+                            {isLoading ? (
                                 <tr className="h-96">
                                     <td colSpan={6} className="p-4">
                                         <div className="flex h-full items-center justify-center">
@@ -84,37 +89,37 @@ export const ProductTable: FC<ProductTableProps> = ({
                                         </div>
                                     </td>
                                 </tr>
-                            )}
-                            {!isLoading && products.length === 0 && (
+                            ) : products.length === 0 ? (
                                 <tr>
                                     <td colSpan={headers.length} className="text-center p-4">
                                         <Error />
                                     </td>
                                 </tr>
-                            )}
-                            {!isLoading && products.length > 0 && currentItems.map((item) => (
-                                <TableRow key={item.id} className="border-b hover:bg-gray-50 transition-colors">
-                                    {fields.map((field, index) => (
-                                        <TableCell
-                                            key={index}
-                                            className={`p-3 text-center ${index === 0 ? 'font-medium' : ''}`}
-                                        >
-                                            {item[field]}
+                            ) : (
+                                currentItems.map((item) => (
+                                    <TableRow key={item.id} className="border-b hover:bg-gray-50 transition-colors">
+                                        {fields.map((field, index) => (
+                                            <TableCell
+                                                key={index}
+                                                className={`p-3 text-center ${index === 0 ? 'font-medium' : ''}`}
+                                            >
+                                                {item[field]}
+                                            </TableCell>
+                                        ))}
+                                        <TableCell className="p-3">
+                                            <div className="flex gap-2 justify-center">
+                                                <Button variant="outline" size="icon">
+                                                    <Edit className="text-lg" />
+                                                </Button>
+                                                <Button variant="outline" size="icon">
+                                                    <Eye className="text-lg" />
+                                                </Button>
+                                                <Delete id={item.id} enableLoading={enableLoading} disableLoading={disableLoading} handleSetProduct={handleSetProduct} />
+                                            </div>
                                         </TableCell>
-                                    ))}
-                                    <TableCell className="p-3">
-                                        <div className="flex gap-2 justify-center">
-                                            <Button variant="outline" size="icon">
-                                                <Edit className="text-lg" />
-                                            </Button>
-                                            <Button variant="outline" size="icon">
-                                                <Eye className="text-lg" />
-                                            </Button>
-                                            <Delete id={item.id} enableLoading={enableLoading} disableLoading={disableLoading} handleSetProduct={handleSetProduct} />
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
+                                    </TableRow>
+                                ))
+                            )}
                         </TableBody>
                     </Table>
                 )}
@@ -154,7 +159,6 @@ export const ProductTable: FC<ProductTableProps> = ({
                         <li>
                             <Button
                                 variant="outline"
-                                className="hover:cursor-pointer"
                                 onClick={() => paginate(currentPage - 1)}
                                 disabled={currentPage === 1}
                             >
@@ -166,7 +170,7 @@ export const ProductTable: FC<ProductTableProps> = ({
                                 <Button
                                     variant="outline"
                                     onClick={() => paginate(number)}
-                                    className={`hover:cursor-pointer ${currentPage === number ? 'bg-gray-900 text-white hover:bg-gray-900 hover:text-white' : ''}`}
+                                    className={`hover:cursor-pointer ${currentPage === number ? 'bg-gray-900 text-white' : ''}`}
                                 >
                                     {number}
                                 </Button>
@@ -175,7 +179,6 @@ export const ProductTable: FC<ProductTableProps> = ({
                         <li>
                             <Button
                                 variant="outline"
-                                className="hover:cursor-pointer"
                                 onClick={() => paginate(currentPage + 1)}
                                 disabled={currentPage === pageNumbers.length}
                             >
