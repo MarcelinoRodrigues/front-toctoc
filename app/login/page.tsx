@@ -30,7 +30,7 @@ export default function LoginPage() {
       });
 
       localStorage.setItem("token", response.data.token);
-      router.replace("/products");
+      router.replace("/dashboard");
     } catch {
       setError("Usuário ou senha inválidos.");
     } finally {
@@ -61,7 +61,7 @@ export default function LoginPage() {
           className="w-full hover:cursor-pointer"
           onClick={handleLogin}
           disabled={isLoading}
-        >
+        >         
           {isLoading ? <Loader2 className="animate-spin" /> : "Entrar"}
         </Button>
       </div>
