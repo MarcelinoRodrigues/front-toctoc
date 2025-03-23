@@ -34,10 +34,12 @@ export const Content = () => {
     }, []);
 
     return (
-        <div className="mx-auto border-8 border-gray-900 p-4 h-screen overflow-auto">
+        <div className="mx-auto border-8 border-gray-900 p-4 h-screen overflow-auto min-w-[50vw]">
             <h2 className="bg-gray-900 text-white rounded-2xl text-center">Dashboard</h2>
             {isLoading && (
-                <Loader2 size={45} className="animate-spin text-gray-500" />
+                <div className="flex items-center justify-center h-[80%]">
+                    <Loader2 size={45} className="animate-spin text-white" />
+                </div>
             )}
             {!isLoading && dashboard.length > 0 && (
                 <div className="flex justify-between">
