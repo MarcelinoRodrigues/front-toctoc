@@ -12,9 +12,10 @@ import { Button } from "@/components/ui/button"
 import { FC, useEffect, useState } from "react"
 import { Product } from "@/types/Product/types"
 import { getProducts } from "@/services/products/getProducts"
-import { Loader2, Edit, Eye } from "lucide-react"
+import { Loader2, Eye } from "lucide-react"
 import { Error } from "../common/error"
 import { Delete } from "./delete"
+import { CreateOrEdit } from "./modals/createOrEdit"
 
 type ProductTableProps = {
     products: Product[]
@@ -108,9 +109,7 @@ export const ProductTable: FC<ProductTableProps> = ({
                                         ))}
                                         <TableCell className="p-3">
                                             <div className="flex gap-2 justify-center">
-                                                <Button variant="outline" size="icon">
-                                                    <Edit className="text-lg" />
-                                                </Button>
+                                                <CreateOrEdit isEdit={true} item={item} enableLoading={enableLoading} disableLoading={disableLoading} handleSetProduct={handleSetProduct}/>
                                                 <Button variant="outline" size="icon">
                                                     <Eye className="text-lg" />
                                                 </Button>
@@ -140,9 +139,7 @@ export const ProductTable: FC<ProductTableProps> = ({
                                     <p><strong>Valor:</strong> R${item.amount}</p>
                                 </div>
                                 <div className="mt-4 flex gap-3 justify-center">
-                                    <Button variant="outline" size="icon">
-                                        <Edit className="text-lg" />
-                                    </Button>
+                                    <CreateOrEdit isEdit={true} item={item} enableLoading={enableLoading} disableLoading={disableLoading} handleSetProduct={handleSetProduct}/>
                                     <Button variant="outline" size="icon">
                                         <Eye className="text-lg" />
                                     </Button>

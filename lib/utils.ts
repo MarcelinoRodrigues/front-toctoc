@@ -1,3 +1,4 @@
+import { ProductState } from "@/types/Product/types";
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -18,4 +19,19 @@ export const validateInputs = (email: string, password: string, handleSetError?:
     return false;
   }
   return true;
-};
+}
+
+export const validateRequiredFields = (product: ProductState) => {
+  const errors: { [key: string]: string } = {}
+
+  const requiredFields = ['name', 'quantity', 'amount']
+
+  requiredFields.forEach(field => {
+    if (!product[field as keyof ProductState] ||
+      (['quantity', 'amount'].includes(field) && Number(product[field as keyof ProductState]) <= 0)) {
+      errors[field] = "Campo obrigatório ou inválido!"
+    }
+  })
+
+  return errors
+}
