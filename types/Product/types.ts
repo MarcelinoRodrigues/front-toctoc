@@ -1,6 +1,5 @@
 export type Product = {
     id: string;
-    tenantId: string;
     name: string;
     description?: string;
     amount: number;

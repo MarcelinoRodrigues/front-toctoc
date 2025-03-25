@@ -4,10 +4,9 @@ import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { Home, Package, Menu, Settings, DollarSign, Boxes, ArrowRightFromLine  } from "lucide-react"
+import { Home, Package, Menu, Settings, DollarSign, Boxes, TrendingUp, ArrowRightFromLine, ChevronDown, ChevronUp } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false)
@@ -26,7 +25,7 @@ const Sidebar = () => {
                         <Menu className="w-6 h-6" />
                     </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="w-64 p-4 flex flex-col h-full" iconBackground="hover:cursor-pointer hover:text-red-500">
+                <SheetContent side="left" className="w-64 p-4 flex flex-col h-full">
                     <SheetTitle>Menu</SheetTitle>
                     <NavLinks onClick={() => setIsOpen(false)} handleLogout={handleLogout} />
                 </SheetContent>
@@ -39,33 +38,69 @@ const Sidebar = () => {
     )
 }
 
-const NavLinks = ({ onClick, handleLogout }: { onClick?: () => void, handleLogout: () => void }) => (
-    <nav className="flex flex-col h-full">
-        <div className="flex flex-col space-y-4">
-            <Link href="/dashboard" onClick={onClick} className={linkClass()}>
-                <Home className="w-5 h-5" /> Dashboard
-            </Link>
-            <Link href="/products" onClick={onClick} className={linkClass()}>
-                <Package className="w-5 h-5" /> Produtos
-            </Link>
-            <Link href="/products" onClick={onClick} className={linkClass()}>
-                <DollarSign  className="w-5 h-5" /> Venda
-            </Link>
-            <Link href="/products" onClick={onClick} className={linkClass()}>
-                <Boxes  className="w-5 h-5" /> Estoque
-            </Link>
-            <Link href="/products" onClick={onClick} className={linkClass()}>
-                <Settings className="w-5 h-5" /> Configuração
-            </Link>
-        </div>
+const NavLinks = ({ onClick, handleLogout }: { onClick?: () => void, handleLogout: () => void }) => {
+    const [financeOpen, setFinanceOpen] = useState(false)
+    const [sale, setSale] = useState(false)
 
-        <div className="mt-auto">
-            <Button onClick={handleLogout} className="w-full bg-red-500 hover:bg-red-600 cursor-pointer">
-                Sair<ArrowRightFromLine/>
-            </Button>
-        </div>
-    </nav>
-)
+    return (
+        <nav className="flex flex-col h-full">
+            <div className="flex flex-col space-y-4">
+                <Link href="/dashboard" onClick={onClick} className={linkClass()}>
+                    <Home className="w-5 h-5" /> Dashboard
+                </Link>
+                <Link href="/products" onClick={onClick} className={linkClass()}>
+                    <Package className="w-5 h-5" /> Produtos
+                </Link>
+                <div className="flex flex-col">
+                    <button onClick={() => setSale(!sale)} className={linkClass()}>
+                        <DollarSign className="w-5 h-5" /> Venda
+                        {sale ? <ChevronUp className="w-4 h-4 ml-auto" /> : <ChevronDown className="w-4 h-4 ml-auto" />}
+                    </button>
+                    {sale && (
+                        <div className="ml-6 flex flex-col space-y-2">
+                            <Link href="/sale/simple" onClick={onClick} className={linkClass()}>
+                                Simples
+                            </Link>
+                            <Link href="/sale/advanced" onClick={onClick} className={linkClass()}>
+                                Avançada 
+                            </Link>
+                        </div>
+                    )}
+                </div>
+                <Link href="/stock" onClick={onClick} className={linkClass()}>
+                    <Boxes className="w-5 h-5" /> Estoque
+                </Link>
+                
+                <div className="flex flex-col">
+                    <button onClick={() => setFinanceOpen(!financeOpen)} className={linkClass()}>
+                        <TrendingUp className="w-5 h-5" /> Financeiro
+                        {financeOpen ? <ChevronUp className="w-4 h-4 ml-auto" /> : <ChevronDown className="w-4 h-4 ml-auto" />}
+                    </button>
+                    {financeOpen && (
+                        <div className="ml-6 flex flex-col space-y-2">
+                            <Link href="/finance/reports" onClick={onClick} className={linkClass()}>
+                                Relatórios
+                            </Link>
+                            <Link href="/finance/entries" onClick={onClick} className={linkClass()}>
+                                Lançamentos
+                            </Link>
+                        </div>
+                    )}
+                </div>
+                
+                <Link href="/settings" onClick={onClick} className={linkClass()}>
+                    <Settings className="w-5 h-5" /> Configuração
+                </Link>
+            </div>
+
+            <div className="mt-auto">
+                <Button onClick={handleLogout} className="w-full bg-red-500 hover:bg-red-600 cursor-pointer">
+                    Sair<ArrowRightFromLine />
+                </Button>
+            </div>
+        </nav>
+    )
+}
 
 const linkClass = () => cn("flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-700 transition hover:text-white")
 

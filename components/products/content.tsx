@@ -5,9 +5,8 @@ import { ProductTable } from "./table"
 import { useAuth } from "@/hooks/useAuth"
 import { Product } from "@/types/Product/types"
 import { useTimeOutLoad } from "@/hooks/useTimeOutLoad"
-import { Button } from "../ui/button"
-import { Table, LayoutGrid  } from 'lucide-react'
 import { CreateOrEdit } from "./modals/createOrEdit"
+import { CardView } from "../common/CardView"
 
 export const Content = () => {
     useAuth()
@@ -16,11 +15,14 @@ export const Content = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [isCardView, setIsCardView] = useState(false)
 
-    const enableLoading = useCallback(() => setIsLoading(true), []);
-    const disableLoading = useCallback(() => setIsLoading(false), []);
+    const enableLoading = useCallback(() => setIsLoading(true), [])
+    const disableLoading = useCallback(() => setIsLoading(false), [])
+    const handleCardView = useCallback((card: boolean) => {
+        setIsCardView(card)
+    },[])
     const handleSetProduct = useCallback((products: Product[]) => {
         setProducts(products);
-    }, []);
+    }, [])
 
     useTimeOutLoad(isLoading, disableLoading)
 
@@ -32,15 +34,9 @@ export const Content = () => {
                     disableLoading={disableLoading} 
                     enableLoading={enableLoading} 
                     handleSetProduct={handleSetProduct} />
-                <div className="flex justify-start md:justify-end w-full md:w-auto">
-                    <Button
-                        variant="outline"
-                        onClick={() => setIsCardView(!isCardView)}
-                        className="w-full md:w-auto"
-                    >
-                        {isCardView ? <Table/> : <LayoutGrid/>}
-                    </Button>
-                </div>
+                <CardView 
+                    isCardView={isCardView} 
+                    handleCardView={handleCardView}/>
             </div>
             <ProductTable 
                 products={products} 
