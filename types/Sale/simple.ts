@@ -12,3 +12,11 @@ export type SimpleSaleState = {
     quantity: number
     payment: 'credit' | 'debit' | 'pix'
 }
+
+export type CreateOrEditProps = {
+    item?: SimpleSale
+    isEdit?: boolean
+    disableLoading: () => void
+    enableLoading: () => void
+    handleSetSale: (sale: SimpleSale[]) => void
+}

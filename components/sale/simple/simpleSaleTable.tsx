@@ -9,8 +9,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
-import { FC, useEffect, useState } from "react"
-import { getProducts } from "@/services/products/getProducts"
+import { FC, useEffect } from "react"
 import { Loader2, Eye } from "lucide-react"
 import { CreateOrEdit } from "./modals/createOrEdit"
 import { SimpleSale } from "@/types/Sale/simple"
@@ -37,19 +36,6 @@ export const SimpleSaleTable: FC<SimpleSaleTableProps> = ({
     const headers = ['Produto', 'Quantidade', 'Forma de Pagamento', 'Ações']
     const fields: (keyof SimpleSale)[] = ['produto', 'quantity', 'payment']
 
-    const [currentPage, setCurrentPage] = useState(1)
-    const itemsPerPage = 6
-
-    const indexOfLastItem = currentPage * itemsPerPage
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage
-    const currentItems = sale.slice(indexOfFirstItem, indexOfLastItem)
-
-    const paginate = (pageNumber: number) => {
-        if (pageNumber >= 1 && pageNumber <= Math.ceil(sale.length / itemsPerPage)) {
-            setCurrentPage(pageNumber)
-        }
-    }
-
     useEffect(() => {
         const fetchProducts = async () => {
             enableLoading();
@@ -60,12 +46,9 @@ export const SimpleSaleTable: FC<SimpleSaleTableProps> = ({
                 disableLoading();
             }
         };
-    
-        fetchProducts();
-    }, [enableLoading, disableLoading, handleSetSale]); 
-    
 
-    const pageNumbers = Array.from({ length: Math.ceil(sale.length / itemsPerPage) }, (_, i) => i + 1)
+        fetchProducts();
+    }, [enableLoading, disableLoading, handleSetSale]);
 
     return (
         <div className="flex flex-col gap-6 p-1 h-[31rem]">
@@ -97,7 +80,7 @@ export const SimpleSaleTable: FC<SimpleSaleTableProps> = ({
                                     </td>
                                 </tr>
                             ) : (
-                                currentItems.map((item) => (
+                                sale.map((item) => (
                                     <TableRow key={item.id} className="border-b hover:bg-gray-50 transition-colors">
                                         {fields.map((field, index) => (
                                             <TableCell
@@ -109,7 +92,7 @@ export const SimpleSaleTable: FC<SimpleSaleTableProps> = ({
                                         ))}
                                         <TableCell className="p-3">
                                             <div className="flex gap-2 justify-center">
-                                                <CreateOrEdit isEdit={true} item={item} enableLoading={enableLoading} disableLoading={disableLoading} handleSetSale={handleSetSale}/>
+                                                <CreateOrEdit isEdit={true} item={item} enableLoading={enableLoading} disableLoading={disableLoading} handleSetSale={handleSetSale} />
                                                 <Button variant="outline" size="icon">
                                                     <Eye className="text-lg" />
                                                 </Button>
@@ -126,7 +109,7 @@ export const SimpleSaleTable: FC<SimpleSaleTableProps> = ({
                 {isCardView && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {!isLoading && sale.length === 0 && <Error />}
-                        {!isLoading && sale.length > 0 && currentItems.map((item) => (
+                        {!isLoading && sale.length > 0 && sale.map((item) => (
                             <div
                                 key={item.id}
                                 className="border border-gray-200 rounded-lg p-4 bg-white shadow-sm hover:shadow-lg transition-shadow"
@@ -137,7 +120,7 @@ export const SimpleSaleTable: FC<SimpleSaleTableProps> = ({
                                     <p><strong>Unidade:</strong> {item.payment}</p>
                                 </div>
                                 <div className="mt-4 flex gap-3 justify-center">
-                                    <CreateOrEdit isEdit={true} item={item} enableLoading={enableLoading} disableLoading={disableLoading} handleSetSale={handleSetSale}/>
+                                    <CreateOrEdit isEdit={true} item={item} enableLoading={enableLoading} disableLoading={disableLoading} handleSetSale={handleSetSale} />
                                     <Button variant="outline" size="icon">
                                         <Eye className="text-lg" />
                                     </Button>
@@ -147,41 +130,6 @@ export const SimpleSaleTable: FC<SimpleSaleTableProps> = ({
                         ))}
                     </div>
                 )}
-            </div>
-            <div className="flex justify-center mt-4">
-                <nav>
-                    <ul className="flex items-center space-x-2">
-                        <li>
-                            <Button
-                                variant="outline"
-                                onClick={() => paginate(currentPage - 1)}
-                                disabled={currentPage === 1}
-                            >
-                                Anterior
-                            </Button>
-                        </li>
-                        {pageNumbers.map(number => (
-                            <li key={number}>
-                                <Button
-                                    variant="outline"
-                                    onClick={() => paginate(number)}
-                                    className={`hover:cursor-pointer ${currentPage === number ? 'bg-gray-900 text-white' : ''}`}
-                                >
-                                    {number}
-                                </Button>
-                            </li>
-                        ))}
-                        <li>
-                            <Button
-                                variant="outline"
-                                onClick={() => paginate(currentPage + 1)}
-                                disabled={currentPage === pageNumbers.length}
-                            >
-                                Próximo
-                            </Button>
-                        </li>
-                    </ul>
-                </nav>
             </div>
         </div>
     )
