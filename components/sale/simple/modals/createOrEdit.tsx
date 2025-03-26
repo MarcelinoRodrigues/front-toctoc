@@ -12,9 +12,10 @@ import { Edit, Plus } from "lucide-react"
 import { getProducts } from "@/services/products/getProducts"
 import { ValidatorError } from "@/components/common/validator-error"
 import { Input } from "@/components/ui/input"
-import { CreateOrEditProps, SimpleSaleState } from "@/types/Sale/simple"
+import { CreateOrEditProps, ProductSelect, RequestAPI, SimpleSaleRequest, SimpleSaleState } from "@/types/Sale/simple"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { defaultProduct } from "@/lib/utils"
+import { createSimpleSale } from "@/services/sale/simple/createSimpleSale"
 
 export const CreateOrEdit: FC<CreateOrEditProps> = ({
     item,
@@ -28,15 +29,15 @@ export const CreateOrEdit: FC<CreateOrEditProps> = ({
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [products, setProducts] = useState<{ id: string, name: string }[]>([])
     const [sale, setSale] = useState<SimpleSaleState>({
-        produto: defaultProduct(),
-        payment: 'pix',
+        produto: { id: "", productName: "" }, 
+        payment: "pix",
         quantity: 0,
-    })
+    });
 
     useEffect(() => {
         if (item) {
             setSale({
-                produto: item.produto || defaultProduct(),
+                produto: item.produto || { id: "", productName: "" },
                 payment: item.payment || 'pix',
                 quantity: item.quantity || 0,
             });
@@ -54,40 +55,48 @@ export const CreateOrEdit: FC<CreateOrEditProps> = ({
     }, [isModalOpen])
 
     const handleProductChange = (productId: string) => {
-        const selectedProduct = products.find(p => p.id === productId)
-        if (selectedProduct) {
-            setSale((prev) => ({
-                ...prev,
-                produto: { ...prev.produto, id: selectedProduct.id, name: selectedProduct.name }
-            }))
-        }
-    }
+        setSale((prev) => ({
+            ...prev,
+            produto: { ...prev.produto, id: productId },
+        }));
+    };
 
     const resetSale = () => {
         setSale({
-            produto: defaultProduct(),
+            produto: { id: "", productName: "" },
             payment: "pix",
             quantity: 0,
         })
         setErrors({})
     }
 
+    const paymentMapping: Record<string, number> = {
+        "credit": 1,
+        "debit": 2,
+        "pix": 0
+    };
+    
     const handleSubmit = async () => {
-        setIsModalOpen(false)
-        enableLoading()
+        setIsModalOpen(false);
+        enableLoading();
 
+        const saleRequest = {
+            productId: sale.produto.id,
+            quantity: sale.quantity,
+            payment: paymentMapping[sale.payment],
+        } as RequestAPI;
+    
         if (isEdit && item) {
             //await updateProduct({ id: item.id, product });
         } else {
-            //await createProduct(product)
+            await createSimpleSale(saleRequest);
         }
 
         disableLoading()
-        resetSale()
-        const saleList = await getProducts()
-        handleSetSale(saleList || [])
-    }
-
+        resetSale();
+        const saleList = await getProducts();
+        handleSetSale(saleList || []);
+    };
 
     return (
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
@@ -109,7 +118,7 @@ export const CreateOrEdit: FC<CreateOrEditProps> = ({
                     <div className="grid grid-cols-4 items-center gap-4">
                         <label htmlFor="name" className="text-right">Produto</label>
                         <div className="col-span-3">
-                            <Select onValueChange={handleProductChange} value={sale.produto.id || undefined}>
+                            <Select onValueChange={handleProductChange} value={sale.produto.id || ""}>
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="Selecione um produto" />
                                 </SelectTrigger>
@@ -141,7 +150,7 @@ export const CreateOrEdit: FC<CreateOrEditProps> = ({
                         <div className="col-span-3">
                             <Select onValueChange={(value) => setSale(prev => ({
                                 ...prev,
-                                payment: value as "credit" | "debit" | "pix" 
+                                payment: value as "credit" | "debit" | "pix"
                             }))} value={sale.payment}>
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="Selecione a forma de pagamento" />

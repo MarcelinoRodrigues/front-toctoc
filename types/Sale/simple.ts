@@ -1,14 +1,23 @@
-import { Product, ProductState } from "../Product/types"
-
 export type SimpleSale = {
     id: string
-    produto: Product
+    productName: string;
     quantity: number
     payment: 'credit' | 'debit' | 'pix'
 }
 
+export type ProductSelect = {
+    id: string
+    productName: string
+}
+
+export type ResponseProduct = {
+    productName: string;
+    quantity: number;
+    payment: string;
+  }
+
 export type SimpleSaleState = {
-    produto: Product
+    produto: ProductSelect
     quantity: number
     payment: 'credit' | 'debit' | 'pix'
 }
@@ -19,4 +28,14 @@ export type CreateOrEditProps = {
     disableLoading: () => void
     enableLoading: () => void
     handleSetSale: (sale: SimpleSale[]) => void
+}
+
+export type SimpleSaleRequest = {
+    request: RequestAPI
+}
+
+export type RequestAPI = {
+    productId: string
+    quantity: number
+    payment:  number
 }

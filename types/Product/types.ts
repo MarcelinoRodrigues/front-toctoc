@@ -8,6 +8,16 @@ export type Product = {
     createDateTime: string;
 }
 
+export type GetProduct = {
+  id: string;
+  productName: string;
+  description?: string;
+  amount: number;
+  quantity: number;
+  payment: string;
+  createDateTime: string;
+}
+
 export type ProductState = {
   name: string
   quantity: number
