@@ -29,7 +29,9 @@ export default function LoginPage() {
         senha: password,
       });
 
-      document.cookie = `token=${response.data.token}; path=/; secure; samesite=strict`;
+      console.log(response)
+
+      localStorage.setItem("token", response.data.token);
       
       requestAnimationFrame(() => {
         router.replace("/dashboard");
