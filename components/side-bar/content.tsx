@@ -14,7 +14,9 @@ const Sidebar = () => {
 
     const handleLogout = () => {
         localStorage.removeItem("token")
-        router.replace("/login")
+        requestAnimationFrame(() => {
+            router.replace("/login");
+          });
     }
 
     return (

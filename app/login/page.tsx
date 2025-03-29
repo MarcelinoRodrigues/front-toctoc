@@ -32,7 +32,10 @@ export default function LoginPage() {
       console.log(response)
 
       localStorage.setItem("token", response.data.token);
-      router.replace("/dashboard");
+      
+      requestAnimationFrame(() => {
+        router.replace("/dashboard");
+      });
     } catch {
       setError("Usuário ou senha inválidos.");
     } finally {
