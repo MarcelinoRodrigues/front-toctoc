@@ -29,6 +29,8 @@ export default function LoginPage() {
         senha: password,
       });
 
+      console.log(response)
+
       localStorage.setItem("token", response.data.token);
       router.replace("/dashboard");
     } catch {

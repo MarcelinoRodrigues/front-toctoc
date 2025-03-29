@@ -35,13 +35,3 @@ export const validateRequiredFields = (product: ProductState) => {
 
   return errors
 }
-
-export const defaultProduct = () => ({
-  id: "",
-  name: "",
-  quantity: 0,
-  description: "",
-  unitMeasure: "",
-  amount: 0,
-  createDateTime: ""
-});
