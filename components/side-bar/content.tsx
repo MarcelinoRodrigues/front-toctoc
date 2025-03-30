@@ -4,7 +4,7 @@ import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { Home, Package, Menu, Settings, DollarSign, Boxes, TrendingUp, ArrowRightFromLine, ChevronDown, ChevronUp } from "lucide-react"
+import { Home, Package, Menu, Settings, Boxes, TrendingUp, ArrowRightFromLine, ChevronDown, ChevronUp } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
