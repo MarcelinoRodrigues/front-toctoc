@@ -42,7 +42,6 @@ const Sidebar = () => {
 
 const NavLinks = ({ onClick, handleLogout }: { onClick?: () => void, handleLogout: () => void }) => {
     const [financeOpen, setFinanceOpen] = useState(false)
-    const [sale, setSale] = useState(false)
 
     return (
         <nav className="flex flex-col h-full">
@@ -53,22 +52,9 @@ const NavLinks = ({ onClick, handleLogout }: { onClick?: () => void, handleLogou
                 <Link href="/products" onClick={onClick} className={linkClass()}>
                     <Package className="w-5 h-5" /> Produtos
                 </Link>
-                <div className="flex flex-col">
-                    <button onClick={() => setSale(!sale)} className={linkClass()}>
-                        <DollarSign className="w-5 h-5" /> Venda
-                        {sale ? <ChevronUp className="w-4 h-4 ml-auto" /> : <ChevronDown className="w-4 h-4 ml-auto" />}
-                    </button>
-                    {sale && (
-                        <div className="ml-6 flex flex-col space-y-2">
-                            <Link href="/sale/simple" onClick={onClick} className={linkClass()}>
-                                Simples
-                            </Link>
-                            <Link href="/sale/advanced" onClick={onClick} className={linkClass()}>
-                                Avançada 
-                            </Link>
-                        </div>
-                    )}
-                </div>
+                <Link href="/sale" onClick={onClick} className={linkClass()}>
+                    <Package className="w-5 h-5" /> Vendas
+                </Link>
                 <Link href="/stock" onClick={onClick} className={linkClass()}>
                     <Boxes className="w-5 h-5" /> Estoque
                 </Link>
