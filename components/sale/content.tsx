@@ -4,6 +4,7 @@ import { useCallback, useState } from "react"
 import { CardView } from "../common/CardView"
 import { Sale } from "@/types/Sale/types"
 import { SaleTable } from "./table"
+import { Create } from "./modals/create"
 
 export const Content = () => {
     const [sale, setSale] = useState<Sale[]>([])
@@ -23,6 +24,10 @@ export const Content = () => {
         <main className="w-full p-4">
             <h2 className="text-2xl font-bold mb-6">Lista de Vendas</h2>
             <div className="flex flex-col md:flex-row gap-4 items-start mb-6">
+                <Create
+                    disableLoading={disableLoading}
+                    enableLoading={enableLoading}
+                    handleSetSale={handleSetSale} />
                 <CardView
                     isCardView={isCardView}
                     handleCardView={handleCardView} />

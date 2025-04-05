@@ -12,3 +12,24 @@ export type Sale = {
     unitMeasure: string
     createDateTime: string
 }
+
+export type SaleState = {
+    productId: number
+    quantity: number
+    payment: string
+    discount: number | null
+    amount: number
+    origin: string | null
+    observation: string | null
+    additionalCost: number | null
+    unitMeasure: string | null
+}
+
+export type SaleTableProps = {
+    sale: Sale[]
+    isLoading: boolean
+    isCardView: boolean
+    handleSetSale: (sale: Sale[]) => void
+    disableLoading: () => void
+    enableLoading: () => void
+}

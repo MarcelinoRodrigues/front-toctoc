@@ -8,7 +8,7 @@ import { useTimeOutLoad } from "@/hooks/useTimeOutLoad"
 import { CreateOrEdit } from "./modals/createOrEdit"
 import { CardView } from "../common/CardView"
 
-export const Content = () => {
+const Content = () => {
     useAuth()
 
     const [products, setProducts] = useState<Product[]>([])
@@ -49,3 +49,5 @@ export const Content = () => {
         </main>
     )
 }
+
+export default Content

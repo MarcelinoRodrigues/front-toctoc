@@ -1,21 +1,13 @@
 "use client"
 
-import { Sale } from "@/types/Sale/types"
+import { Sale, SaleTableProps } from "@/types/Sale/types"
 import { FC, useEffect, useState } from "react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
 import { Eye, Loader2 } from "lucide-react"
 import { Error } from "../common/error"
 import { Button } from "../ui/button"
 import { getSale } from "@/services/sale/getSales"
-
-type SaleTableProps = {
-    sale: Sale[]
-    isLoading: boolean
-    isCardView: boolean
-    handleSetSale: (sale: Sale[]) => void
-    disableLoading: () => void
-    enableLoading: () => void
-}
+import { Create } from "./modals/create"
 
 export const SaleTable: FC<SaleTableProps> = ({
     sale,
