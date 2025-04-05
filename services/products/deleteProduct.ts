@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "@/lib/api";
 import axios from "axios";
 
 export const deleteProduct = async (id: string) => {
@@ -5,7 +6,7 @@ export const deleteProduct = async (id: string) => {
 
   try {
     const response = await axios.delete(
-        `https://localhost:44323/api/Product?Id=${id}`, 
+        `${API_BASE_URL}/Product?Id=${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

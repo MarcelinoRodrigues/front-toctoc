@@ -7,7 +7,6 @@ import { Eye, Loader2 } from "lucide-react"
 import { Error } from "../common/error"
 import { Button } from "../ui/button"
 import { getSale } from "@/services/sale/getSales"
-import { Create } from "./modals/create"
 
 export const SaleTable: FC<SaleTableProps> = ({
     sale,
@@ -62,14 +61,14 @@ export const SaleTable: FC<SaleTableProps> = ({
         return paymentMapping[String(value).toLowerCase()] || value
     }
 
-    const formatValue = (field: string, value: any) => {
-        if (value === null) return "-"
+    const formatValue = (field: string, value: string | number) => {
+        if (!value) return "-";
     
         if (field.includes("createDateTime")) 
-            return new Date(value).toLocaleDateString("pt-BR")
-
+            return new Date(value).toLocaleDateString("pt-BR");
+    
         if (field.toLowerCase() === "payment") 
-            return formatPayment(value)
+            return formatPayment(String(value));
     
         if (["amount", "discount", "additionalCost"].includes(field)) {
             return new Intl.NumberFormat("pt-BR", {
@@ -78,7 +77,7 @@ export const SaleTable: FC<SaleTableProps> = ({
             }).format(Number(value));
         }
     
-        return value;
+        return String(value);
     };
 
     return (

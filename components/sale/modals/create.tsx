@@ -9,10 +9,8 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { Plus } from "lucide-react"
-import { createProduct } from "@/services/products/createProduct"
 import { getProducts } from "@/services/products/getProducts"
-import { ProductState } from "@/types/Product/types"
-import { validateRequiredFields, validateRequiredSaleFields } from "@/lib/utils"
+import { validateRequiredSaleFields } from "@/lib/utils"
 import { ValidatorError } from "@/components/common/validator-error"
 import { Input } from "@/components/ui/input"
 import { Sale, SaleState } from "@/types/Sale/types"
