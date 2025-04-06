@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "@/lib/api";
 import { ProductState } from "@/types/Product/types";
 import axios from "axios";
 
@@ -11,7 +12,7 @@ export const updateProduct = async ({ id, product }: UpdateProductProps) => {
 
     try {
         const response = await axios.put(
-            `https://localhost:44323/api/Product/update/${id}`,
+            `${API_BASE_URL}/Product/update/${id}`,
             product,
             {
                 headers: {

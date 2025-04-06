@@ -31,7 +31,7 @@ export const Content = () => {
         };
 
         fetchProducts();
-    }, []);
+    }, [enableLoading, disableLoading]);
 
     return (
         <div className="mx-auto border-8 border-gray-900 p-4 h-screen overflow-auto min-w-[50vw]">
