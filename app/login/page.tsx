@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { validateInputs } from "@/lib/utils";
+import { API_BASE_URL } from "@/lib/api";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const response = await axios.post("https://localhost:44323/api/Auth/login", {
+      const response = await axios.post(`${API_BASE_URL}/Auth/login`, {
         email,
         senha: password,
       });
