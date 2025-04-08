@@ -30,9 +30,14 @@ export default function LoginPage() {
         senha: password,
       });
 
-      console.log(response)
+      const token = response.data.token;
+      localStorage.setItem("token", token);
 
-      localStorage.setItem("token", response.data.token);
+      const inSevenDays = new Date();
+      inSevenDays.setDate(inSevenDays.getDate() + 7);
+  
+      document.cookie = `jwt=${token}; expires=${inSevenDays.toUTCString()}; path=/; Secure; SameSite=Strict`;
+  
       
       requestAnimationFrame(() => {
         router.replace("/dashboard");
