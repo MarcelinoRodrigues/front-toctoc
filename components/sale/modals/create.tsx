@@ -1,14 +1,29 @@
 'use client'
 
-import { useState, useTransition } from "react"
+import { useEffect, useState, useTransition } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { handleCreteSale } from "@/app/actions/CreateSale"
 import { Loader2, Plus } from "lucide-react"
+import { handleCreteSale } from "@/app/actions/CreateSale"
+import { getProducts } from "@/services/products/getProducts"
+
+interface Product {
+  id: string;
+  name: string;
+}
 
 export const CreateSaleDialog = () => {
   const [open, setOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
+  const [products, setProducts] = useState<Product[]>([])
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const data = await getProducts()
+      if (data) setProducts(data)
+    }
+    fetchProducts()
+  }, [])
 
   const submitForm = (formData: FormData) => {
     startTransition(async () => {
@@ -39,15 +54,22 @@ export const CreateSaleDialog = () => {
               <form action={submitForm} className="space-y-4">
 
                 <div>
-                  <label className="block text-sm font-medium">Produto ID</label>
-                  <input
-                    type="text"
+                  <label className="block text-sm font-medium">Produto</label>
+                  <select
                     name="productId"
                     required
                     className="mt-1 w-full border px-3 py-2 rounded"
-                    defaultValue="3fa85f64-5717-4562-b3fc-2c963f66afa6"
-                  />
+                    defaultValue=""
+                  >
+                    <option value="" disabled>Selecione um produto</option>
+                    {products.map((product) => (
+                      <option key={product.id} value={product.id}>
+                        {product.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
+
                 <div>
                   <label className="block text-sm font-medium">Quantidade</label>
                   <input
