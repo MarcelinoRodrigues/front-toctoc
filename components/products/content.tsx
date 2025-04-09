@@ -4,18 +4,13 @@ import { useCallback, useState } from "react"
 import { ProductTable } from "./table"
 import { Product } from "@/types/Product/types"
 import { CreateOrEdit } from "./modals/createOrEdit"
-import { CardView } from "../common/CardView"
 
 const Content = () => {
     const [products, setProducts] = useState<Product[]>([])
     const [isLoading, setIsLoading] = useState(true)
-    const [isCardView, setIsCardView] = useState(false)
 
     const enableLoading = useCallback(() => setIsLoading(true), [])
     const disableLoading = useCallback(() => setIsLoading(false), [])
-    const handleCardView = useCallback((card: boolean) => {
-        setIsCardView(card)
-    },[])
     const handleSetProduct = useCallback((products: Product[]) => {
         setProducts(products);
     }, [])
@@ -27,14 +22,10 @@ const Content = () => {
                     disableLoading={disableLoading} 
                     enableLoading={enableLoading} 
                     handleSetProduct={handleSetProduct} />
-                <CardView 
-                    isCardView={isCardView} 
-                    handleCardView={handleCardView}/>
             </div>
             <ProductTable 
                 products={products} 
                 isLoading={isLoading} 
-                isCardView={isCardView}
                 handleSetProduct={handleSetProduct} 
                 disableLoading={disableLoading} 
                 enableLoading={enableLoading} 

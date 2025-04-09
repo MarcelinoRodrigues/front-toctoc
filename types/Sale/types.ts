@@ -1,26 +1,26 @@
 export type Sale = {
-    id: number
-    productId: number
-    productName: string
-    quantity: number
-    payment: string
-    discount: number
-    amount: number
-    origin: string
-    observation: string
-    additionalCost: number
-    unitMeasure: string
-    createDateTime: string
+  id: number
+  productId: number
+  productName: string
+  quantity: number
+  payment: string
+  discount: number
+  amount: number
+  origin: string
+  observation: string
+  additionalCost: number
+  unitMeasure: string
+  createDateTime: string
 }
 
 export type SaleState = {
-    productId: number
-    quantity: number
-    payment: string
-    discount: number | null
-    amount: number
-    origin: string | null
-    observation: string | null
-    additionalCost: number | null
-    unitMeasure: string | null
+  productId: number
+  quantity: number
+  payment: string
+  discount: number | null
+  amount: number
+  origin: string | null
+  observation: string | null
+  additionalCost: number | null
+  unitMeasure: string | null
 }
