@@ -1,20 +1,20 @@
-'use client';
+'use client'
 
-import { useState, useTransition } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { handleCreteSale } from "@/app/actions/CreateSale";
-import { Loader2, Plus } from "lucide-react";
+import { useState, useTransition } from "react"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { handleCreteSale } from "@/app/actions/CreateSale"
+import { Loader2, Plus } from "lucide-react"
 
 export const CreateSaleDialog = () => {
-  const [open, setOpen] = useState(false);
-  const [isPending, startTransition] = useTransition();
+  const [open, setOpen] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
   const submitForm = (formData: FormData) => {
     startTransition(async () => {
-      await handleCreteSale(formData);
-      setOpen(false);
-    });
+      await handleCreteSale(formData)
+      setOpen(false)
+    })
   }
 
   return (
@@ -29,7 +29,7 @@ export const CreateSaleDialog = () => {
         {
           isPending ? (
             <div className="m-auto p-10">
-              <Loader2 className="animate-spin" height={50} width={50} />  
+              <Loader2 className="animate-spin" height={50} width={50} />
             </div>
           ) : (
             <>
@@ -131,5 +131,5 @@ export const CreateSaleDialog = () => {
         }
       </DialogContent>
     </Dialog>
-  );
+  )
 }

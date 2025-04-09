@@ -11,6 +11,8 @@ export const getSale = async () => {
     rejectUnauthorized: false,
   });
 
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   try {
     const response = await axios.get(`${API_BASE_URL}/Sale`, {
       headers: {
