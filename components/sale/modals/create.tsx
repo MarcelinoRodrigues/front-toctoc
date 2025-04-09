@@ -1,168 +1,188 @@
-import { FC, useState } from "react"
-import { Button } from "@/components/ui/button"
-import {
-    Dialog,
-    DialogContent,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import { Plus } from "lucide-react"
-import { getProducts } from "@/services/products/getProducts"
-import { validateRequiredSaleFields } from "@/lib/utils"
-import { ValidatorError } from "@/components/common/validator-error"
-import { Input } from "@/components/ui/input"
-import { Sale, SaleState } from "@/types/Sale/types"
+'use client'
 
-type CreateProps = {
-    disableLoading: () => void
-    enableLoading: () => void
-    handleSetSale: (sale: Sale[]) => void
+import { useEffect, useState, useTransition } from "react"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { Loader2, Plus, Settings } from "lucide-react"
+import { handleCreteSale } from "@/app/actions/CreateSale"
+import { getProducts } from "@/services/products/getProducts"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+
+interface Product {
+  id: string;
+  name: string;
 }
 
-export const Create: FC<CreateProps> = ({
-    enableLoading,
-    disableLoading,
-    handleSetSale,
-}) => {
-    const [errors, setErrors] = useState<{ [key: string]: string }>({})
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const [sale, setSale] = useState<SaleState>({
-        productId: 0,
-        quantity: 0,
-        payment: '',
-        discount: null,
-        amount: 0,
-        origin: null,
-        observation: null,
-        additionalCost: null,
-        unitMeasure: null
+export const CreateSaleDialog = () => {
+  const [open, setOpen] = useState(false)
+  const [isPending, startTransition] = useTransition()
+  const [products, setProducts] = useState<Product[]>([])
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const data = await getProducts()
+      if (data) setProducts(data)
+    }
+    fetchProducts()
+  }, [])
+
+  const submitForm = (formData: FormData) => {
+    startTransition(async () => {
+      await handleCreteSale(formData)
+      setOpen(false)
     })
+  }
 
-    const resetProduct = () => {
-        setSale({
-            productId: 0,
-            quantity: 0,
-            payment: '',
-            discount: null,
-            amount: 0,
-            origin: null,
-            observation: null,
-            additionalCost: null,
-            unitMeasure: null
-        })
-        setErrors({})
-    }
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline" className="mb-1 hover:cursor-pointer">
+          <Plus />
+        </Button>
+      </DialogTrigger>
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target
-        setSale((prev) => ({ ...prev, [name]: value }))
-
-        setErrors((prevErrors) => {
-            const newErrors = { ...prevErrors }
-            if (!value || (["quantity", "amount"].includes(name) && Number(value) <= 0)) {
-                newErrors[name] = "Campo obrigatório ou inválido!"
-            } else {
-                delete newErrors[name]
-            }
-            return newErrors
-        })
-    }
-
-    const handleSubmit = async () => {
-        const validationErrors = validateRequiredSaleFields(sale)
-        if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors)
-            return
-        }
-
-        setIsModalOpen(false)
-        enableLoading()
-
-        //await createProduct(sale)
-
-        disableLoading()
-        resetProduct()
-        const productList = await getProducts()
-        handleSetSale(productList || [])
-    }
-
-    return (
-        <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-            <DialogTrigger asChild>
-                <Button
-                    variant="outline"
-                    className="mb-1 hover:cursor-pointer"
-                    onClick={() => setIsModalOpen(true)}
-                >
-                    <Plus />
-                </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                    <DialogTitle>Criar venda</DialogTitle>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                    <ValidatorError validator={errors.name} error={errors.name} />
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <label htmlFor="name" className="text-right">Nome</label>
-                        <Input
-                            name="name"
-                            //value={sale.name}
-                            onChange={handleChange}
-                            className="col-span-3"
-                        />
-                    </div>
-
-                    <ValidatorError validator={errors.quantity} error={errors.quantity} />
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <label htmlFor="quantity" className="text-right">Quantidade</label>
-                        <Input
-                            name="quantity"
-                            value={sale.quantity}
-                            onChange={handleChange}
-                            className="col-span-3"
-                        />
-                    </div>
-
-                    <ValidatorError validator={errors.amount} error={errors.amount} />
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <label htmlFor="amount" className="text-right">Preço</label>
-                        <Input
-                            name="amount"
-                            value={sale.amount}
-                            onChange={handleChange}
-                            className="col-span-3"
-                        />
-                    </div>
-
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <label htmlFor="observation" className="text-right">Observação</label>
-                        <Input
-                            name="observation"
-                            value={sale.observation ?? ''}
-                            onChange={handleChange}
-                            className="col-span-3"
-                        />
-                    </div>
-
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <label htmlFor="unitMeasure" className="text-right">Unidade de Medida</label>
-                        <Input
-                            name="unitMeasure"
-                            value={sale.unitMeasure ?? ''}
-                            onChange={handleChange}
-                            className="col-span-3"
-                        />
-                    </div>
+      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto" removeClose={isPending}>
+        {
+          isPending ? (
+            <div className="m-auto p-10">
+              <Loader2 className="animate-spin" height={50} width={50} />
+            </div>
+          ) : (
+            <>
+              <DialogHeader>
+                <DialogTitle>Nova Venda</DialogTitle>
+              </DialogHeader>
+              <form action={submitForm} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium">Produto</label>
+                  <select
+                    name="productId"
+                    required
+                    className="mt-1 w-full border px-3 py-2 rounded"
+                    defaultValue=""
+                  >
+                    <option value="" disabled>Selecione um produto</option>
+                    {products.map((product) => (
+                      <option key={product.id} value={product.id}>
+                        {product.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-                <DialogFooter>
-                    <Button className="hover:cursor-pointer" onClick={handleSubmit}>
-                        Criar
-                    </Button>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
-    )
+                <div>
+                  <label className="block text-sm font-medium">Quantidade</label>
+                  <input
+                    type="number"
+                    name="quantity"
+                    required
+                    className="mt-1 w-full border px-3 py-2 rounded"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium">Preço</label>
+                  <input
+                    type="number"
+                    name="amount"
+                    required
+                    className="mt-1 w-full border px-3 py-2 rounded"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium">Pagamento</label>
+                  <select
+                    name="payment"
+                    required
+                    className="mt-1 w-full border px-3 py-2 rounded"
+                    defaultValue="credit"
+                  >
+                    <option value="credit">Crédito</option>
+                    <option value="debit">Débito</option>
+                    <option value="pix">Pix</option>
+                  </select>
+                </div>
+
+                <Accordion type="single" collapsible className="w-full">
+                  <AccordionItem value="opcionais">
+                    <AccordionTrigger className="px-4 py-3 text-base font-semibold bg-muted hover:bg-muted/70 rounded-t-md flex items-center gap-2 hover:cursor-pointer">
+                      <Settings className="h-4 w-4 text-muted-foreground" />
+                      Campos opcionais
+                    </AccordionTrigger>
+                    <AccordionContent className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium">Desconto</label>
+                        <input
+                          type="number"
+                          name="discount"
+                          className="mt-1 w-full border px-3 py-2 rounded"
+                          defaultValue={0}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium">Custo adicional</label>
+                        <input
+                          type="number"
+                          name="additionalCost"
+                          className="mt-1 w-full border px-3 py-2 rounded"
+                          defaultValue={0}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium">Origem</label>
+                        <input
+                          type="text"
+                          name="origin"
+                          className="mt-1 w-full border px-3 py-2 rounded"
+                          defaultValue="n/a"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium">Observação</label>
+                        <input
+                          type="text"
+                          name="observation"
+                          className="mt-1 w-full border px-3 py-2 rounded"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium">Unidade de Medida</label>
+                        <select
+                          name="unitMeasure"
+                          className="mt-1 w-full border px-3 py-2 rounded"
+                          defaultValue="UN"
+                        >
+                          <option value="UN">Unidade (UN)</option>
+                          <option value="KG">Quilograma (KG)</option>
+                          <option value="G">Grama (G)</option>
+                          <option value="L">Litro (L)</option>
+                          <option value="ML">Mililitro (ML)</option>
+                          <option value="CM">Centímetro (CM)</option>
+                          <option value="MM">Milímetro (MM)</option>
+                          <option value="M2">Metro quadrado (M²)</option>
+                          <option value="M3">Metro cúbico (M³)</option>
+                          <option value="PCT">Pacote (PCT)</option>
+                          <option value="DZ">Dúzia (DZ)</option>
+                          <option value="CX">Caixa (CX)</option>
+                          <option value="SC">Saco (SC)</option>
+                          <option value="T">Tonelada (T)</option>
+                        </select>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+
+                <div className="flex justify-end space-x-2 pt-4">
+                  <Button type="submit" disabled={isPending}>
+                    Criar
+                  </Button>
+                  <Button type="button" onClick={() => setOpen(false)} variant="outline">
+                    Cancelar
+                  </Button>
+                </div>
+              </form>
+            </>
+          )
+        }
+      </DialogContent>
+    </Dialog>
+  )
 }

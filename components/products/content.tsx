@@ -28,7 +28,6 @@ const Content = () => {
 
     return (
         <main className="w-full p-4">
-            <h2 className="text-2xl font-bold mb-6">Lista de Produtos</h2>
             <div className="flex flex-col md:flex-row gap-4 items-start mb-6">
                 <CreateOrEdit 
                     disableLoading={disableLoading} 

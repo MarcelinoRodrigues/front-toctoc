@@ -24,12 +24,3 @@ export type SaleState = {
     additionalCost: number | null
     unitMeasure: string | null
 }
-
-export type SaleTableProps = {
-    sale: Sale[]
-    isLoading: boolean
-    isCardView: boolean
-    handleSetSale: (sale: Sale[]) => void
-    disableLoading: () => void
-    enableLoading: () => void
-}
