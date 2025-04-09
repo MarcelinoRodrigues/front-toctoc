@@ -11,6 +11,6 @@ export const getDashboard = async () => {
 
         return response.data;
     } catch {
-        return null;
+        return [{products: 0, sale: 0}];
     }
 };

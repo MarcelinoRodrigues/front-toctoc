@@ -3,8 +3,6 @@ export type Product = {
     name: string;
     description?: string;
     amount: number;
-    quantity: number;
-    unitMeasure: string;
     createDateTime: string;
 }
 
@@ -13,16 +11,13 @@ export type GetProduct = {
   productName: string;
   description?: string;
   amount: number;
-  quantity: number;
   payment: string;
   createDateTime: string;
 }
 
 export type ProductState = {
   name: string
-  quantity: number
   description: string
-  unitMeasure: string
   amount: number
 }
 

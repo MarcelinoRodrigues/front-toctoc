@@ -30,11 +30,11 @@ export const validateInputs = (email: string, password: string, handleSetError?:
 export const validateRequiredFields = (product: ProductState) => {
   const errors: { [key: string]: string } = {}
 
-  const requiredFields = ['name', 'quantity', 'amount']
+  const requiredFields = ['name', 'amount']
 
   requiredFields.forEach(field => {
     if (!product[field as keyof ProductState] ||
-      (['quantity', 'amount'].includes(field) && Number(product[field as keyof ProductState]) <= 0)) {
+      (['amount'].includes(field) && Number(product[field as keyof ProductState]) <= 0)) {
       errors[field] = "Campo obrigatório ou inválido!"
     }
   })

@@ -34,8 +34,8 @@ export const ProductTable: FC<ProductTableProps> = ({
     enableLoading,
     disableLoading,
 }) => {
-    const headers = ['Nome', 'Quantidade', 'Descrição', 'UM', 'Valor', 'Ações']
-    const fields: (keyof Product)[] = ['name', 'quantity', 'description', 'unitMeasure', 'amount']
+    const headers = ['Nome', 'Descrição', 'Valor', 'Ações']
+    const fields: (keyof Product)[] = ['name', 'description', 'amount']
 
     const [currentPage, setCurrentPage] = useState(1)
     const itemsPerPage = 6
@@ -134,8 +134,6 @@ export const ProductTable: FC<ProductTableProps> = ({
                                 <h3 className="font-semibold text-lg">{item.name}</h3>
                                 <p className="text-gray-600 text-sm">{item.description}</p>
                                 <div className="mt-3 text-sm">
-                                    <p><strong>Quantidade:</strong> {item.quantity}</p>
-                                    <p><strong>Unidade:</strong> {item.unitMeasure}</p>
                                     <p><strong>Valor:</strong> R${item.amount}</p>
                                 </div>
                                 <div className="mt-4 flex gap-3 justify-center">

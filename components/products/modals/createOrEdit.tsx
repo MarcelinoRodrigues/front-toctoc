@@ -36,9 +36,7 @@ export const CreateOrEdit: FC<CreateOrEditProps> = ({
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [product, setProduct] = useState<ProductState>({
         name: "",
-        quantity: 0,
         description: "",
-        unitMeasure: "",
         amount: 0,
     })
 
@@ -46,9 +44,7 @@ export const CreateOrEdit: FC<CreateOrEditProps> = ({
         if (item) {
             setProduct({
                 name: item.name || "",
-                quantity: item.quantity || 0,
                 description: item.description || "",
-                unitMeasure: item.unitMeasure || "",
                 amount: item.amount || 0,
             });
         }
@@ -57,9 +53,7 @@ export const CreateOrEdit: FC<CreateOrEditProps> = ({
     const resetProduct = () => {
         setProduct({
             name: "",
-            quantity: 0,
             description: "",
-            unitMeasure: "",
             amount: 0,
         })
         setErrors({})
@@ -71,7 +65,7 @@ export const CreateOrEdit: FC<CreateOrEditProps> = ({
 
         setErrors((prevErrors) => {
             const newErrors = { ...prevErrors }
-            if (!value || (["quantity", "amount"].includes(name) && Number(value) <= 0)) {
+            if (!value || (["amount"].includes(name) && Number(value) <= 0)) {
                 newErrors[name] = "Campo obrigatório ou inválido!"
             } else {
                 delete newErrors[name]
@@ -129,17 +123,6 @@ export const CreateOrEdit: FC<CreateOrEditProps> = ({
                         />
                     </div>
 
-                    <ValidatorError validator={errors.quantity} error={errors.quantity} />
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <label htmlFor="quantity" className="text-right">Quantidade</label>
-                        <Input
-                            name="quantity"
-                            value={product.quantity}
-                            onChange={handleChange}
-                            className="col-span-3"
-                        />
-                    </div>
-
                     <ValidatorError validator={errors.amount} error={errors.amount} />
                     <div className="grid grid-cols-4 items-center gap-4">
                         <label htmlFor="amount" className="text-right">Preço</label>
@@ -156,16 +139,6 @@ export const CreateOrEdit: FC<CreateOrEditProps> = ({
                         <Input
                             name="description"
                             value={product.description}
-                            onChange={handleChange}
-                            className="col-span-3"
-                        />
-                    </div>
-
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <label htmlFor="unitMeasure" className="text-right">Unidade de Medida</label>
-                        <Input
-                            name="unitMeasure"
-                            value={product.unitMeasure}
                             onChange={handleChange}
                             className="col-span-3"
                         />

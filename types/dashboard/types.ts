@@ -1,3 +1,5 @@
 export type DashboardItem = {
-    products: number;
+    products: number
+    sale: number
+    stock: number
 }

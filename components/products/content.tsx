@@ -2,15 +2,11 @@
 
 import { useCallback, useState } from "react"
 import { ProductTable } from "./table"
-import { useAuth } from "@/hooks/useAuth"
 import { Product } from "@/types/Product/types"
-import { useTimeOutLoad } from "@/hooks/useTimeOutLoad"
 import { CreateOrEdit } from "./modals/createOrEdit"
 import { CardView } from "../common/CardView"
 
 const Content = () => {
-    useAuth()
-
     const [products, setProducts] = useState<Product[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const [isCardView, setIsCardView] = useState(false)
@@ -23,8 +19,6 @@ const Content = () => {
     const handleSetProduct = useCallback((products: Product[]) => {
         setProducts(products);
     }, [])
-
-    useTimeOutLoad(isLoading, disableLoading)
 
     return (
         <main className="w-full p-4">

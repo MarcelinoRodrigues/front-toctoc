@@ -1,4 +1,3 @@
-// components/sale/responsive-table.tsx
 import { Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getSale } from "@/services/sale/getSales";
