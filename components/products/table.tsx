@@ -34,8 +34,8 @@ export const ProductTable: FC<ProductTableProps> = ({
     enableLoading,
     disableLoading,
 }) => {
-    const headers = ['Nome', 'Descrição', 'Valor', 'Ações']
-    const fields: (keyof Product)[] = ['name', 'description', 'amount']
+    const headers = ['Nome', 'Valor', 'Descrição', 'Ações']
+    const fields: (keyof Product)[] = ['name', 'amount', 'description']
 
     const [currentPage, setCurrentPage] = useState(1)
     const itemsPerPage = 6
@@ -63,9 +63,6 @@ export const ProductTable: FC<ProductTableProps> = ({
     
         fetchProducts();
     }, [enableLoading, disableLoading, handleSetProduct]); 
-    
-
-    const pageNumbers = Array.from({ length: Math.ceil(products.length / itemsPerPage) }, (_, i) => i + 1)
 
     return (
         <div className="flex flex-col gap-6 p-1 h-[31rem]">
@@ -110,9 +107,6 @@ export const ProductTable: FC<ProductTableProps> = ({
                                         <TableCell className="p-3">
                                             <div className="flex gap-2 justify-center">
                                                 <CreateOrEdit isEdit={true} item={item} enableLoading={enableLoading} disableLoading={disableLoading} handleSetProduct={handleSetProduct}/>
-                                                <Button variant="outline" size="icon">
-                                                    <Eye className="text-lg" />
-                                                </Button>
                                                 <Delete id={item.id} enableLoading={enableLoading} disableLoading={disableLoading} handleSetProduct={handleSetProduct} />
                                             </div>
                                         </TableCell>
@@ -138,50 +132,12 @@ export const ProductTable: FC<ProductTableProps> = ({
                                 </div>
                                 <div className="mt-4 flex gap-3 justify-center">
                                     <CreateOrEdit isEdit={true} item={item} enableLoading={enableLoading} disableLoading={disableLoading} handleSetProduct={handleSetProduct}/>
-                                    <Button variant="outline" size="icon">
-                                        <Eye className="text-lg" />
-                                    </Button>
                                     <Delete id={item.id} enableLoading={enableLoading} disableLoading={disableLoading} handleSetProduct={handleSetProduct} />
                                 </div>
                             </div>
                         ))}
                     </div>
                 )}
-            </div>
-            <div className="flex justify-center mt-4">
-                <nav>
-                    <ul className="flex items-center space-x-2">
-                        <li>
-                            <Button
-                                variant="outline"
-                                onClick={() => paginate(currentPage - 1)}
-                                disabled={currentPage === 1}
-                            >
-                                Anterior
-                            </Button>
-                        </li>
-                        {pageNumbers.map(number => (
-                            <li key={number}>
-                                <Button
-                                    variant="outline"
-                                    onClick={() => paginate(number)}
-                                    className={`hover:cursor-pointer ${currentPage === number ? 'bg-gray-900 text-white' : ''}`}
-                                >
-                                    {number}
-                                </Button>
-                            </li>
-                        ))}
-                        <li>
-                            <Button
-                                variant="outline"
-                                onClick={() => paginate(currentPage + 1)}
-                                disabled={currentPage === pageNumbers.length}
-                            >
-                                Próximo
-                            </Button>
-                        </li>
-                    </ul>
-                </nav>
             </div>
         </div>
     )

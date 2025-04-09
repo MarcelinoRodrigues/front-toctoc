@@ -9,14 +9,16 @@ import { getProducts } from "@/services/products/getProducts"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 interface Product {
-  id: string;
-  name: string;
+  id: string
+  name: string
+  amount: number
 }
 
 export const CreateSaleDialog = () => {
   const [open, setOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
   const [products, setProducts] = useState<Product[]>([])
+  const [selectedAmount, setSelectedAmount] = useState<number | null>(null)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -60,6 +62,14 @@ export const CreateSaleDialog = () => {
                     required
                     className="mt-1 w-full border px-3 py-2 rounded"
                     defaultValue=""
+                    onChange={(e) => {
+                      const selectedProduct = products.find(p => p.id === e.target.value)
+                      if (selectedProduct) {
+                        setSelectedAmount(selectedProduct.amount)
+                      } else {
+                        setSelectedAmount(null)
+                      }
+                    }}
                   >
                     <option value="" disabled>Selecione um produto</option>
                     {products.map((product) => (
@@ -81,11 +91,12 @@ export const CreateSaleDialog = () => {
                 <div>
                   <label className="block text-sm font-medium">Preço</label>
                   <input
-                    type="number"
-                    name="amount"
-                    required
-                    className="mt-1 w-full border px-3 py-2 rounded"
+                    type="text"
+                    className="mt-1 w-full border px-3 py-2 rounded bg-gray-100 text-gray-700 cursor-not-allowed"
+                    value={selectedAmount !== null ? `R$ ${selectedAmount.toFixed(2).replace('.', ',')}` : ''}
+                    readOnly
                   />
+                  <input type="hidden" name="amount" value={selectedAmount ?? ''} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium">Pagamento</label>
