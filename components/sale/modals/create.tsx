@@ -124,6 +124,9 @@ export const CreateSaleDialog = () => {
                   <Button type="submit" disabled={isPending} className="hover:cursor-pointer">
                     Criar
                   </Button>
+                  <Button onClick={() => setOpen(false)} className="hover:cursor-pointer">
+                    Cancelar
+                  </Button>
                 </div>
               </form>
             </>

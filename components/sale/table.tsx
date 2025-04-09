@@ -1,13 +1,6 @@
+// components/sale/responsive-table.tsx
 import { Eye } from "lucide-react";
-import { Button } from "../ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../ui/table";
+import { Button } from "@/components/ui/button";
 import { getSale } from "@/services/sale/getSales";
 import { Sale } from "@/types/Sale/types";
 import { fields, formatValue, headers } from "@/utils/sale";
@@ -16,43 +9,67 @@ export async function SaleTable() {
   const sales: Sale[] = await getSale();
 
   return (
-    <div className="flex flex-col gap-6 p-1 h-[31rem]">
-      <div className="overflow-x-auto flex-grow">
-        <Table className="w-full border border-gray-200 rounded-lg shadow-sm">
-          <TableHeader className="bg-gray-100 text-gray-700 uppercase text-sm">
-            <TableRow>
-              {headers.map((headerName, index) => (
-                <TableHead key={index} className="p-3 border-b text-center">
-                  {headerName}
-                </TableHead>
+    <div className="flex flex-col gap-6 p-1">
+      <div className="hidden md:block overflow-x-auto">
+        <table className="w-full border border-gray-200 rounded-lg shadow-sm">
+          <thead className="bg-gray-100 text-gray-700 uppercase text-sm">
+            <tr>
+              {headers.map((header, i) => (
+                <th key={i} className="p-3 border-b text-center">
+                  {header}
+                </th>
               ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody className="bg-white">
-            {sales.map((item: Sale) => (
-              <TableRow
+            </tr>
+          </thead>
+          <tbody className="bg-white">
+            {sales.map((item) => (
+              <tr
                 key={item.id}
                 className="border-b hover:bg-gray-50 transition-colors"
               >
-                {fields.map((field, index) => (
-                  <TableCell
-                    key={index}
-                    className={`p-3 text-center ${index === 0 ? "font-medium" : ""}`}
+                {fields.map((field, i) => (
+                  <td
+                    key={i}
+                    className={`p-3 text-center ${i === 0 ? "font-medium" : ""}`}
                   >
                     {formatValue(field, item[field])}
-                  </TableCell>
+                  </td>
                 ))}
-                <TableCell className="p-3">
+                <td className="p-3">
                   <div className="flex gap-2 justify-center">
                     <Button variant="outline" size="icon">
                       <Eye className="text-lg" />
                     </Button>
                   </div>
-                </TableCell>
-              </TableRow>
+                </td>
+              </tr>
             ))}
-          </TableBody>
-        </Table>
+          </tbody>
+        </table>
+      </div>
+
+      <div className="flex flex-col gap-4 md:hidden">
+        {sales.map((item) => (
+          <div
+            key={item.id}
+            className="border rounded-lg shadow-sm bg-white p-4 space-y-2"
+          >
+            {fields.map((field, i) => (
+              <div key={i} className="flex justify-between text-sm">
+                <span className="font-semibold text-gray-600">{headers[i]}</span>
+                <span className="text-right text-gray-800">
+                  {formatValue(field, item[field])}
+                </span>
+              </div>
+            ))}
+
+            <div className="pt-2 flex justify-end">
+              <Button variant="outline" size="icon">
+                <Eye className="text-lg" />
+              </Button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
