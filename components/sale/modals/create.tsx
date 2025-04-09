@@ -108,12 +108,16 @@ export const CreateSaleDialog = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium">Pagamento</label>
-                  <input
-                    type="text"
+                  <select
                     name="payment"
+                    required
                     className="mt-1 w-full border px-3 py-2 rounded"
                     defaultValue="credit"
-                  />
+                  >
+                    <option value="credit">Crédito</option>
+                    <option value="debit">Débito</option>
+                    <option value="pix">Pix</option>
+                  </select>
                 </div>
                 <div>
                   <label className="block text-sm font-medium">Origem</label>
