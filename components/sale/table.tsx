@@ -10,7 +10,7 @@ export async function SaleTable() {
 
   return (
     <div className="flex flex-col gap-6 p-1">
-      <div className="hidden md:block overflow-x-auto">
+      <div className="hidden md:block overflow-x-auto max-h-[85vh] overflow-y-auto rounded border">
         <table className="w-full border border-gray-200 rounded-lg shadow-sm">
           <thead className="bg-gray-100 text-gray-700 uppercase text-sm">
             <tr>
