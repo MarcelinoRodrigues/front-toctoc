@@ -35,6 +35,12 @@ export const CreateSaleDialog = () => {
     })
   }
 
+  useEffect(() => {
+    if (!open) {
+      setSelectedAmount(null)
+    }
+  }, [open])
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -43,7 +49,7 @@ export const CreateSaleDialog = () => {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto" removeClose={isPending}>
+      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto w-[90%]" removeClose={isPending}>
         {
           isPending ? (
             <div className="m-auto p-10">
@@ -143,7 +149,7 @@ export const CreateSaleDialog = () => {
                           type="text"
                           name="origin"
                           className="mt-1 w-full border px-3 py-2 rounded"
-                          defaultValue="n/a"
+                          defaultValue="N/A"
                         />
                       </div>
                       <div>
@@ -152,6 +158,7 @@ export const CreateSaleDialog = () => {
                           type="text"
                           name="observation"
                           className="mt-1 w-full border px-3 py-2 rounded"
+                          defaultValue="N/A"
                         />
                       </div>
                       <div>
