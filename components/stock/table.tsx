@@ -1,11 +1,11 @@
 import { Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getSale } from "@/services/sale/getSales";
-import { Sale } from "@/types/Sale/types";
-import { fields, formatValue, headers } from "@/utils/sale";
+import { getStock } from "@/services/stock/getStock";
+import { fields, formatValue, headers } from "@/utils/stock";
+import { Stock } from "@/types/stock/types";
 
-export async function SaleTable() {
-  const sales: Sale[] = await getSale();
+export async function StockTable() {
+  const stock: Stock[] = await getStock()
 
   return (
     <div className="flex flex-col gap-6 p-1">
@@ -21,7 +21,7 @@ export async function SaleTable() {
             </tr>
           </thead>
           <tbody className="bg-white">
-            {sales.map((item) => (
+            {stock.map((item) => (
               <tr
                 key={item.id}
                 className="border-b hover:bg-gray-50 transition-colors"
@@ -48,7 +48,7 @@ export async function SaleTable() {
       </div>
 
       <div className="flex flex-col gap-4 md:hidden">
-        {sales.map((item) => (
+        {stock.map((item) => (
           <div
             key={item.id}
             className="border rounded-lg shadow-sm bg-white p-4 space-y-2"

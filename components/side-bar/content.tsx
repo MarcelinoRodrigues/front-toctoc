@@ -12,6 +12,7 @@ import {
 import {
   Home,
   Package,
+  DollarSign,
   Menu,
   Settings,
   Boxes,
@@ -75,7 +76,7 @@ const NavLinks = ({
           Produtos
         </SidebarLink>
 
-        <SidebarLink href="/sale" icon={<Package className="w-5 h-5" />} onClick={onClick}>
+        <SidebarLink href="/sale" icon={<DollarSign className="w-5 h-5" />} onClick={onClick}>
           Vendas
         </SidebarLink>
 
