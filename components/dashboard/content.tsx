@@ -40,8 +40,8 @@ export const Content = () => {
           {dashboard.map((item, index) => (
             <Fragment key={index}>
               <Windownnw title="Produtos" quantity={item.products} />
-              <Windownnw title="Vendas" quantity={item.sale} />
-              <Windownnw title="Estoque" quantity={item.stock} />
+              <Windownnw title="Vendas" quantity={item.sales} />
+              <Windownnw title="Estoque" quantity={item.stocks} />
             </Fragment>
           ))}
         </div>
