@@ -14,20 +14,22 @@ export const Content = async () => {
   const dashboard: DashboardData[] = await getDashboard();
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-6 w-full">
-      <h2 className="text-3xl font-bold text-center text-white bg-gray-900 py-3 rounded-xl mb-6 shadow">
-        Dashboard
-      </h2>
+    <section className="w-full px-6 py-10 bg-[#F9FAFB]">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-5xl font-bold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-[#019267] to-[#1e3a34] drop-shadow-md">
+          Painel Geral
+        </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {dashboard.map((item: DashboardData, index) => (
-          <Fragment key={index}>
-            <Windownnw title="Produtos" quantity={item.products} />
-            <Windownnw title="Vendas" quantity={item.sales} />
-            <WindownStock inQty={item.stockIn} outQty={item.stockOut} />
-          </Fragment>
-        ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {dashboard.map((item: DashboardData, index) => (
+            <Fragment key={index}>
+              <Windownnw title="Produtos" quantity={item.products} />
+              <Windownnw title="Vendas" quantity={item.sales} />
+              <WindownStock inQty={item.stockIn} outQty={item.stockOut} />
+            </Fragment>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
