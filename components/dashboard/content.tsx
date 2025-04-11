@@ -5,7 +5,7 @@ import { getDashboard } from "@/services/dashboard/getDashboard";
 type DashboardData = {
   products: number;
   sales: number;
-  stocks: number;
+  stock: number;
 };
 
 export const Content = async () => {
@@ -22,7 +22,7 @@ export const Content = async () => {
           <Fragment key={index}>
             <Windownnw title="Produtos" quantity={item.products} />
             <Windownnw title="Vendas" quantity={item.sales} />
-            <Windownnw title="Estoque" quantity={item.stocks} />
+            <Windownnw title="Estoque" quantity={item.stock} />
           </Fragment>
         ))}
       </div>
