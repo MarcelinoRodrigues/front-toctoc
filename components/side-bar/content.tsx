@@ -37,19 +37,25 @@ const Sidebar = () => {
 
   return (
     <div className="flex">
+      {/* Mobile */}
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger asChild>
-          <Button variant="outline" className="hover:cursor-pointer lg:hidden">
+          <Button variant="secondary" className="lg:hidden p-2 text-muted-foreground">
             <Menu className="w-6 h-6" />
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="w-64 p-4 flex flex-col h-full">
-          <SheetTitle>Menu</SheetTitle>
-          <NavLinks onClick={() => setIsOpen(false)} handleLogout={handleLogout} />
+        <SheetContent side="left" className="w-64 p-4 flex flex-col h-full bg-background">
+          <SheetTitle className="text-xl font-semibold mb-6">Menu</SheetTitle>
+
+          {/* Wrapper com grow para empurrar o botão pro fim */}
+          <div className="flex flex-col h-full justify-between">
+            <NavLinks onClick={() => setIsOpen(false)} handleLogout={handleLogout} />
+          </div>
         </SheetContent>
       </Sheet>
 
-      <aside className="hidden lg:flex lg:flex-col w-64 p-4 bg-gray-900 text-white h-screen">
+      {/* Desktop */}
+      <aside className="hidden lg:flex flex-col w-64 p-4 bg-muted text-muted-foreground h-screen border-r border-border">
         <NavLinks handleLogout={handleLogout} />
       </aside>
     </div>
@@ -66,8 +72,8 @@ const NavLinks = ({
   const [financeOpen, setFinanceOpen] = useState(false)
 
   return (
-    <nav className="flex flex-col h-full">
-      <div className="flex flex-col space-y-4">
+    <nav className="flex flex-col h-full justify-between">
+      <div className="flex flex-col gap-1">
         <SidebarLink href="/dashboard" icon={<Home className="w-5 h-5" />} onClick={onClick}>
           Dashboard
         </SidebarLink>
@@ -85,17 +91,22 @@ const NavLinks = ({
         </SidebarLink>
 
         <div className="flex flex-col">
-          <button onClick={() => setFinanceOpen(!financeOpen)} className={linkClass()}>
-            <TrendingUp className="w-5 h-5" />
-            Financeiro
+          <button
+            onClick={() => setFinanceOpen(!financeOpen)}
+            className={linkClass("justify-between")}
+          >
+            <div className="flex items-center gap-3">
+              <TrendingUp className="w-5 h-5" />
+              <span>Financeiro</span>
+            </div>
             {financeOpen ? (
-              <ChevronUp className="w-4 h-4 ml-auto" />
+              <ChevronUp className="w-4 h-4" />
             ) : (
-              <ChevronDown className="w-4 h-4 ml-auto" />
+              <ChevronDown className="w-4 h-4" />
             )}
           </button>
           {financeOpen && (
-            <div className="ml-6 flex flex-col space-y-2">
+            <div className="ml-8 mt-2 flex flex-col gap-1">
               <SidebarLink href="/finance/reports" onClick={onClick}>
                 Relatórios
               </SidebarLink>
@@ -107,16 +118,19 @@ const NavLinks = ({
         </div>
 
         <SidebarLink href="/settings" icon={<Settings className="w-5 h-5" />} onClick={onClick}>
-          Configuração
+          Configurações
         </SidebarLink>
       </div>
 
-      <div className="mt-auto">
+      {/* Botão de sair fixado no final */}
+      <div className="mt-4 pt-4 border-t border-gray-700">
         <Button
           onClick={handleLogout}
-          className="w-full bg-red-500 hover:bg-red-600 cursor-pointer"
+          variant="destructive"
+          className="w-full justify-center gap-3 py-3 text-white text-base font-semibold hover:bg-red-600"
         >
-          Sair <ArrowRightFromLine className="ml-2" />
+          <ArrowRightFromLine className="w-5 h-5" />
+          Sair
         </Button>
       </div>
     </nav>
@@ -135,16 +149,22 @@ const SidebarLink = ({
   onClick?: () => void
 }) => {
   return (
-    <Link href={href} onClick={onClick} className={linkClass()}>
-      {icon}
-      {children}
+    <Link
+      href={href}
+      onClick={onClick}
+      className={linkClass()}
+    >
+      {icon && <span className="text-muted-foreground">{icon}</span>}
+      <span className="truncate">{children}</span>
     </Link>
   )
 }
 
-const linkClass = () =>
+const linkClass = (extra?: string) =>
   cn(
-    "flex items-center gap-3 px-4 py-2 rounded-md hover:bg-gray-700 transition hover:text-white"
+    "flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-accent hover:text-accent-foreground transition text-sm font-medium",
+    "text-muted-foreground",
+    extra
   )
 
 export default Sidebar
