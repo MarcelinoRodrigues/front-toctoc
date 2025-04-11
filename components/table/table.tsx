@@ -4,7 +4,7 @@ type CommonTableProps<T> = {
   fetchData: () => Promise<T[]>;
   headers: string[];
   fields: (keyof T)[];
-  formatValue: (field: keyof T, value: any) => React.ReactNode;
+  formatValue: (field: keyof T, value: T[keyof T]) => React.ReactNode;
 };
 
 export async function CommonTable<T>({

@@ -12,7 +12,10 @@ export const CreateSaleDialog = () => {
   const [open, setOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
   const [products, setProducts] = useState<SelectProduct[]>([])
-  const [selectedAmount, setSelectedAmount] = useState<number | null>(null)
+  const [unitAmount, setUnitAmount] = useState<number | null>(null)
+  const [quantity, setQuantity] = useState<number>(1)
+
+  const totalAmount = unitAmount !== null ? unitAmount * quantity : null
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -28,12 +31,6 @@ export const CreateSaleDialog = () => {
       setOpen(false)
     })
   }
-
-  useEffect(() => {
-    if (!open) {
-      setSelectedAmount(null)
-    }
-  }, [open])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -65,9 +62,9 @@ export const CreateSaleDialog = () => {
                     onChange={(e) => {
                       const selectedProduct = products.find(p => p.id === e.target.value)
                       if (selectedProduct) {
-                        setSelectedAmount(selectedProduct.amount)
+                        setUnitAmount(selectedProduct.amount)
                       } else {
-                        setSelectedAmount(null)
+                        setUnitAmount(null)
                       }
                     }}
                   >
@@ -85,7 +82,10 @@ export const CreateSaleDialog = () => {
                     type="number"
                     name="quantity"
                     required
+                    value={quantity}
+                    min={1}
                     className="mt-1 w-full border px-3 py-2 rounded"
+                    onChange={(e) => setQuantity(Number(e.target.value))}
                   />
                 </div>
                 <div>
@@ -93,10 +93,10 @@ export const CreateSaleDialog = () => {
                   <input
                     type="text"
                     className="mt-1 w-full border px-3 py-2 rounded bg-gray-100 text-gray-700 cursor-not-allowed"
-                    value={selectedAmount !== null ? `R$ ${selectedAmount.toFixed(2).replace('.', ',')}` : ''}
+                    value={totalAmount !== null ? `R$ ${totalAmount.toFixed(2).replace('.', ',')}` : ''}
                     readOnly
                   />
-                  <input type="hidden" name="amount" value={selectedAmount ?? ''} />
+                  <input type="hidden" name="amount" value={totalAmount ?? ''} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium">Pagamento</label>
