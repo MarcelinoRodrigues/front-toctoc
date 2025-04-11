@@ -2,24 +2,23 @@ import { Stock } from "@/types/stock/types";
 
 export const headers = [
   "Produto",
-  "Type",
-  "Valor"
+  "Quantidade",
+  "Tipo",
+  "Valor",
+  "Ações",
 ];
 
 export const fields: (keyof Stock)[] = [
   "productName",
-  "Type",
+  "quantity",
+  "type",
   "amount"
 ];
 
 export const formatType = (value: number | string) => {
   const paymentMapping: Record<string, string> = {
-    "0": "Credito",
-    credit: "Credito",
-    "1": "Debito",
-    debit: "Debito",
-    "2": "Pix",
-    pix: "Pix",
+    in: "Entrada",
+    out: "Saída",
   };
   return paymentMapping[String(value).toLowerCase()] || String(value);
 };
@@ -27,7 +26,7 @@ export const formatType = (value: number | string) => {
 export const formatValue = (field: string, value: string | number | null | undefined) => {
   if (value === null || value === undefined || value === "") return "-";
 
-  if (field.toLowerCase() === "Type") {
+  if (field.toLowerCase() === "type") {
     return formatType(value);
   }
 

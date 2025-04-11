@@ -3,9 +3,9 @@
 
 import { cookies } from "next/headers";
 import axios from "axios";
-import https from "https";
 import { API_BASE_URL } from "@/lib/api";
 import { revalidatePath } from "next/cache";
+import { agent } from "@/lib/utils";
 
 export async function handleCreteSale(form: FormData) {
   const cookieStore = cookies();
@@ -22,8 +22,6 @@ export async function handleCreteSale(form: FormData) {
     additionalCost: Number(form.get("additionalCost")) || 0,
     unitMeasure: form.get("unitMeasure")?.toString() || "UN",
   };
-
-  const agent = new https.Agent({ rejectUnauthorized: false });
 
   await axios.post(`${API_BASE_URL}/Sale/create`, data, {
     headers: {
