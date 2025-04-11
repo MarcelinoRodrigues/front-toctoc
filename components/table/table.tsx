@@ -4,7 +4,7 @@ type CommonTableProps<T> = {
   fetchData: () => Promise<T[]>;
   headers: string[];
   fields: (keyof T)[];
-  formatValue: (field: keyof T, value: any) => React.ReactNode;
+  formatValue: (field: keyof T, value: T[keyof T]) => React.ReactNode;
 };
 
 export async function CommonTable<T>({
@@ -17,41 +17,46 @@ export async function CommonTable<T>({
 
   return (
     <div className="flex flex-col gap-6 p-1">
-      <div className="hidden md:block overflow-x-auto max-h-[85vh] overflow-y-auto rounded border">
-        <table className="w-full border border-gray-200 rounded-lg shadow-sm">
-          <thead className="bg-gray-100 text-gray-700 uppercase text-sm">
+      <div className="hidden md:block overflow-x-auto max-h-[85vh] overflow-y-auto rounded border border-gray-200 shadow-sm">
+        <table className="w-full text-sm text-gray-800">
+          <thead className="bg-gradient-to-r from-green-100 via-white to-green-50 text-green-900 uppercase text-xs font-semibold">
             <tr>
               {headers.map((header, i) => (
-                <th key={i} className="p-3 border-b text-center">
+                <th key={i} className="p-4 text-center border-b border-gray-300">
                   {header}
                 </th>
               ))}
             </tr>
           </thead>
+
           <tbody className="bg-white">
             {data.map((item: T, rowIndex) => (
               <tr
                 key={rowIndex}
-                className="border-b hover:bg-gray-50 transition-colors"
+                className="border-b border-gray-100 hover:bg-green-50/30 transition"
               >
                 {fields.map((field, colIndex) => {
                   const isTypeField = String(field).toLowerCase() === "type";
                   const typeValue = String(item[field]).toLowerCase();
 
-                  const typeBgClass =
+                  const typeBadgeStyle =
                     typeValue === "in"
-                      ? "bg-green-50 text-green-600"
+                      ? "bg-green-100 text-green-700"
                       : typeValue === "out"
-                      ? "bg-red-50 text-red-600"
-                      : "";
+                      ? "bg-red-100 text-red-700"
+                      : "bg-gray-100 text-gray-600";
 
                   return (
                     <td
                       key={colIndex}
-                      className={`p-3 text-center ${colIndex === 0 ? "font-medium" : ""}`}
+                      className={`p-4 text-center ${
+                        colIndex === 0 ? "font-semibold" : ""
+                      }`}
                     >
                       {isTypeField ? (
-                        <span className={`text-sm px-2 py-0.5 rounded-full font-medium ${typeBgClass}`}>
+                        <span
+                          className={`text-xs px-3 py-1 rounded-full font-medium inline-block ${typeBadgeStyle}`}
+                        >
                           {formatValue(field, item[field])}
                         </span>
                       ) : (
@@ -60,8 +65,11 @@ export async function CommonTable<T>({
                     </td>
                   );
                 })}
-                <td className="p-3 text-center text-gray-400">
-                  <MoreHorizontal className="mx-auto" size={18} />
+
+                <td className="p-4 text-center">
+                  <button className="p-1 rounded-full hover:bg-gray-200 transition">
+                    <MoreHorizontal className="text-gray-500" size={18} />
+                  </button>
                 </td>
               </tr>
             ))}
@@ -73,16 +81,33 @@ export async function CommonTable<T>({
         {data.map((item: T, rowIndex) => (
           <div
             key={rowIndex}
-            className="border rounded-lg shadow-sm bg-white p-4 space-y-2"
+            className="border rounded-xl shadow bg-white p-4 space-y-3"
           >
-            {fields.map((field, i) => (
-              <div key={i} className="flex justify-between text-sm">
-                <span className="font-semibold text-gray-600">{headers[i]}</span>
-                <span className="text-right text-gray-800">
-                  {formatValue(field, item[field])}
-                </span>
-              </div>
-            ))}
+            {fields.map((field, i) => {
+              const isTypeField = String(field).toLowerCase() === "type";
+              const typeValue = String(item[field]).toLowerCase();
+              const typeBadgeStyle =
+                typeValue === "in"
+                  ? "bg-green-100 text-green-700"
+                  : typeValue === "out"
+                  ? "bg-red-100 text-red-700"
+                  : "bg-gray-100 text-gray-600";
+
+              return (
+                <div key={i} className="flex justify-between items-center text-sm">
+                  <span className="font-medium text-gray-600">{headers[i]}</span>
+                  <span
+                    className={`${
+                      isTypeField
+                        ? `text-xs px-2 py-0.5 rounded-full font-medium ${typeBadgeStyle}`
+                        : "text-gray-800"
+                    }`}
+                  >
+                    {formatValue(field, item[field])}
+                  </span>
+                </div>
+              );
+            })}
             <div className="pt-2 flex justify-end">
               <MoreHorizontal className="text-gray-400" size={18} />
             </div>

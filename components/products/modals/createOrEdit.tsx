@@ -13,9 +13,9 @@ import { createProduct } from "@/services/products/createProduct"
 import { updateProduct } from "@/services/products/updateProduct"
 import { getProducts } from "@/services/products/getProducts"
 import { Product, ProductState } from "@/types/Product/types"
-import { validateRequiredFields } from "@/lib/utils"
 import { ValidatorError } from "@/components/common/validator-error"
 import { Input } from "@/components/ui/input"
+import { validateRequiredFields } from "@/utils/products"
 
 type CreateOrEditProps = {
     item?: Product

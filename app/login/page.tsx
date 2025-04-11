@@ -5,8 +5,8 @@ import axios from "axios";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { validateInputs } from "@/lib/utils";
 import { API_BASE_URL } from "@/lib/api";
+import { validateInputs } from "@/utils/login";
 
 export default function LoginPage() {
   const router = useRouter();
