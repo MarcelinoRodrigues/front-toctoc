@@ -4,7 +4,7 @@ import { useEffect, useState, useTransition } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Loader2, Plus, Settings } from "lucide-react"
-import { handleCreteSale } from "@/app/actions/CreateSale"
+import { handleCreteSale } from "@/app/actions/sale/CreateSale"
 import { getProducts } from "@/services/products/getProducts"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 

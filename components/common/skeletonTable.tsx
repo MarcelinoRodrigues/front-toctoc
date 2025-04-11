@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 const HEADERS = Array(6).fill("")
 
-export function SaleTableSkeleton() {
+export function TableSkeleton() {
   return (
     <div className="flex flex-col gap-6 p-1 h-[31rem]">
       <div className="overflow-x-auto flex-grow">
