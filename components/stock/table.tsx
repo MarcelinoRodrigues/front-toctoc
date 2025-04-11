@@ -26,14 +26,32 @@ export async function StockTable() {
                 key={item.id}
                 className="border-b hover:bg-gray-50 transition-colors"
               >
-                {fields.map((field, i) => (
-                  <td
-                    key={i}
-                    className={`p-3 text-center ${i === 0 ? "font-medium" : ""}`}
-                  >
-                    {formatValue(field, item[field])}
-                  </td>
-                ))}
+                {fields.map((field, i) => {
+                  const isTypeField = field.toLowerCase() === "type";
+                  const typeValue = String(item[field]).toLowerCase();
+
+                  const typeBgClass =
+                    typeValue === "in"
+                      ? "bg-green-50 text-green-600"
+                      : typeValue === "out"
+                        ? "bg-red-50 text-red-600"
+                        : "";
+
+                  return (
+                    <td
+                      key={i}
+                      className={`p-3 text-center ${i === 0 ? "font-medium" : ""}`}
+                    >
+                      {isTypeField ? (
+                        <span className={`text-sm px-2 py-0.5 rounded-full font-medium ${typeBgClass}`}>
+                          {formatValue(field, item[field])}
+                        </span>
+                      ) : (
+                        formatValue(field, item[field])
+                      )}
+                    </td>
+                  );
+                })}
                 <td className="p-3">
                   <div className="flex gap-2 justify-center">
                     <Button variant="outline" size="icon">

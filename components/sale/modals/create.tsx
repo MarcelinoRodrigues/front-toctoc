@@ -8,16 +8,10 @@ import { handleCreteSale } from "@/app/actions/CreateSale"
 import { getProducts } from "@/services/products/getProducts"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
-interface Product {
-  id: string
-  name: string
-  amount: number
-}
-
 export const CreateSaleDialog = () => {
   const [open, setOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
-  const [products, setProducts] = useState<Product[]>([])
+  const [products, setProducts] = useState<SelectProduct[]>([])
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null)
 
   useEffect(() => {
