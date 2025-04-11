@@ -1,11 +1,13 @@
 import { Windownnw } from "./windonnw";
 import { Fragment } from "react";
 import { getDashboard } from "@/services/dashboard/getDashboard";
+import { WindownStock } from "./windownStock";
 
 type DashboardData = {
   products: number;
   sales: number;
-  stock: number;
+  stockIn: number;
+  stockOut: number;
 };
 
 export const Content = async () => {
@@ -22,7 +24,7 @@ export const Content = async () => {
           <Fragment key={index}>
             <Windownnw title="Produtos" quantity={item.products} />
             <Windownnw title="Vendas" quantity={item.sales} />
-            <Windownnw title="Estoque" quantity={item.stock} />
+            <WindownStock inQty={item.stockIn} outQty={item.stockOut} />
           </Fragment>
         ))}
       </div>
