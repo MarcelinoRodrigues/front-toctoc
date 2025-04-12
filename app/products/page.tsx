@@ -1,7 +1,5 @@
-"use client"
-
+import { Content } from "@/components/products/content"
 import Sidebar from "@/components/side-bar/content"
-import Content from "@/components/products/content"
 
 export default function ProductsPage() {
   return (

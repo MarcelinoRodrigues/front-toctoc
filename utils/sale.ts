@@ -43,7 +43,6 @@ export const headers = [
   "Forma de Pagamento",
   "Origem",
   "Observação",
-  "Ações",
 ];
 
 export const fields: (keyof Sale)[] = [

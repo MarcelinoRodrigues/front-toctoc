@@ -1,17 +1,17 @@
-import { MoreHorizontal } from "lucide-react";
-
-type CommonTableProps<T> = {
+type CommonTableProps<T extends { id: string }> = {
   fetchData: () => Promise<T[]>;
   headers: string[];
   fields: (keyof T)[];
   formatValue: (field: keyof T, value: T[keyof T]) => React.ReactNode;
+  renderActions?: (id: string) => React.ReactNode;
 };
 
-export async function CommonTable<T>({
+export async function CommonTable<T extends { id: string }>({
   fetchData,
   headers,
   fields,
   formatValue,
+  renderActions,
 }: CommonTableProps<T>) {
   const data = await fetchData();
 
@@ -26,6 +26,9 @@ export async function CommonTable<T>({
                   {header}
                 </th>
               ))}
+              {renderActions && (
+                <th className="p-4 text-center border-b border-gray-300">Ações</th>
+              )}
             </tr>
           </thead>
 
@@ -49,9 +52,7 @@ export async function CommonTable<T>({
                   return (
                     <td
                       key={colIndex}
-                      className={`p-4 text-center ${
-                        colIndex === 0 ? "font-semibold" : ""
-                      }`}
+                      className={`p-4 text-center ${colIndex === 0 ? "font-semibold" : ""}`}
                     >
                       {isTypeField ? (
                         <span
@@ -66,17 +67,18 @@ export async function CommonTable<T>({
                   );
                 })}
 
-                <td className="p-4 text-center">
-                  <button className="p-1 rounded-full hover:bg-gray-200 transition">
-                    <MoreHorizontal className="text-gray-500" size={18} />
-                  </button>
-                </td>
+                {renderActions && (
+                  <td className="p-4 text-center">
+                    {renderActions(item.id)}
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
         </table>
       </div>
 
+      {/* MOBILE */}
       <div className="flex flex-col gap-4 md:hidden">
         {data.map((item: T, rowIndex) => (
           <div
@@ -108,9 +110,12 @@ export async function CommonTable<T>({
                 </div>
               );
             })}
-            <div className="pt-2 flex justify-end">
-              <MoreHorizontal className="text-gray-400" size={18} />
-            </div>
+
+            {renderActions && (
+              <div className="pt-2 flex justify-end">
+                {renderActions(item.id)}
+              </div>
+            )}
           </div>
         ))}
       </div>

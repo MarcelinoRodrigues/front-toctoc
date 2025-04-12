@@ -5,7 +5,6 @@ export const headers = [
   "Quantidade",
   "Tipo",
   "Valor",
-  "Ações",
 ];
 
 export const fields: (keyof Stock)[] = [

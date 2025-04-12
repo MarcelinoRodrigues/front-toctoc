@@ -1,81 +1,42 @@
-"use client";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import axios from "axios";
+'use client'
+
+import { loginAction } from "../actions/login/login";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { API_BASE_URL } from "@/lib/api";
-import { validateInputs } from "@/utils/login";
+import { useTransition } from "react";
 
 export default function LoginPage() {
-  const router = useRouter();
+  const [isPending, startTransition] = useTransition()
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleSetError = (errorMessage: string) => setError(errorMessage)
-
-  const handleLogin = async () => {
-    if (!validateInputs(email,password,handleSetError)) return;
-    
-    setIsLoading(true);
-    setError("");
-
-    try {
-      const response = await axios.post(`${API_BASE_URL}/Auth/login`, {
-        email,
-        senha: password,
-      });
-
-      const token = response.data.token;
-      localStorage.setItem("token", token);
-
-      const inSevenDays = new Date();
-      inSevenDays.setDate(inSevenDays.getDate() + 7);
-  
-      document.cookie = `jwt=${token}; expires=${inSevenDays.toUTCString()}; path=/; Secure; SameSite=Strict`;
-  
-      
-      requestAnimationFrame(() => {
-        router.replace("/dashboard");
-      });
-    } catch {
-      setError("Usuário ou senha inválidos.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const submitForm = (formData: FormData) => {
+    startTransition(async () => {
+      await loginAction(formData)
+    })
+  }
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <div className="w-80 p-6 bg-white shadow-lg rounded-lg">
-        <h2 className="text-xl font-bold mb-4">Login</h2>
+      <form
+        action={submitForm}
+        className="w-80 p-6 bg-white shadow-lg rounded-lg space-y-4"
+      >
+        <h2 className="text-xl font-bold">Login</h2>
         <Input
+          name="email"
           type="email"
           placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="mb-2"
+          required
         />
         <Input
+          name="password"
           type="password"
           placeholder="Senha"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="mb-4"
+          required
         />
-        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
-        <Button
-          className="w-full hover:cursor-pointer"
-          onClick={handleLogin}
-          disabled={isLoading}
-        >         
-          {isLoading ? <Loader2 className="animate-spin" /> : "Entrar"}
+        <Button disabled={isPending} className="w-full" type="submit">
+          {isPending ? "Carregando" : "Entrar"}
         </Button>
-      </div>
+      </form>
     </div>
   );
 }
