@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useTransition } from "react"
+import { useState, useTransition } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Loader2, Plus, Settings } from "lucide-react"
@@ -19,14 +19,6 @@ export const CreateSaleDialog = ({ products }: CreateSaleDialogProps) => {
   const [quantity, setQuantity] = useState<number>(1)
 
   const totalAmount = unitAmount !== null ? unitAmount * quantity : null
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      //const data = await getProducts()
-      //if (data) setProducts(data)
-    }
-    fetchProducts()
-  }, [])
 
   const submitForm = (formData: FormData) => {
     startTransition(async () => {
