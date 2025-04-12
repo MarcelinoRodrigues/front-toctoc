@@ -33,7 +33,7 @@ export default function LoginPage() {
           placeholder="Senha"
           required
         />
-        <Button disabled={isPending} className="w-full" type="submit">
+        <Button disabled={isPending} className="w-full hover:cursor-pointer" type="submit">
           {isPending ? "Carregando" : "Entrar"}
         </Button>
       </form>
