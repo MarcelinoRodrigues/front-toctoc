@@ -1,4 +1,8 @@
-import { ProductState } from "@/types/Product/types"
+import { Product, ProductState } from "@/types/Product/types"
+
+export const headers = ['Nome', 'Valor', 'Descrição']
+
+export const fields: (keyof Product)[] = ['name', 'amount', 'description']
 
 export const validateRequiredFields = (product: ProductState) => {
   const errors: { [key: string]: string } = {}
@@ -14,3 +18,9 @@ export const validateRequiredFields = (product: ProductState) => {
 
   return errors
 }
+
+export const formatValue = (field: string, value: string | number | null | undefined) => {
+  if (value === null || value === undefined || value === "") return "-";
+
+  return String(value);
+};
