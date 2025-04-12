@@ -31,14 +31,12 @@ export default function LoginPage() {
       });
 
       const token = response.data.token;
-      localStorage.setItem("token", token);
 
       const inSevenDays = new Date();
       inSevenDays.setDate(inSevenDays.getDate() + 7);
   
       document.cookie = `jwt=${token}; expires=${inSevenDays.toUTCString()}; path=/; Secure; SameSite=Strict`;
-  
-      
+    
       requestAnimationFrame(() => {
         router.replace("/dashboard");
       });
