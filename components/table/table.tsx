@@ -1,3 +1,5 @@
+import { NotResult } from "../common/notResult";
+
 type CommonTableProps<T extends { id: string }> = {
   fetchData: () => Promise<T[]>;
   headers: string[];
@@ -15,8 +17,17 @@ export async function CommonTable<T extends { id: string }>({
 }: CommonTableProps<T>) {
   const data = await fetchData();
 
+  if (data.length === 0) {
+    return (
+      <div className="w-full flex justify-center items-center py-10">
+        <NotResult />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-6 p-1">
+      {/* DESKTOP */}
       <div className="hidden md:block overflow-x-auto max-h-[85vh] overflow-y-auto rounded border border-gray-200 shadow-sm">
         <table className="w-full text-sm text-gray-800">
           <thead className="bg-gradient-to-r from-green-100 via-white to-green-50 text-green-900 uppercase text-xs font-semibold">
