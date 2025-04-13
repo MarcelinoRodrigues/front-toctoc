@@ -3,7 +3,7 @@ type CommonTableProps<T extends { id: string }> = {
   headers: string[];
   fields: (keyof T)[];
   formatValue: (field: keyof T, value: T[keyof T]) => React.ReactNode;
-  renderActions?: (id: string) => React.ReactNode;
+  renderActions?: (item: T) => React.ReactNode;
 };
 
 export async function CommonTable<T extends { id: string }>({
@@ -69,7 +69,7 @@ export async function CommonTable<T extends { id: string }>({
 
                 {renderActions && (
                   <td className="p-4 text-center">
-                    {renderActions(item.id)}
+                    {renderActions(item)}
                   </td>
                 )}
               </tr>
@@ -113,7 +113,7 @@ export async function CommonTable<T extends { id: string }>({
 
             {renderActions && (
               <div className="pt-2 flex justify-end">
-                {renderActions(item.id)}
+                {renderActions(item)}
               </div>
             )}
           </div>

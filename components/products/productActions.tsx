@@ -1,20 +1,22 @@
 'use client'
 
-import { Button } from "../ui/button"
 import { Delete } from "./modals/delete"
-import { Edit } from 'lucide-react'
+import { EditModal } from "./modals/edit"
 
 type Props = {
-  id: string
+  product: {
+    id: string
+    name: string
+    amount: number
+    description?: string
+  }
 }
 
-export const ProductActions = ({ id }: Props) => {
+export const ProductActions = ({ product }: Props) => {
   return (
     <div className="flex gap-2 justify-center">
-      <Button onClick={() => { }} className="hover:cursor-pointer">
-        <Edit/>
-      </Button>
-      <Delete id={id}/>
+      <EditModal product={product}/>
+      <Delete id={product.id}/>
     </div>
   )
 }
