@@ -93,6 +93,29 @@ export const Create = () => {
                           defaultValue={0}
                         />
                       </div>
+                      <div>
+                        <label className="block text-sm font-medium">Unidade de Medida</label>
+                        <select
+                          name="unitMeasure"
+                          className="mt-1 w-full border px-3 py-2 rounded"
+                          defaultValue="UN"
+                        >
+                          <option value="UN">Unidade (UN)</option>
+                          <option value="KG">Quilograma (KG)</option>
+                          <option value="G">Grama (G)</option>
+                          <option value="L">Litro (L)</option>
+                          <option value="ML">Mililitro (ML)</option>
+                          <option value="CM">Centímetro (CM)</option>
+                          <option value="MM">Milímetro (MM)</option>
+                          <option value="M2">Metro quadrado (M²)</option>
+                          <option value="M3">Metro cúbico (M³)</option>
+                          <option value="PCT">Pacote (PCT)</option>
+                          <option value="DZ">Dúzia (DZ)</option>
+                          <option value="CX">Caixa (CX)</option>
+                          <option value="SC">Saco (SC)</option>
+                          <option value="T">Tonelada (T)</option>
+                        </select>
+                      </div>
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
