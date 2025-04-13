@@ -72,17 +72,6 @@ export const CreateStockDialog = ({ products }: CreateSaleDialogProps) => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium">Tipo de movimentação</label>
-                  <input
-                    type="text"
-                    className="mt-1 w-full border px-3 py-2 rounded bg-gray-100 text-gray-700 cursor-not-allowed"
-                    value="Entrada"
-                    readOnly
-                  />
-                  <input type="hidden" name="type" value="In" />
-                </div>
-
-                <div>
                   <label className="block text-sm font-medium">Quantidade</label>
                   <input
                     type="number"

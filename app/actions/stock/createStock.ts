@@ -1,4 +1,3 @@
-// CreateSale.tsx
 "use server";
 
 import { cookies } from "next/headers";
@@ -13,7 +12,6 @@ export async function handleCreteStock(form: FormData) {
 
   const data = {
     productId: form.get("productId")?.toString() || "",
-    type: form.get("type")?.toString() || "",
     quantity: Number(form.get("quantity")),
     amount: Number(form.get("amount")),
   };
