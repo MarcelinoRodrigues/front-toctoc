@@ -6,7 +6,7 @@ import { API_BASE_URL } from "@/lib/api";
 import { revalidatePath } from "next/cache";
 import { agent } from "@/lib/utils";
 
-export async function handleCreteProduct(form: FormData) {
+export async function handleEditProduct(form: FormData, id: string) {
   const cookieStore = cookies();
   const token = (await cookieStore).get("jwt")?.value;
 
@@ -16,7 +16,7 @@ export async function handleCreteProduct(form: FormData) {
     description: form.get("description")?.toString() || "",
   };
 
-  await axios.post(`${API_BASE_URL}/Product/create`, data, {
+  await axios.put(`${API_BASE_URL}/Product/update/${id}`, data, {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",

@@ -18,7 +18,7 @@ export const Content = async () => {
           headers={headers}
           fields={fields}
           formatValue={formatValue}
-          renderActions={(id) => <ProductActions id={id} />}
+          renderActions={(item) => <ProductActions product={item} />}
         />
       </Suspense>
     </main>
