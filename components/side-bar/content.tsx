@@ -40,7 +40,7 @@ const Sidebar = () => {
       {/* Mobile */}
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger asChild>
-          <Button variant="secondary" className="lg:hidden p-2 text-muted-foreground">
+          <Button variant="secondary" className="lg:hidden p-2 text-muted-foreground mb-3">
             <Menu className="w-6 h-6" />
           </Button>
         </SheetTrigger>
