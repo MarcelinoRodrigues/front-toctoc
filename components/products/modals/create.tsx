@@ -9,8 +9,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Loader2, Plus } from "lucide-react"
+import { Loader2, Plus, Settings } from "lucide-react"
 import { handleCreteProduct } from "@/app/actions/products/createProduct"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 export const Create = () => {
   const [isPending, startTransition] = useTransition()
@@ -76,6 +77,25 @@ export const Create = () => {
                   />
                 </div>
 
+                <Accordion type="single" collapsible className="w-full">
+                  <AccordionItem value="opcionais">
+                    <AccordionTrigger className="px-4 py-3 text-base font-semibold bg-muted hover:bg-muted/70 rounded-t-md flex items-center gap-2 hover:cursor-pointer">
+                      <Settings className="h-4 w-4 text-muted-foreground" />
+                      Campos opcionais
+                    </AccordionTrigger>
+                    <AccordionContent className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium">Quantidade em estoque</label>
+                        <input
+                          type="number"
+                          name="quantity"
+                          className="mt-1 w-full border px-3 py-2 rounded"
+                          defaultValue={0}
+                        />
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
 
                 <div className="flex justify-end space-x-2 pt-4">
                   <Button type="submit" disabled={isPending}>
