@@ -14,6 +14,8 @@ export async function handleCreteProduct(form: FormData) {
     name: form.get("name")?.toString() || "",
     amount:  Number(form.get("amount")) || 0,
     description: form.get("description")?.toString() || "",
+    quantity: Number(form.get("quantity")) || 0,
+    unitMeasure: form.get("unitMeasure")?.toString() || "UN",
   };
 
   await axios.post(`${API_BASE_URL}/Product/create`, data, {
