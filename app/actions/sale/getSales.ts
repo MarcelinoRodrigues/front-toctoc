@@ -3,9 +3,8 @@
 
 import { cookies } from 'next/headers'
 import axios from 'axios'
-import { API_BASE_URL } from '@/lib/api'
+import { agent, API_BASE_URL } from '@/lib/api'
 import { Sale } from '@/types/Sale/types'
-import { agent } from '@/lib/utils'
 
 export async function getSales(filters: Record<string, string>): Promise<{
   sales: Sale[]

@@ -5,7 +5,7 @@ import { cookies } from "next/headers"
 import axios from "axios"
 import { API_BASE_URL } from "@/lib/api"
 import { Product } from "@/types/Product/types"
-import { agent } from "@/lib/utils"
+import { agent } from "@/lib/api"
 
 export async function getProducts(): Promise<Product[]> {
   const cookieStore = cookies()

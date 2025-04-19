@@ -2,9 +2,8 @@
 
 import { cookies } from "next/headers";
 import axios from "axios";
-import { API_BASE_URL } from "@/lib/api";
+import { agent, API_BASE_URL } from "@/lib/api";
 import { revalidatePath } from "next/cache";
-import { agent } from "@/lib/utils";
 
 export async function handleCreteProduct(form: FormData) {
   const cookieStore = cookies();

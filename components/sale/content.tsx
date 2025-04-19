@@ -58,9 +58,8 @@ export const Content = ({
 
   return (
     <main className="w-full p-4 space-y-4">
-      {isPending ? (
-        <TableSkeleton />
-      ) : (
+      {isPending && <TableSkeleton />}
+      {!isPending && (
         <CommonTable
           data={data.sales}
           fields={fields}
@@ -75,7 +74,7 @@ export const Content = ({
           renderFilters={() => (
             <FilterSaleDialog onSubmit={handleFilterSubmit} />
           )}
-          currentPage={page ?? 1} 
+          currentPage={page ?? 1}
           onPageChange={(newPage) => fetchPageData(newPage)}
           hasNextPage={hasNextPage}
         />

@@ -2,9 +2,8 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { API_BASE_URL } from "@/lib/api";
+import { agent, API_BASE_URL } from "@/lib/api";
 import axios from "axios";
-import { agent } from "@/lib/utils";
 
 export async function loginAction(formData: FormData) {
   const email = formData.get("email") as string;

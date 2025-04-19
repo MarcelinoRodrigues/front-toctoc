@@ -1,5 +1,6 @@
 import { NotResult } from "../common/notResult";
 import { MobileTable } from "./mobileTable";
+import { Pagination } from "./pagination";
 
 type CommonTableProps<T extends { id: string }> = {
   data: T[];
@@ -22,7 +23,7 @@ export function CommonTable<T extends { id: string }>({
   renderActions,
   renderCreate,
   renderFilters,
-  currentPage = 1, 
+  currentPage = 1,
   onPageChange,
   hasNextPage
 }: CommonTableProps<T>) {
@@ -96,31 +97,7 @@ export function CommonTable<T extends { id: string }>({
 
       <MobileTable data={data} headers={headers} fields={fields} formatValue={formatValue} renderActions={renderActions} />
       {onPageChange && (
-        <div className="flex justify-between items-center py-4 px-6 bg-gray-50 rounded-lg shadow-md border-t border-gray-200">
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => onPageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-600 shadow-sm hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Anterior
-          </button>
-          <span className="text-sm font-medium text-gray-700">
-            Página {currentPage} de {hasNextPage ? currentPage + 1 : currentPage}
-          </span>
-          <button
-            onClick={() => onPageChange(currentPage + 1)}
-            disabled={!hasNextPage}
-            className="px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-600 shadow-sm hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Próxima
-          </button>
-        </div>
-        <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-500">Total de itens: {data.length}</span>
-        </div>
-      </div>
-          
+        <Pagination data={data} currentPage={currentPage} onPageChange={onPageChange} hasNextPage={hasNextPage} />
       )}
     </div>
   );

@@ -3,7 +3,7 @@
 import { cookies } from "next/headers"
 import axios from "axios"
 import { API_BASE_URL } from "@/lib/api"
-import { agent } from "@/lib/utils"
+import { agent } from "@/lib/api"
 import { Stock } from "@/types/stock/types"
 
 export async function getStock(filters: Record<string, string>): Promise<{
