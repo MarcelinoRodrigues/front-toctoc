@@ -1,22 +1,48 @@
+'use client'
+
+import { useEffect, useState } from 'react';
 import { NotResult } from "../common/notResult";
 import { MobileTable } from "./mobileTable";
+import { TableSkeleton } from '../common/skeletonTable';
 
 type CommonTableProps<T extends { id: string }> = {
   fetchData: () => Promise<T[]>;
   headers: string[];
-  fields: (keyof T)[];
-  formatValue: (field: keyof T, value: T[keyof T]) => React.ReactNode;
+  fields: (keyof T)[]; 
+  formatValue: (field: keyof T, value: T[keyof T]) => React.ReactNode; 
   renderActions?: (item: T) => React.ReactNode;
+  renderFilters?: () => React.ReactNode;
 };
 
-export async function CommonTable<T extends { id: string }>({
+export function CommonTable<T extends { id: string }>({
   fetchData,
   headers,
   fields,
   formatValue,
   renderActions,
+  renderFilters
 }: CommonTableProps<T>) {
-  const data = await fetchData();
+  const [data, setData] = useState<T[]>([]); 
+  const [loading, setLoading] = useState<boolean>(true); 
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true); 
+        const fetchedData = await fetchData();
+        setData(fetchedData);
+      } catch  {
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData(); 
+  }, [fetchData]);
+
+  if (loading) {
+    return <TableSkeleton />
+  }
 
   if (data.length === 0) {
     return (
@@ -28,7 +54,7 @@ export async function CommonTable<T extends { id: string }>({
 
   return (
     <div className="flex flex-col gap-6 p-1">
-      {/* DESKTOP */}
+      {renderFilters && renderFilters()}
       <div className="hidden md:block overflow-x-auto max-h-[85vh] overflow-y-auto rounded border border-gray-200 shadow-sm">
         <table className="w-full text-sm text-gray-800">
           <thead className="bg-gradient-to-r from-green-100 via-white to-green-50 text-green-900 uppercase text-xs font-semibold">

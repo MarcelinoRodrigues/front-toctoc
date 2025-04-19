@@ -10,9 +10,10 @@ import { Product } from "@/types/Product/types"
 
 interface CreateSaleDialogProps {
   products: Product[]
+  onCreateSuccess: () => void 
 }
 
-export const CreateSaleDialog = ({ products }: CreateSaleDialogProps) => {
+export const CreateSaleDialog = ({ products, onCreateSuccess }: CreateSaleDialogProps) => {
   const [open, setOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
   const [unitAmount, setUnitAmount] = useState<number | null>(null)
@@ -24,6 +25,7 @@ export const CreateSaleDialog = ({ products }: CreateSaleDialogProps) => {
     startTransition(async () => {
       await handleCreteSale(formData)
       setOpen(false)
+      onCreateSuccess()
     })
   }
 
