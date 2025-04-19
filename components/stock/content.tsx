@@ -10,9 +10,9 @@ import { Stock } from "@/types/stock/types";
 import { Product } from "@/types/Product/types";
 import { getStock } from "@/app/actions/stock/getStock";
 
-export const Content = () => {
-  const [data, setData] = useState<Stock[]>([])
-  const [isPending] = useTransition()
+export const Content = ({ stock }:{stock: Stock[]}) => {
+  const [data, setData] = useState(stock)
+  const [isPending, startTransition] = useTransition()
   const [products, setProducts] = useState<Product[]>([])
   
     useEffect(() => {
@@ -23,7 +23,11 @@ export const Content = () => {
   return (
     <main className="w-full p-4">
       <div className="flex flex-col md:flex-row gap-4 items-start mb-6">
-        <CreateStockDialog products = {products} />
+        <CreateStockDialog products={products} onCreateSuccess={() => {
+                  startTransition(() => {
+                    getStock().then(setData)
+                  })
+                }} />
       </div>
       {isPending ? (
               <TableSkeleton />
