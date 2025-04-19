@@ -20,7 +20,7 @@ export const Content = ({initialProducts}: {initialProducts: Product[]}) => {
   return (
     <main className="w-full p-4">
       <div className="flex flex-col md:flex-row gap-4 items-start mb-6">
-        <Create onCreateSuccess={() => {
+        <Create onDataUpdate={() => {
                   startTransition(() => {
                     getProducts().then(setData)
                   })
@@ -34,7 +34,11 @@ export const Content = ({initialProducts}: {initialProducts: Product[]}) => {
           fields={fields}
           headers={headers}
           formatValue={formatValue}
-          renderActions={(item) => <ProductActions product={item} />}
+          renderActions={(item) => <ProductActions product={item} onDataUpdate={() => {
+            startTransition(() => {
+              getProducts().then(setData)
+            })
+          }} />}
         />
       )}
     </main>
