@@ -4,9 +4,10 @@ import { MobileTable } from "./mobileTable";
 type CommonTableProps<T extends { id: string }> = {
   data: T[];
   headers: string[];
-  fields: (keyof T)[]; 
-  formatValue: (field: keyof T, value: T[keyof T]) => React.ReactNode; 
+  fields: (keyof T)[];
+  formatValue: (field: keyof T, value: T[keyof T]) => React.ReactNode;
   renderActions?: (item: T) => React.ReactNode;
+  renderCreate?: () => React.ReactNode;
   renderFilters?: () => React.ReactNode;
 };
 
@@ -16,6 +17,7 @@ export function CommonTable<T extends { id: string }>({
   fields,
   formatValue,
   renderActions,
+  renderCreate,
   renderFilters
 }: CommonTableProps<T>) {
 
@@ -29,7 +31,10 @@ export function CommonTable<T extends { id: string }>({
 
   return (
     <div className="flex flex-col gap-6 p-1">
-      {renderFilters && renderFilters()}
+      <div className="self-start flex items-center gap-2">
+          {renderCreate && (renderCreate())}
+          {renderFilters && (renderFilters())}         
+        </div>
       <div className="hidden md:block overflow-x-auto max-h-[85vh] overflow-y-auto rounded border border-gray-200 shadow-sm">
         <table className="w-full text-sm text-gray-800">
           <thead className="bg-gradient-to-r from-green-100 via-white to-green-50 text-green-900 uppercase text-xs font-semibold">
@@ -59,8 +64,8 @@ export function CommonTable<T extends { id: string }>({
                     typeValue === "in"
                       ? "bg-green-100 text-green-700"
                       : typeValue === "out"
-                      ? "bg-red-100 text-red-700"
-                      : "bg-gray-100 text-gray-600";
+                        ? "bg-red-100 text-red-700"
+                        : "bg-gray-100 text-gray-600";
 
                   return (
                     <td

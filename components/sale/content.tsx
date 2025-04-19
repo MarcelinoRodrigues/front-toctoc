@@ -41,14 +41,6 @@ export const Content = ({
 
   return (
     <main className="w-full p-4">
-      <div className="flex flex-col md:flex-row gap-4 items-start mb-6">
-        <CreateSaleDialog products={products} onCreateSuccess={() => {
-          startTransition(() => {
-            getSales({}).then(setData)
-          })
-        }} />
-      </div>
-
       {isPending ? (
         <TableSkeleton />
       ) : (
@@ -57,6 +49,12 @@ export const Content = ({
           fields={fields}
           headers={headers}
           formatValue={formatValue}
+          renderCreate={
+            () => <CreateSaleDialog products={products} onCreateSuccess={() => {
+              startTransition(() => {
+                getSales({}).then(setData)
+              })
+            }} />}
           renderFilters={() => <FilterSaleDialog onSubmit={handleFilterSubmit} />}
         />
       )}
