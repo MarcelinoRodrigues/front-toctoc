@@ -1,4 +1,3 @@
-// app/actions/getSales.ts
 "use server"
 
 import { cookies } from "next/headers"
@@ -7,16 +6,23 @@ import { API_BASE_URL } from "@/lib/api"
 import { agent } from "@/lib/utils"
 import { Stock } from "@/types/stock/types"
 
-export async function getStock(): Promise<Stock[]> {
+export async function getStock(filters: Record<string, string>): Promise<{
+  stock: Stock[]
+  hasNextPage: boolean
+}> {
   const cookieStore = cookies()
   const token = (await cookieStore).get("jwt")?.value
 
   const { data } = await axios.get(`${API_BASE_URL}/Stock`, {
+    params: filters,
     headers: {
       Authorization: `Bearer ${token}`,
     },
     httpsAgent: agent, 
   })
 
-  return data
+  return {
+    stock: data.items ?? [],
+    hasNextPage: data.hasNextPage ?? false,
+  }
 }

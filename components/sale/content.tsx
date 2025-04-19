@@ -25,7 +25,6 @@ export const Content = ({
   const [isPending, startTransition] = useTransition()
 
   const [data, setData] = useState(initialSales)
-  const [products] = useState(initialProducts)
   const [page, setPage] = useState(1)
   const [hasNextPage, setHasNextPage] = useState(true)
   const [filters, setFilters] = useState<Record<string, string>>({})
@@ -69,7 +68,7 @@ export const Content = ({
           formatValue={formatValue}
           renderCreate={() => (
             <CreateSaleDialog
-              products={products}
+              products={initialProducts}
               onCreateSuccess={() => fetchPageData(1)}
             />
           )}
