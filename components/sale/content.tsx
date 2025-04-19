@@ -53,7 +53,7 @@ export const Content = ({
         <TableSkeleton />
       ) : (
         <CommonTable
-          fetchData={() => Promise.resolve(data)}
+          data={data}
           fields={fields}
           headers={headers}
           formatValue={formatValue}

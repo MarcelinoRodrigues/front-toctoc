@@ -30,7 +30,7 @@ export const Content = ({initialProducts}: {initialProducts: Product[]}) => {
         <TableSkeleton />
       ) : (
         <CommonTable
-          fetchData={() => Promise.resolve(data)}
+          data={data}
           fields={fields}
           headers={headers}
           formatValue={formatValue}

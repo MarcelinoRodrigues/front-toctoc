@@ -1,12 +1,8 @@
-'use client'
-
-import { useEffect, useState } from 'react';
 import { NotResult } from "../common/notResult";
 import { MobileTable } from "./mobileTable";
-import { TableSkeleton } from '../common/skeletonTable';
 
 type CommonTableProps<T extends { id: string }> = {
-  fetchData: () => Promise<T[]>;
+  data: T[];
   headers: string[];
   fields: (keyof T)[]; 
   formatValue: (field: keyof T, value: T[keyof T]) => React.ReactNode; 
@@ -15,34 +11,13 @@ type CommonTableProps<T extends { id: string }> = {
 };
 
 export function CommonTable<T extends { id: string }>({
-  fetchData,
+  data,
   headers,
   fields,
   formatValue,
   renderActions,
   renderFilters
 }: CommonTableProps<T>) {
-  const [data, setData] = useState<T[]>([]); 
-  const [loading, setLoading] = useState<boolean>(true); 
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        setLoading(true); 
-        const fetchedData = await fetchData();
-        setData(fetchedData);
-      } catch  {
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData(); 
-  }, [fetchData]);
-
-  if (loading) {
-    return <TableSkeleton />
-  }
 
   if (data.length === 0) {
     return (
