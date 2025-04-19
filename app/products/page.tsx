@@ -1,11 +1,14 @@
 import { Content } from "@/components/products/content"
 import Sidebar from "@/components/side-bar/content"
+import { getProducts } from "../actions/products/getProducts"
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const products = await getProducts()
+
   return (
     <div className="h-screen w-screen p-4 lg:p-0 lg:flex">
       <Sidebar />
-      <Content />
+      <Content initialProducts={products} />
     </div>
   )
 }
