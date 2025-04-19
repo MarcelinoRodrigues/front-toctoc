@@ -10,13 +10,14 @@ type Props = {
     amount: number
     description?: string
   }
+  onDataUpdate: () => void 
 }
 
-export const ProductActions = ({ product }: Props) => {
+export const ProductActions = ({ product, onDataUpdate }: Props) => {
   return (
     <div className="flex gap-2 justify-center">
-      <EditModal product={product}/>
-      <Delete id={product.id}/>
+      <EditModal product={product} onDataUpdate={onDataUpdate} />
+      <Delete id={product.id} onDataUpdate={onDataUpdate} />
     </div>
   )
 }

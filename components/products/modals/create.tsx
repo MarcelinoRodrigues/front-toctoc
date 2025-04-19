@@ -13,7 +13,11 @@ import { Loader2, Plus, Settings } from "lucide-react"
 import { handleCreteProduct } from "@/app/actions/products/createProduct"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
-export const Create = () => {
+interface CreateProductDialogProps {
+  onDataUpdate: () => void 
+}
+
+export const Create = ({ onDataUpdate }: CreateProductDialogProps) => {
   const [isPending, startTransition] = useTransition()
   const [open, setOpen] = useState<boolean>(false)
 
@@ -21,6 +25,7 @@ export const Create = () => {
     startTransition(async () => {
       await handleCreteProduct(formData)
       setOpen(false)
+      onDataUpdate()
     })
   }
 

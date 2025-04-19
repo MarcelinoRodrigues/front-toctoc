@@ -1,32 +1,27 @@
-'use client'
-
 import { deleteProduct } from "@/app/actions/products/deleteProduct"
 import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Trash } from "lucide-react"
 import { useState } from "react"
 
 type DeleteProps = {
   id: string
+  onDataUpdate: () => void
 }
 
-export const Delete = ({ id }: DeleteProps) => {
+export const Delete = ({ id, onDataUpdate }: DeleteProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
   const handleDisableModal = () => setIsModalOpen(false)
 
-  const handleDelete = async () => await deleteProduct(id)
+  const handleDelete = async () => {
+    await deleteProduct(id)
+    onDataUpdate()
+    setIsModalOpen(false)
+  }
 
   return (
-    <Dialog open={isModalOpen} onOpenChange={(open) => { setIsModalOpen(open) }}>
-
+    <Dialog open={isModalOpen} onOpenChange={(open) => setIsModalOpen(open)}>
       <DialogTrigger asChild>
         <Button variant="destructive" size="icon" className="hover:cursor-pointer">
           <Trash className="text-lg" />
