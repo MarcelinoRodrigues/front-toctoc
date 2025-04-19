@@ -1,4 +1,3 @@
-// app/actions/getSales.ts
 'use server'
 
 import { cookies } from 'next/headers'
@@ -10,20 +9,26 @@ export async function getSales(filters: Record<string, string>): Promise<{
   sales: Sale[]
   hasNextPage: boolean
 }> {
-  const cookieStore = cookies()
-  const token = (await cookieStore).get('jwt')?.value
+  try {
+    const cookieStore = cookies()
+    const token = (await cookieStore).get('jwt')?.value
 
-  const { data } = await axios.get(`${API_BASE_URL}/Sale`, {
-    params: filters,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    httpsAgent: agent,
-  })
+    const { data } = await axios.get(`${API_BASE_URL}/Sale`, {
+      params: filters,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      httpsAgent: agent,
+    })
 
-  return {
-    sales: data.items ?? [],
-    hasNextPage: data.hasNextPage ?? false,
+    return {
+      sales: data.items ?? [],
+      hasNextPage: data.hasNextPage ?? false,
+    }
+  } catch {
+    return {
+      sales: [],
+      hasNextPage: false,
+    }
   }
 }
-
