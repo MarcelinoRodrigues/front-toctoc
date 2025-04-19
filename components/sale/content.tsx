@@ -10,16 +10,35 @@ import { Product } from '@/types/Product/types'
 import { Sale } from '@/types/Sale/types'
 import { getSales } from '@/app/actions/sale/getSales'
 
+interface ResponseSale {
+  sales: Sale[]
+  hasNextPage: boolean
+}
+
 export const Content = ({
   initialSales,
   initialProducts,
 }: {
-  initialSales: Sale[]
+  initialSales: ResponseSale
   initialProducts: Product[]
 }) => {
+  const [isPending, startTransition] = useTransition()
+
   const [data, setData] = useState(initialSales)
   const [products] = useState(initialProducts)
-  const [isPending, startTransition] = useTransition()
+  const [page, setPage] = useState(1)
+  const [hasNextPage, setHasNextPage] = useState(true)
+  const [filters, setFilters] = useState<Record<string, string>>({})
+
+  const fetchPageData = (pageToLoad: number, appliedFilters = filters) => {
+    startTransition(() => {
+      getSales({ ...appliedFilters, page: String(pageToLoad) }).then((res) => {
+        setData(res)
+        setHasNextPage(res.hasNextPage)
+        setPage(pageToLoad)
+      })
+    })
+  }
 
   const handleFilterSubmit = (formData: FormData) => {
     const newFilters: Record<string, string> = {}
@@ -34,28 +53,32 @@ export const Content = ({
     if (amount) newFilters.amount = amount
     if (payment && payment !== 'all') newFilters.payment = payment
 
-    startTransition(() => {
-      getSales(newFilters).then(setData)
-    })
+    setFilters(newFilters)
+    fetchPageData(1, newFilters)
   }
 
   return (
-    <main className="w-full p-4">
+    <main className="w-full p-4 space-y-4">
       {isPending ? (
         <TableSkeleton />
       ) : (
         <CommonTable
-          data={data}
+          data={data.sales}
           fields={fields}
           headers={headers}
           formatValue={formatValue}
-          renderCreate={
-            () => <CreateSaleDialog products={products} onCreateSuccess={() => {
-              startTransition(() => {
-                getSales({}).then(setData)
-              })
-            }} />}
-          renderFilters={() => <FilterSaleDialog onSubmit={handleFilterSubmit} />}
+          renderCreate={() => (
+            <CreateSaleDialog
+              products={products}
+              onCreateSuccess={() => fetchPageData(1)}
+            />
+          )}
+          renderFilters={() => (
+            <FilterSaleDialog onSubmit={handleFilterSubmit} />
+          )}
+          currentPage={page ?? 1} 
+          onPageChange={(newPage) => fetchPageData(newPage)}
+          hasNextPage={hasNextPage}
         />
       )}
     </main>
