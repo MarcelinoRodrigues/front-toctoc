@@ -1,10 +1,10 @@
-import { ReportItem } from "@/types/reports/types";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { utils, writeFile } from "xlsx";
 import { headers } from "./report";
+import { Report } from "@/types/reports/types";
 
-export const exportReport = (format: string, data: ReportItem[]) => {
+export const exportReport = (format: string, data: Report[]) => {
   if (!data || data.length === 0) {
     console.warn("Nenhum dado disponível para exportação.");
     return;
@@ -13,12 +13,10 @@ export const exportReport = (format: string, data: ReportItem[]) => {
   const tableData = data.map((item) => [
     item.type === "in" ? "Entrada" : "Saída",
     item.quantity,
-    item.minQuantity,
     item.amount,
     item.expireDate ? new Date(item.expireDate).toLocaleDateString() : "—",
     item.category,
     item.supplier,
-    item.lowTurnover ? "Sim" : "Não",
   ]);
 
   switch (format.toLowerCase()) {

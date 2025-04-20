@@ -144,10 +144,6 @@ const mockData: Report[] = [
 export const Content = () => {
   const [page, setPage] = useState(1);
 
-  const handleFilter = (formData: FormData) => {
-    console.log("Filtro aplicado:", Object.fromEntries(formData.entries()));
-  };
-
   const handleExport = (format: string) => {
     exportReport(format, mockData);
   };
