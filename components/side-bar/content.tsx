@@ -15,6 +15,7 @@ import {
   DollarSign,
   Menu,
   Settings,
+  ExternalLink,
   Boxes,
   TrendingUp,
   ArrowRightFromLine,

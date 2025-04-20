@@ -1,27 +1,8 @@
+import { ReportItem } from "@/types/reports/types";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { utils, writeFile } from "xlsx";
-
-export type ReportItem = {
-  id: string;
-  type: 'in' | 'out';
-  quantity: number;
-  minQuantity: number;
-  expireDate?: string; 
-  category: string;
-  supplier: string;
-  lowTurnover: boolean;
-};
-
-const HEADERS = [
-  "Tipo",
-  "Quantidade",
-  "Qtd. Mínima",
-  "Vencimento",
-  "Categoria",
-  "Fornecedor",
-  "Giro Baixo",
-];
+import { headers } from "./report";
 
 export const exportReport = (format: string, data: ReportItem[]) => {
   if (!data || data.length === 0) {
@@ -33,6 +14,7 @@ export const exportReport = (format: string, data: ReportItem[]) => {
     item.type === "in" ? "Entrada" : "Saída",
     item.quantity,
     item.minQuantity,
+    item.amount,
     item.expireDate ? new Date(item.expireDate).toLocaleDateString() : "—",
     item.category,
     item.supplier,
@@ -43,7 +25,7 @@ export const exportReport = (format: string, data: ReportItem[]) => {
     case "pdf": {
       const doc = new jsPDF();
       autoTable(doc, {
-        head: [HEADERS],
+        head: [headers],
         body: tableData,
       });
       doc.save("relatorio.pdf");
@@ -52,7 +34,7 @@ export const exportReport = (format: string, data: ReportItem[]) => {
 
     case "csv": {
       const csvContent = [
-        HEADERS.join(","),
+        headers.join(","),
         ...tableData.map((row) => row.join(",")),
       ].join("\n");
 
@@ -69,7 +51,7 @@ export const exportReport = (format: string, data: ReportItem[]) => {
     }
 
     case "excel": {
-      const worksheet = utils.aoa_to_sheet([HEADERS, ...tableData]);
+      const worksheet = utils.aoa_to_sheet([headers, ...tableData]);
       const workbook = utils.book_new();
       utils.book_append_sheet(workbook, worksheet, "Relatório");
       writeFile(workbook, "relatorio.xlsx");

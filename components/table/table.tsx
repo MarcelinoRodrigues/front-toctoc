@@ -1,4 +1,5 @@
 import { NotResult } from "../common/notResult";
+import { ExportDropdown } from "../finance/reports/modals/exportDropdown";
 import { MobileTable } from "./mobileTable";
 import { Pagination } from "./pagination";
 
@@ -13,6 +14,7 @@ type CommonTableProps<T extends { id: string }> = {
   currentPage?: number;
   onPageChange?: (page: number) => void;
   hasNextPage?: boolean;
+  onExport?: (format: string) => void;
 };
 
 export function CommonTable<T extends { id: string }>({
@@ -25,7 +27,8 @@ export function CommonTable<T extends { id: string }>({
   renderFilters,
   currentPage = 1,
   onPageChange,
-  hasNextPage
+  hasNextPage,
+  onExport,
 }: CommonTableProps<T>) {
 
   return (
@@ -33,6 +36,9 @@ export function CommonTable<T extends { id: string }>({
       <div className="self-start flex items-center gap-2">
         {renderCreate && renderCreate()}
         {renderFilters && renderFilters()}
+        {onExport && (
+          <ExportDropdown options={['PDF', 'CSV', 'Excel']} onExport={onExport} />
+        )}
       </div>
 
       <div className="hidden md:block overflow-x-auto min-h-[73vh] max-h-[73vh] overflow-y-auto rounded border border-gray-200 shadow-sm bg-white">
