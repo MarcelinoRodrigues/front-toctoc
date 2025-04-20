@@ -14,10 +14,10 @@ import { handleCreteProduct } from "@/app/actions/products/createProduct"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 interface CreateProductDialogProps {
-  onDataUpdate: () => void 
+  onCreateSuccess: () => void 
 }
 
-export const Create = ({ onDataUpdate }: CreateProductDialogProps) => {
+export const Create = ({ onCreateSuccess }: CreateProductDialogProps) => {
   const [isPending, startTransition] = useTransition()
   const [open, setOpen] = useState<boolean>(false)
 
@@ -25,7 +25,7 @@ export const Create = ({ onDataUpdate }: CreateProductDialogProps) => {
     startTransition(async () => {
       await handleCreteProduct(formData)
       setOpen(false)
-      onDataUpdate()
+      onCreateSuccess()
     })
   }
 

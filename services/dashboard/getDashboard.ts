@@ -1,7 +1,6 @@
-import { API_BASE_URL } from "@/lib/api";
+import { agent, API_BASE_URL } from "@/lib/api";
 import axios from "axios";
 import { cookies } from "next/headers";
-import { agent } from "@/lib/utils";
 
 export const getDashboard = async () => {
   const cookieStore = cookies();

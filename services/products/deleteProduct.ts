@@ -1,7 +1,6 @@
-import { API_BASE_URL } from "@/lib/api";
+import { agent, API_BASE_URL } from "@/lib/api";
 import { cookies } from "next/headers";
 import axios from "axios";
-import { agent } from "@/lib/utils";
 import { revalidatePath } from "next/cache";
 
 export const deleteProduct = async (id: string) => {
@@ -21,7 +20,7 @@ export const deleteProduct = async (id: string) => {
     );
 
     return response.data;
-  } catch (error) {
+  } catch {
     return null;
   }
   finally{

@@ -6,17 +6,17 @@ import { useState } from "react"
 
 type DeleteProps = {
   id: string
-  onDataUpdate: () => void
+  onCreateSuccess: () => void
 }
 
-export const Delete = ({ id, onDataUpdate }: DeleteProps) => {
+export const Delete = ({ id, onCreateSuccess }: DeleteProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
   const handleDisableModal = () => setIsModalOpen(false)
 
   const handleDelete = async () => {
     await deleteProduct(id)
-    onDataUpdate()
+    onCreateSuccess()
     setIsModalOpen(false)
   }
 

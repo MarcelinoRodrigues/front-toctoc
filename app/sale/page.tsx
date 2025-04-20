@@ -5,12 +5,12 @@ import Sidebar from '@/components/side-bar/content'
 
 export default async function SalePage() {
   const sales = await getSales({})
-  const products = await getProducts()
+  const products = await getProducts({})
 
   return (
     <div className="h-screen w-screen p-4 lg:p-0 lg:flex">
       <Sidebar />
-      <Content initialSales={sales} initialProducts={products} />
+      <Content initialSales={sales} initialProducts={products.products} />
     </div>
   );
 }

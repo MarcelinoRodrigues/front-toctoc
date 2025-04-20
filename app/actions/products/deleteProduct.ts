@@ -3,7 +3,7 @@
 import { API_BASE_URL } from "@/lib/api";
 import { cookies } from "next/headers";
 import axios from "axios";
-import { agent } from "@/lib/utils";
+import { agent } from "@/lib/api";
 import { revalidatePath } from "next/cache";
 
 export async function deleteProduct (id: string) {
