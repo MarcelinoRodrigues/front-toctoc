@@ -61,7 +61,7 @@ export const Content = ({
       {isPending && <TableSkeleton />}
       {!isPending && (
         <CommonTable
-          data={data.sales}
+          data={data.sales ?? []}
           fields={fields}
           headers={headers}
           formatValue={formatValue}

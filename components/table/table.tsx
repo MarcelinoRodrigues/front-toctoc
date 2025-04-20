@@ -51,10 +51,10 @@ export function CommonTable<T extends { id: string }>({
           </thead>
 
           <tbody className="bg-white">
-            {data.length === 0 ? (
+            {data?.length === 0 ? (
               <tr>
                 <td
-                  colSpan={headers.length + (renderActions ? 1 : 0)}
+                  colSpan={headers?.length + (renderActions ? 1 : 0)}
                   className="text-center"
                 >
                   <NotResult />
@@ -100,16 +100,16 @@ export function CommonTable<T extends { id: string }>({
       </div>
 
       <MobileTable
-        data={data}
+        data={data ?? []}
         headers={headers}
         fields={fields}
         formatValue={formatValue}
         renderActions={renderActions}
       />
 
-      {onPageChange && data.length > 0 && (
+      {onPageChange && data?.length > 0 && (
         <Pagination
-          data={data}
+          data={data ?? []}
           currentPage={currentPage}
           onPageChange={onPageChange}
           hasNextPage={hasNextPage}

@@ -19,10 +19,10 @@ type EditModalProps = {
     amount: number
     description?: string
   },
-  onDataUpdate: () => void
+  onCreateSuccess: () => void
 }
 
-export const EditModal = ({ product, onDataUpdate }: EditModalProps) => {
+export const EditModal = ({ product, onCreateSuccess }: EditModalProps) => {
   const [isPending, startTransition] = useTransition()
   const [open, setOpen] = useState<boolean>(false)
 
@@ -30,7 +30,7 @@ export const EditModal = ({ product, onDataUpdate }: EditModalProps) => {
     startTransition(async () => {
       await handleEditProduct(formData, product.id)
       setOpen(false)
-      onDataUpdate()
+      onCreateSuccess()
     })
   }
 

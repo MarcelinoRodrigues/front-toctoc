@@ -58,7 +58,7 @@ export const Content = ({
         <TableSkeleton />
       ) : (
         <CommonTable
-          data={data.stock}
+          data={data.stock ?? []}
           fields={fields}
           headers={headers}
           formatValue={formatValue}

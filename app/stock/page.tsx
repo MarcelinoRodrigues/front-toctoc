@@ -5,12 +5,12 @@ import { getProducts } from "../actions/products/getProducts";
 
 export default async function Stock() {
   const stock = await getStock({})
-  const products = await getProducts()
+  const products = await getProducts({})
 
   return (
     <div className="h-screen w-screen p-4 lg:p-0 lg:flex">
       <Sidebar />
-      <Content initialStock={stock} initialProducts={products} />
+      <Content initialStock={stock} initialProducts={products.products} />
     </div>
   )
 }

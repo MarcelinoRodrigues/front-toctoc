@@ -66,7 +66,7 @@ export const CreateSaleDialog = ({ products, onCreateSuccess }: CreateSaleDialog
                     }}
                   >
                     <option value="" disabled>Selecione um produto</option>
-                    {products.map((product) => (
+                    {(products ?? []).map((product) => (
                       <option key={product.id} value={product.id}>
                         {product.name}
                       </option>
