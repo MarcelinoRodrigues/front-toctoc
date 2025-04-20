@@ -49,7 +49,7 @@ export const Create = ({ onCreateSuccess }: CreateProductDialogProps) => {
           ) : (
             <>
               <DialogHeader>
-                <DialogTitle>Nova Venda</DialogTitle>
+                <DialogTitle>Novo Produto</DialogTitle>
               </DialogHeader>
               <form action={submitForm} className="space-y-4">
                 <div>
@@ -96,6 +96,24 @@ export const Create = ({ onCreateSuccess }: CreateProductDialogProps) => {
                           name="quantity"
                           className="mt-1 w-full border px-3 py-2 rounded"
                           defaultValue={0}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium">Categoria</label>
+                        <input
+                          type="text"
+                          name="category"
+                          className="mt-1 w-full border px-3 py-2 rounded"
+                          defaultValue={''}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium">Fornecedor</label>
+                        <input
+                          type="text"
+                          name="provider"
+                          className="mt-1 w-full border px-3 py-2 rounded"
+                          defaultValue={''}
                         />
                       </div>
                       <div>
