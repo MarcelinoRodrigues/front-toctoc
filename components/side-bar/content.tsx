@@ -20,6 +20,7 @@ import {
   ArrowRightFromLine,
   ChevronDown,
   ChevronUp,
+  ClipboardList,
 } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -70,6 +71,7 @@ const NavLinks = ({
   handleLogout: () => void
 }) => {
   const [financeOpen, setFinanceOpen] = useState(false)
+  const [products, setProducts] = useState(false)
 
   return (
     <nav className="flex flex-col h-full justify-between">
@@ -78,9 +80,36 @@ const NavLinks = ({
           Dashboard
         </SidebarLink>
 
-        <SidebarLink href="/products" icon={<Package className="w-5 h-5" />} onClick={onClick}>
-          Produtos
-        </SidebarLink>
+        <div className="flex flex-col">
+          <button
+            onClick={() => setProducts(!products)}
+            className={linkClass("justify-between")}
+          >
+            <div className="flex items-center gap-3">
+              <ClipboardList  className="w-5 h-5" />
+              <span>Cadastro</span>
+            </div>
+            {products ? (
+              <ChevronUp className="w-4 h-4" />
+            ) : (
+              <ChevronDown className="w-4 h-4" />
+            )}
+          </button>
+
+          {products && (
+            <div className="ml-8 mt-2 flex flex-col gap-1">
+              <SidebarLink href="/products" onClick={onClick}>
+                Produtos
+              </SidebarLink>
+              {/* <SidebarLink href="/category" onClick={onClick}>
+                Categoria
+              </SidebarLink>
+              <SidebarLink href="/finance/entries" onClick={onClick}>
+                Fornecedor
+              </SidebarLink> */}
+            </div>
+          )}
+        </div>
 
         <SidebarLink href="/sale" icon={<DollarSign className="w-5 h-5" />} onClick={onClick}>
           Vendas

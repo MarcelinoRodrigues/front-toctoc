@@ -6,9 +6,7 @@ export const headers = [
   'Produto',
   'Quantidade',
   'Valor',
-  'Vencimento',
-  'Categoria',
-  'Fornecedor',
+  'Vencimento'
 ];
 
 export const fields: (keyof Report)[] = [
@@ -17,9 +15,7 @@ export const fields: (keyof Report)[] = [
   'productName',
   'quantity',
   'amount',
-  'expireDate',
-  'category',
-  'supplier',
+  'expireDate'
 ]
 
 const type_labels: Record<Report["type"], string> = {

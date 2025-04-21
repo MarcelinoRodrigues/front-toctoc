@@ -15,8 +15,6 @@ const mockData: Report[] = [
     quantity: 5,
     amount: 0,
     expireDate: "2025-12-31",
-    category: "Bebidas",
-    supplier: "Fornecedor A",
   },
   {
     id: "2",
@@ -26,8 +24,6 @@ const mockData: Report[] = [
     quantity: 20,
     amount: 0,
     expireDate: undefined,
-    category: "Limpeza",
-    supplier: "Fornecedor B",
   },
   {
     id: "3",
@@ -37,8 +33,6 @@ const mockData: Report[] = [
     quantity: 8,
     amount: 0,
     expireDate: "2024-05-10",
-    category: "Alimentos",
-    supplier: "Fornecedor C",
   },
   {
     id: "14",
@@ -48,8 +42,6 @@ const mockData: Report[] = [
     quantity: 5,
     amount: 0,
     expireDate: "2025-12-31",
-    category: "Bebidas",
-    supplier: "Fornecedor A",
   },
   {
     id: "25",
@@ -59,8 +51,6 @@ const mockData: Report[] = [
     quantity: 20,
     amount: 0,
     expireDate: undefined,
-    category: "Limpeza",
-    supplier: "Fornecedor B",
   },
   {
     id: "36",
@@ -70,8 +60,6 @@ const mockData: Report[] = [
     quantity: 8,
     amount: 0,
     expireDate: "2024-05-10",
-    category: "Alimentos",
-    supplier: "Fornecedor C",
   },
   {
     id: "17",
@@ -81,8 +69,6 @@ const mockData: Report[] = [
     quantity: 5,
     amount: 0,
     expireDate: "2025-12-31",
-    category: "Bebidas",
-    supplier: "Fornecedor A",
   },
   {
     id: "28",
@@ -92,8 +78,6 @@ const mockData: Report[] = [
     quantity: 20,
     amount: 0,
     expireDate: undefined,
-    category: "Limpeza",
-    supplier: "Fornecedor B",
   },
   {
     id: "39",
@@ -103,8 +87,6 @@ const mockData: Report[] = [
     quantity: 8,
     amount: 0,
     expireDate: "2024-05-10",
-    category: "Alimentos",
-    supplier: "Fornecedor C",
   },
   {
     id: "111",
@@ -114,8 +96,6 @@ const mockData: Report[] = [
     quantity: 5,
     amount: 0,
     expireDate: "2025-12-31",
-    category: "Bebidas",
-    supplier: "Fornecedor A",
   },
   {
     id: "212",
@@ -125,8 +105,6 @@ const mockData: Report[] = [
     quantity: 20,
     amount: 0,
     expireDate: undefined,
-    category: "Limpeza",
-    supplier: "Fornecedor B",
   },
   {
     id: "313",
@@ -136,8 +114,6 @@ const mockData: Report[] = [
     quantity: 8,
     amount: 0,
     expireDate: "2024-05-10",
-    category: "Alimentos",
-    supplier: "Fornecedor C",
   },
 ];
 

@@ -5,7 +5,5 @@ export type Report = {
   quantity: number;
   amount: number
   expireDate?: string; 
-  category: string;
-  supplier: string;
   createDateTime: string
 }

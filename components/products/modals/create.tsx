@@ -99,24 +99,6 @@ export const Create = ({ onCreateSuccess }: CreateProductDialogProps) => {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium">Categoria</label>
-                        <input
-                          type="text"
-                          name="category"
-                          className="mt-1 w-full border px-3 py-2 rounded"
-                          defaultValue={''}
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium">Fornecedor</label>
-                        <input
-                          type="text"
-                          name="provider"
-                          className="mt-1 w-full border px-3 py-2 rounded"
-                          defaultValue={''}
-                        />
-                      </div>
-                      <div>
                         <label className="block text-sm font-medium">Unidade de Medida</label>
                         <select
                           name="unitMeasure"
