@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/sheet"
 import {
   Home,
-  Package,
   DollarSign,
   Menu,
   Settings,
