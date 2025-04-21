@@ -4,6 +4,5 @@ export type Report = {
   productName: string
   quantity: number;
   amount: number
-  expireDate?: string; 
   createDateTime: string
 }

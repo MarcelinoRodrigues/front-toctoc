@@ -47,14 +47,6 @@ export const FilterReportDialog: FC<FilterReportDialogProps> = ({ onSubmit }) =>
                   <option value="out">Saída</option>
                 </select>
               </div>
-              <div>
-                <label className="block text-sm font-medium">Categoria</label>
-                <input type="text" name="category" className="mt-1 w-full border px-3 py-2 rounded" placeholder="Categoria" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium">Fornecedor</label>
-                <input type="text" name="supplier" className="mt-1 w-full border px-3 py-2 rounded" placeholder="Fornecedor" />
-              </div>
               <div className="flex justify-end pt-4">
                 <Button type="submit" disabled={isPending} className="flex items-center gap-2">
                   <FilterIcon />
