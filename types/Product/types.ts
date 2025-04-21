@@ -3,5 +3,7 @@ export type Product = {
   name: string;
   description?: string;
   amount: number;
+  category: string
+  provider: string
   createDateTime: string;
 }

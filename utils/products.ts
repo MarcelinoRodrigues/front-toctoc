@@ -1,8 +1,8 @@
 import { Product } from "@/types/Product/types"
 
-export const headers = ['Nome', 'Valor', 'Descrição']
+export const headers = ['Nome', 'Valor', 'Categoria', 'Fornecedor', 'Descrição']
 
-export const fields: (keyof Product)[] = ['name', 'amount', 'description']
+export const fields: (keyof Product)[] = ['name', 'amount','category','provider', 'description']
 
 export const formatValue = (field: string, value: string | number | null | undefined) => {
   if (value === null || value === undefined || value === "") return "-";
