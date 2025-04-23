@@ -17,8 +17,8 @@ export const fields: (keyof Report)[] = [
 ]
 
 const type_labels: Record<Report["type"], string> = {
-  in: "Entrada",
-  out: "Saída",
+  In: "Entrada",
+  Out: "Saída",
 };
 
 export const formatValue = <K extends keyof Report>(field: K, value: Report[K]): string | number => {
