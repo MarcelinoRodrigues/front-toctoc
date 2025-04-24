@@ -39,6 +39,15 @@ export const FilterReportDialog: FC<FilterReportDialogProps> = ({ onSubmit }) =>
               <DialogTitle>Filtros de Relatório</DialogTitle>
             </DialogHeader>
             <form action={submitForm} className="space-y-4">
+            <div>
+                <label className="block text-sm font-medium">Relatório</label>
+                <input
+                  type="date"
+                  name="createDate"
+                  className="mt-1 w-full border px-3 py-2 rounded"
+                />
+              </div>
+
               <div>
                 <label className="block text-sm font-medium">Tipo</label>
                 <select name="type" className="mt-1 w-full border px-3 py-2 rounded">
@@ -46,6 +55,24 @@ export const FilterReportDialog: FC<FilterReportDialogProps> = ({ onSubmit }) =>
                   <option value="in">Entrada</option>
                   <option value="out">Saída</option>
                 </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium">Quantidade</label>
+                <input
+                  type="number"
+                  name="quantity"
+                  className="mt-1 w-full border px-3 py-2 rounded"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium">Valor</label>
+                <input
+                  type="number"
+                  name="amount"
+                  className="mt-1 w-full border px-3 py-2 rounded"
+                />
               </div>
               <div className="flex justify-end pt-4">
                 <Button type="submit" disabled={isPending} className="flex items-center gap-2">

@@ -43,11 +43,17 @@ export const Content = ({
   const handleFilterSubmit = (formData: FormData) => {
     const newFilters: Record<string, string> = {}
 
+    const type = formData.get("type")?.toString()
+    const productName = formData.get("productName")?.toString()
     const quantity = formData.get("quantity")?.toString()
     const amount = formData.get("amount")?.toString()
+    const createDate = formData.get("createDate")?.toString()
 
+    if (type && type !== 'all') newFilters.type = type
+    if (productName) newFilters.productName = productName
     if (quantity) newFilters.quantity = quantity
     if (amount) newFilters.amount = amount
+    if (createDate) newFilters.createDate = createDate
 
     setFilters(newFilters)
     fetchPageData(1, newFilters)
