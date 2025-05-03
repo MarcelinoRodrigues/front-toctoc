@@ -27,7 +27,7 @@ export const Content = ({
   const [filters, setFilters] = useState<Record<string, string>>({})
 
   const handleExport = (format: string) => {
-    exportReport(format, initialReport.report);
+    exportReport(format, data.report);
   };
 
   const fetchPageData = (pageToLoad: number, appliedFilters = filters) => {
