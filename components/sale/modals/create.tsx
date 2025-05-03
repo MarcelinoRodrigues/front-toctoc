@@ -98,7 +98,7 @@ export const CreateSaleDialog = ({ products, onCreateSuccess }: CreateSaleDialog
                       onChange={(e) => {
                         const selectedProduct = products.find(p => p.id === e.target.value)
                         if (selectedProduct) {
-                          setUnitAmount(selectedProduct.amount)
+                          setUnitAmount(selectedProduct.sellingPrice)
                         } else {
                           setUnitAmount(null)
                         }

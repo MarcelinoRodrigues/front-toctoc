@@ -7,10 +7,12 @@ type Props = {
   product: {
     id: string
     name: string
-    amount: number
+    purchasePrice: number;
+    sellingPrice: number;
+    profit: number;
     description?: string
   }
-  onCreateSuccess: () => void 
+  onCreateSuccess: () => void
 }
 
 export const ProductActions = ({ product, onCreateSuccess }: Props) => {

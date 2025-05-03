@@ -16,7 +16,9 @@ type EditModalProps = {
   product: {
     id: string
     name: string
-    amount: number
+    purchasePrice: number;
+    sellingPrice: number;
+    profit: number;
     description?: string
   },
   onCreateSuccess: () => void
@@ -66,7 +68,7 @@ export const EditModal = ({ product, onCreateSuccess }: EditModalProps) => {
                     defaultValue={product.name}
                   />
                 </div>
-                <div>
+                {/* <div>
                   <label className="block text-sm font-medium">Valor</label>
                   <input
                     type="number"
@@ -76,7 +78,7 @@ export const EditModal = ({ product, onCreateSuccess }: EditModalProps) => {
                     min={1}
                     className="mt-1 w-full border px-3 py-2 rounded"
                   />
-                </div>
+                </div> */}
 
                 <div>
                   <label className="block text-sm font-medium">Descrição</label>

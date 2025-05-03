@@ -2,6 +2,8 @@ export type Product = {
   id: string;
   name: string;
   description?: string;
-  amount: number;
+  purchasePrice: number;
+  sellingPrice: number;
+  profit: number;
   createDateTime: string;
 }

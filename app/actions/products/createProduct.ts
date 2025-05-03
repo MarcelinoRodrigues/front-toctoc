@@ -11,7 +11,9 @@ export async function handleCreteProduct(form: FormData) {
 
   const data = {
     name: form.get("name")?.toString() || "",
-    amount:  Number(form.get("amount")) || 0,
+    purchasePrice: Number(form.get("purchasePrice")) || 0,
+    sellingPrice: Number(form.get("sellingPrice")) || 0,
+    profit:  Number(form.get("profit")) || 0,
     description: form.get("description")?.toString() || "",
     quantity: Number(form.get("quantity")) || 0,
     unitMeasure: form.get("unitMeasure")?.toString() || "UN",
