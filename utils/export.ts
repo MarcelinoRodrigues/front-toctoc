@@ -11,11 +11,11 @@ export const exportReport = (format: string, data: Report[]) => {
   }
 
   const tableData = data.map((item) => [
-    item.type === "in" ? "Entrada" : "Saída",
+    item.type === "In" ? "Entrada" : "Saída",
     item.productName,
     item.quantity,
     item.amount,
-    item.expireDate ? new Date(item.expireDate).toLocaleDateString() : "—",
+    item.createDateTime ? new Date(item.createDateTime).toLocaleDateString() : "—",
   ]);
 
   switch (format.toLowerCase()) {

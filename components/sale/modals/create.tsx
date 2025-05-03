@@ -36,6 +36,11 @@ export const CreateSaleDialog = ({ products, onCreateSuccess }: CreateSaleDialog
     });
   };
 
+  const handleResetModal = () => {
+    setOpen(false)
+    setErrorMessage(null)
+  }
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -62,7 +67,7 @@ export const CreateSaleDialog = ({ products, onCreateSuccess }: CreateSaleDialog
           <div className="flex justify-end">
             <Button
               type="button"
-              onClick={() => setOpen(false)}
+              onClick={handleResetModal}
               variant="default"
             >
               OK

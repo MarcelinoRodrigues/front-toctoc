@@ -36,11 +36,19 @@ export async function handleCreteSale(form: FormData): Promise<{ success: boolea
     revalidatePath("/sale");
 
     return { success: true };
-  } catch (error: any) {
-    console.error("Erro ao criar venda:", error);
+  } catch (error: unknown) {
+  
+    let message = "Erro inesperado ao criar a venda.";
+  
+    if (axios.isAxiosError(error)) {
+      message = error.response?.data?.message || message;
+    } else if (error instanceof Error) {
+      message = error.message;
+    }
+  
     return {
       success: false,
-      message: error.response?.data?.message || "Erro inesperado ao criar a venda.",
+      message,
     };
-  }
+  }  
 }
