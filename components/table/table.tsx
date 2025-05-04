@@ -73,7 +73,7 @@ export function CommonTable<T extends { id: string }>({
                     const fieldName = String(field).toLowerCase();
 
                     const isTypeField = fieldName === "type";
-                    const isProfitField = fieldName === "profit";
+                    const isProfitField = fieldName === "profit" || fieldName === "amount";
 
                     let badgeStyle = "bg-gray-100 text-gray-600";
 

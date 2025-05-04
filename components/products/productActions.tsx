@@ -1,7 +1,6 @@
 'use client'
 
 import { Delete } from "./modals/delete"
-import { EditModal } from "./modals/edit"
 
 type Props = {
   product: {
@@ -18,7 +17,7 @@ type Props = {
 export const ProductActions = ({ product, onCreateSuccess }: Props) => {
   return (
     <div className="flex gap-2 justify-center">
-      <EditModal product={product} onCreateSuccess={onCreateSuccess} />
+      {/* <EditModal product={product} onCreateSuccess={onCreateSuccess} /> */}
       <Delete id={product.id} onCreateSuccess={onCreateSuccess} />
     </div>
   )
