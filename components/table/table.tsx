@@ -2,6 +2,7 @@ import { NotResult } from "../common/notResult";
 import { ExportDropdown } from "../finance/reports/modals/exportDropdown";
 import { MobileTable } from "./mobileTable";
 import { Pagination } from "./pagination";
+import { Cart } from "../cart/cart";
 
 type CommonTableProps<T extends { id: string }> = {
   data: T[];
@@ -11,6 +12,7 @@ type CommonTableProps<T extends { id: string }> = {
   renderActions?: (item: T) => React.ReactNode;
   renderCreate?: () => React.ReactNode;
   renderFilters?: () => React.ReactNode;
+  renderSale?: () => React.ReactNode;
   currentPage?: number;
   onPageChange?: (page: number) => void;
   hasNextPage?: boolean;
@@ -25,6 +27,7 @@ export function CommonTable<T extends { id: string }>({
   renderActions,
   renderCreate,
   renderFilters,
+  renderSale,
   currentPage = 1,
   onPageChange,
   hasNextPage,
@@ -38,6 +41,7 @@ export function CommonTable<T extends { id: string }>({
         {onExport && (
           <ExportDropdown options={['PDF', 'CSV', 'Excel']} onExport={onExport} />
         )}
+        {renderSale && renderSale()}
       </div>
 
       <div className="hidden md:block overflow-x-auto min-h-[73vh] max-h-[73vh] overflow-y-auto rounded border border-gray-200 shadow-sm bg-white">

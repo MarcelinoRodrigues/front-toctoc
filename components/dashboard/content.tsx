@@ -12,7 +12,7 @@ type DashboardData = {
 }
 
 export const Content = async () => {
-  const dashboard: DashboardData[] = await getDashboard();
+  const dashboard: DashboardData = await getDashboard();
 
   return (
     <section className="w-full px-6 py-10 bg-[#F9FAFB]">
@@ -22,14 +22,12 @@ export const Content = async () => {
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {dashboard.map((item: DashboardData, index) => (
-            <Fragment key={index}>
-              <Windownnw title="Produtos" quantity={item.products} />
-              <Windownnw title="Vendas" quantity={item.sales} />
-              <Windownnw title="Estoque" quantity={item.stock} />
-              <WindownReport inQty={item.reportIn} outQty={item.reportOut} />
+            <Fragment>
+              <Windownnw title="Produtos" quantity={dashboard.products} />
+              <Windownnw title="Vendas" quantity={dashboard.sales} />
+              <Windownnw title="Estoque" quantity={dashboard.stock} />
+              <WindownReport inQty={dashboard.reportIn} outQty={dashboard.reportOut} />
             </Fragment>
-          ))}
         </div>
       </div>
     </section>
