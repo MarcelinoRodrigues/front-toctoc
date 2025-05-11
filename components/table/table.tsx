@@ -2,7 +2,6 @@ import { NotResult } from "../common/notResult";
 import { ExportDropdown } from "../finance/reports/modals/exportDropdown";
 import { MobileTable } from "./mobileTable";
 import { Pagination } from "./pagination";
-import { Cart } from "../cart/cart";
 
 type CommonTableProps<T extends { id: string }> = {
   data: T[];

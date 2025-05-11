@@ -9,7 +9,6 @@ import { FilterSaleDialog } from './modals/filter'
 import { Product } from '@/types/Product/types'
 import { Sale } from '@/types/Sale/types'
 import { getSales } from '@/app/actions/sale/getSales'
-import { Cart } from '../cart/cart'
 
 interface ResponseSale {
   sales: Sale[]

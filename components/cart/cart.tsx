@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { FilterIcon, ShoppingCart } from "lucide-react"
+import { ShoppingCart } from "lucide-react"
 
 export const Cart = () => {
   return (
