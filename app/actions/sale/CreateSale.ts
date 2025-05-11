@@ -1,4 +1,3 @@
-// CreateSale.tsx
 "use server"
 
 import { cookies } from "next/headers"
@@ -15,13 +14,13 @@ export async function handleCreteSale(form: FormData): Promise<{ success: boolea
     const data = {
       productId: form.get("productId")?.toString() || "",
       quantity: Number(form.get("quantity")),
-      payment: form.get("payment")?.toString() || "credit",
+      payment: form.get("payment"),
       discount: Number(form.get("discount")) || 0,
       amount: Number(form.get("amount")),
       origin: form.get("origin")?.toString() || "n/a",
       observation: form.get("observation")?.toString() || "",
       additionalCost: Number(form.get("additionalCost")) || 0,
-      unitMeasure: form.get("unitMeasure")?.toString() || "UN",
+      unitMeasure: form.get("unitMeasure"),
     };
 
     await axios.post(`${API_BASE_URL}/Sale/create`, data, {

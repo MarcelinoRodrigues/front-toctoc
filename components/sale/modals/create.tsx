@@ -140,11 +140,12 @@ export const CreateSaleDialog = ({ products, onCreateSuccess }: CreateSaleDialog
                       name="payment"
                       required
                       className="mt-1 w-full border px-3 py-2 rounded"
-                      defaultValue="credit"
+                      defaultValue={0}
                     >
-                      <option value="credit">Crédito</option>
-                      <option value="debit">Débito</option>
-                      <option value="pix">Pix</option>
+                      <option value={0} >Dinheiro</option>
+                      <option value={1}>Crédito</option>
+                      <option value={2}>Débito</option>
+                      <option value={3}>Pix</option>
                     </select>
                   </div>
 
@@ -196,22 +197,22 @@ export const CreateSaleDialog = ({ products, onCreateSuccess }: CreateSaleDialog
                           <select
                             name="unitMeasure"
                             className="mt-1 w-full border px-3 py-2 rounded"
-                            defaultValue="UN"
+                            defaultValue={0}
                           >
-                            <option value="UN">Unidade (UN)</option>
-                            <option value="KG">Quilograma (KG)</option>
-                            <option value="G">Grama (G)</option>
-                            <option value="L">Litro (L)</option>
-                            <option value="ML">Mililitro (ML)</option>
-                            <option value="CM">Centímetro (CM)</option>
-                            <option value="MM">Milímetro (MM)</option>
-                            <option value="M2">Metro quadrado (M²)</option>
-                            <option value="M3">Metro cúbico (M³)</option>
-                            <option value="PCT">Pacote (PCT)</option>
-                            <option value="DZ">Dúzia (DZ)</option>
-                            <option value="CX">Caixa (CX)</option>
-                            <option value="SC">Saco (SC)</option>
-                            <option value="T">Tonelada (T)</option>
+                            <option value={0}>Unidade (UN)</option>
+                            <option value={1}>Quilograma (KG)</option>
+                            <option value={2}>Grama (G)</option>
+                            <option value={3}>Litro (L)</option>
+                            <option value={4}>Mililitro (ML)</option>
+                            <option value={5}>Centímetro (CM)</option>
+                            <option value={6}>Milímetro (MM)</option>
+                            <option value={7}>Metro quadrado (M²)</option>
+                            <option value={8}>Metro cúbico (M³)</option>
+                            <option value={9}>Pacote (PCT)</option>
+                            <option value={10}>Dúzia (DZ)</option>
+                            <option value={11}>Caixa (CX)</option>
+                            <option value={12}>Saco (SC)</option>
+                            <option value={13}>Tonelada (T)</option>
                           </select>
                         </div>
                       </AccordionContent>

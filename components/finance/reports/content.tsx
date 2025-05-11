@@ -46,13 +46,11 @@ export const Content = ({
     const type = formData.get("type")?.toString()
     const productName = formData.get("productName")?.toString()
     const quantity = formData.get("quantity")?.toString()
-    const amount = formData.get("amount")?.toString()
     const reportDay = formData.get("reportDay")?.toString()
 
     if (type && type !== 'all') newFilters.type = type
     if (productName) newFilters.productName = productName
     if (quantity) newFilters.quantity = quantity
-    if (amount) newFilters.amount = amount
     if (reportDay) newFilters.reportDay = reportDay
 
     setFilters(newFilters)

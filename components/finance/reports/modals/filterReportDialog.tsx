@@ -73,14 +73,6 @@ export const FilterReportDialog: FC<FilterReportDialogProps> = ({ onSubmit }) =>
                         className="mt-1 w-full border px-3 py-2 rounded"
                       />
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium">Valor</label>
-                      <input
-                        type="number"
-                        name="amount"
-                        className="mt-1 w-full border px-3 py-2 rounded"
-                      />
-                    </div>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
