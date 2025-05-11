@@ -23,7 +23,7 @@ export const Content = ({
 
   const [data, setData] = useState(initialReport)
   const [page, setPage] = useState(1)
-  const [hasNextPage, setHasNextPage] = useState(true)
+  const [hasNextPage, setHasNextPage] = useState(initialReport.hasNextPage)
   const [filters, setFilters] = useState<Record<string, string>>({})
 
   const handleExport = (format: string) => {

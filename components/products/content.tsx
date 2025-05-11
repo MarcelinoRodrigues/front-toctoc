@@ -24,7 +24,7 @@ export const Content = ({
 
   const [data, setData] = useState(initialProducts)
   const [page, setPage] = useState(1)
-  const [hasNextPage, setHasNextPage] = useState(true)
+  const [hasNextPage, setHasNextPage] = useState(initialProducts.hasNextPage)
   const [filters, setFilters] = useState<Record<string, string>>({})
 
   const fetchPageData = (pageToLoad: number, appliedFilters = filters) => {
