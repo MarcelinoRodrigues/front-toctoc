@@ -23,9 +23,9 @@ export const Content = async () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <Fragment>
-              <Windownnw title="Produtos" quantity={dashboard.products} />
-              <Windownnw title="Vendas" quantity={dashboard.sales} />
-              <Windownnw title="Estoque" quantity={dashboard.stock} />
+              <Windownnw title="Produtos" quantity={dashboard.products} href="/products" />
+              <Windownnw title="Vendas" quantity={dashboard.sales} href="/sale"  />
+              <Windownnw title="Estoque" quantity={dashboard.stock} href="/stock"  />
               <WindownReport inQty={dashboard.reportIn} outQty={dashboard.reportOut} />
             </Fragment>
         </div>
