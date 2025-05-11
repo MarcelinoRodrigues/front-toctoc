@@ -181,6 +181,7 @@ const SidebarLink = ({
       href={href}
       onClick={onClick}
       className={linkClass()}
+      prefetch={true}
     >
       {icon && <span className="text-muted-foreground">{icon}</span>}
       <span className="truncate">{children}</span>
