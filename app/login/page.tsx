@@ -16,10 +16,8 @@ export default function LoginPage() {
 
   return (
     <div className="flex h-screen">
-      {/* Imagem lateral */}
-      <div className="hidden md:flex w-1/2 bg-cover bg-center" style={{ backgroundImage: `url('https://source.unsplash.com/featured/?technology,login')` }} />
+      <div className="hidden md:flex w-1/2 bg-cover bg-center"/>
 
-      {/* Formulário de login */}
       <div className="flex w-full md:w-1/2 justify-center items-center bg-gray-50">
         <form
           action={submitForm}
