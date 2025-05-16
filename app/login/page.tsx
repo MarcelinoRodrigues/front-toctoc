@@ -4,6 +4,7 @@ import { loginAction } from "../actions/login/login";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
+import { InitialTitleLogin } from "@/components/Login/title";
 
 export default function LoginPage() {
   const [isPending, startTransition] = useTransition();
@@ -16,7 +17,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex h-screen">
-      <div className="hidden md:flex w-1/2 bg-cover bg-center"/>
+      <InitialTitleLogin />
 
       <div className="flex w-full md:w-1/2 justify-center items-center bg-gray-50">
         <form

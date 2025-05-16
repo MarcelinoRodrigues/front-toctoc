@@ -1,15 +1,11 @@
 "use server";
 
-import { cookies } from "next/headers";
 import axios from "axios";
 import { agent, API_BASE_URL } from "@/lib/api";
 import { revalidatePath } from "next/cache";
 
 export async function handleCreateUser(form: FormData) {
   try {
-    const cookieStore = cookies();
-    const token = (await cookieStore).get("jwt")?.value;
-
     const data = {
       name: form.get("name")?.toString() || "",
       taxNumber: form.get("taxNumber")?.toString() || "",
@@ -18,22 +14,16 @@ export async function handleCreateUser(form: FormData) {
       passwordHash: form.get("password")?.toString() || ""
     };
 
-    console.log(data)
-
-    const headers: any = {
+    await axios.post(`${API_BASE_URL}/User`, data, {
+    headers: {
       "Content-Type": "application/json",
-      Accept: "*/*"
-    };
-
-    if (token) headers.Authorization = `Bearer ${token}`;
-
-    const response = await axios.post(`${API_BASE_URL}/User`, data, {
-      headers,
-      httpsAgent: agent,
-    });
+      Accept: "*/*",
+    },
+    httpsAgent: agent,
+  });
 
     revalidatePath("/");
-  } catch (err: any) {
-    throw err;
+  } catch{
+    
   }
 }

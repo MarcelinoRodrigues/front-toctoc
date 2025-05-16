@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { handleCreateUser } from "../actions/user/create";
+import { InitialTitleLogin } from "@/components/Login/title";
 
 export default function UserSignupPage() {
   const [isPending, startTransition] = useTransition();
@@ -25,7 +26,7 @@ export default function UserSignupPage() {
       try {
         await handleCreateUser(formData);
         alert('Conta criada! Você tem 14 dias de acesso gratuito.');
-      } catch (err) {
+      } catch {
         alert('Erro ao criar conta.');
       }
     });
@@ -33,7 +34,7 @@ export default function UserSignupPage() {
 
   return (
     <div className="flex h-screen">
-      <div className="hidden md:flex w-1/2 bg-cover bg-center" style={{ backgroundImage: `url('https://source.unsplash.com/featured/?business,account')` }} />
+      <InitialTitleLogin />
 
       <div className="flex w-full md:w-1/2 justify-center items-center bg-gray-50 relative">
         <Link href="/login" className="absolute top-6 left-6 flex items-center text-gray-600 hover:text-gray-900">
