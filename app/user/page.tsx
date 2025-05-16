@@ -10,24 +10,23 @@ import { InitialTitleLogin } from "@/components/Login/title";
 
 export default function UserSignupPage() {
   const [isPending, startTransition] = useTransition();
-
   const [name, setName] = useState('');
   const [taxNumber, setTaxNumber] = useState('');
   const [tel, setTel] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const formData = new FormData(e.currentTarget);
 
     startTransition(async () => {
       try {
         await handleCreateUser(formData);
-        alert('Conta criada! Você tem 14 dias de acesso gratuito.');
+        window.location.href = "/login?success=1";
       } catch {
-        alert('Erro ao criar conta.');
+        setErrorMessage('Erro ao criar conta. Verifique os dados e tente novamente.');
       }
     });
   };
@@ -51,6 +50,10 @@ export default function UserSignupPage() {
           <Input name="tel" value={tel} onChange={(e) => setTel(e.target.value)} placeholder="Telefone" required />
           <Input name="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
           <Input name="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Senha" required />
+
+          {errorMessage && (
+            <p className="text-sm text-red-500 text-center">{errorMessage}</p>
+          )}
 
           <Button disabled={isPending} type="submit" className="w-full">
             {isPending ? 'Criando conta...' : 'Cadastrar'}

@@ -1,6 +1,6 @@
 "use server";
 
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { agent, API_BASE_URL } from "@/lib/api";
 import { revalidatePath } from "next/cache";
 
@@ -15,15 +15,24 @@ export async function handleCreateUser(form: FormData) {
     };
 
     await axios.post(`${API_BASE_URL}/User`, data, {
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "*/*",
-    },
-    httpsAgent: agent,
-  });
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "*/*",
+      },
+      httpsAgent: agent,
+    });
 
     revalidatePath("/");
-  } catch{
-    
+  } catch (err) {
+    const error = err as AxiosError;
+
+    const message =
+      error.response?.data && typeof error.response.data === "object"
+        ? (error.response.data as { message?: string; error?: string }).message ||
+          (error.response.data as { message?: string; error?: string }).error ||
+          "Erro ao criar usuário."
+        : "Erro ao criar usuário.";
+
+    throw new Error(message);
   }
 }

@@ -3,11 +3,21 @@
 import { loginAction } from "../actions/login/login";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useTransition } from "react";
+import { useTransition, useEffect, useState } from "react";
 import { InitialTitleLogin } from "@/components/Login/title";
+import { useSearchParams } from "next/navigation";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 export default function LoginPage() {
+  const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  useEffect(() => {
+    if (searchParams.get("success") === "1") {
+      setShowSuccessModal(true);
+    }
+  }, [searchParams]);
 
   const submitForm = (formData: FormData) => {
     startTransition(async () => {
@@ -41,6 +51,15 @@ export default function LoginPage() {
             </a>
           </p>
         </form>
+
+        <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Conta criada com sucesso</DialogTitle>
+            </DialogHeader>
+            <p className="text-sm text-gray-600">Você tem 14 dias de acesso gratuito.</p>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
