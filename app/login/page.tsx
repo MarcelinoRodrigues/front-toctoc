@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { loginAction } from "../actions/login/login";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,7 @@ export default function LoginPage() {
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (searchParams.get("success") === "1") {
@@ -20,8 +21,17 @@ export default function LoginPage() {
   }, [searchParams]);
 
   const submitForm = (formData: FormData) => {
+    setErrorMessage("");
+
     startTransition(async () => {
-      await loginAction(formData);
+      const result = await loginAction(formData);
+
+      if (result?.error) {
+        setErrorMessage(result.error);
+      } else if (result?.success) {
+        // Redirecionamento direto, sem router
+        window.location.href = "/dashboard";
+      }
     });
   };
 
@@ -39,6 +49,10 @@ export default function LoginPage() {
 
           <Input name="email" type="email" placeholder="Email" required />
           <Input name="password" type="password" placeholder="Senha" required />
+
+          {errorMessage && (
+            <p className="text-sm text-red-500 text-center">{errorMessage}</p>
+          )}
 
           <Button disabled={isPending} className="w-full">
             {isPending ? "Carregando..." : "Entrar"}
