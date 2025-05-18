@@ -3,13 +3,11 @@ import { Stock } from "@/types/stock/types";
 export const headers = [
   "Produto",
   "Quantidade",
-  "Valor",
 ];
 
 export const fields: (keyof Stock)[] = [
   "productName",
   "quantity",
-  "amount"
 ];
 
 export const formatValue = (field: string, value: string | number | null | undefined) => {

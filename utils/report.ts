@@ -5,7 +5,6 @@ export const headers = [
   'Tipo',
   'Produto',
   'Quantidade',
-  'Valor',
 ];
 
 export const fields: (keyof Report)[] = [
@@ -13,7 +12,6 @@ export const fields: (keyof Report)[] = [
   'type',
   'productName',
   'quantity',
-  'amount'
 ]
 
 const type_labels: Record<Report["type"], string> = {
@@ -25,13 +23,6 @@ export const formatValue = <K extends keyof Report>(field: K, value: Report[K]):
 
   if (field.includes("createDateTime")) {
     return new Date(value as string).toLocaleDateString("pt-BR");
-  }
-
-  if (field === "amount") {
-    return new Intl.NumberFormat("pt-BR", {
-      style: "currency",
-      currency: "BRL",
-    }).format(Number(value));
   }
 
   if(field === 'type'){

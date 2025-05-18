@@ -15,7 +15,6 @@ export const exportReport = (format: string, data: Report[]) => {
     item.type === "In" ? "Entrada" : "Saída",
     item.productName,
     item.quantity,
-    item.amount,
   ]);
 
   switch (format.toLowerCase()) {

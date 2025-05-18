@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from "react"
+import { useEffect, useState, useTransition } from "react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -14,20 +14,35 @@ import { handleCreteProduct } from "@/app/actions/products/createProduct"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
 interface CreateProductDialogProps {
-  onCreateSuccess: () => void 
+  onCreateSuccess: () => void
 }
 
 export const Create = ({ onCreateSuccess }: CreateProductDialogProps) => {
   const [isPending, startTransition] = useTransition()
   const [open, setOpen] = useState<boolean>(false)
+  const [sellingPrice, setSellingPrice] = useState<number>(1)
+  const [purchasePrice, setPurchasePrice] = useState<number>(0)
+  const [error, setError] = useState<string | null>(null)
+
+  const profit = sellingPrice - purchasePrice
 
   const submitForm = async (formData: FormData) => {
+    if (error !== null)
+      return
+
     startTransition(async () => {
       await handleCreteProduct(formData)
       setOpen(false)
       onCreateSuccess()
     })
   }
+
+  useEffect(() => {
+    if (purchasePrice >= sellingPrice)
+      setError("O valor de compra deve ser menor que o valor de venda.")
+    else
+      setError(null)
+  }, [purchasePrice, sellingPrice])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -62,24 +77,42 @@ export const Create = ({ onCreateSuccess }: CreateProductDialogProps) => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium">Valor</label>
+                  <label className="block text-sm font-medium">Preço de compra</label>
                   <input
                     type="number"
-                    name="amount"
+                    name="purchasePrice"
+                    required
+                    className={`mt-1 w-full border px-3 py-2 rounded ${error ? 'border-red-500 focus:outline-red-500' : ''}`}
+                    value={purchasePrice}
+                    onChange={(e) => setPurchasePrice(Number(e.target.value))}
+                  />
+                  {error && (
+                    <p className="mt-1 text-sm text-red-600 font-medium">
+                      {error}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <label className="block text-sm font-medium">Preço de venda</label>
+                  <input
+                    type="number"
+                    name="sellingPrice"
                     required
                     min={1}
                     className="mt-1 w-full border px-3 py-2 rounded"
+                    value={sellingPrice}
+                    onChange={(e) => setSellingPrice(Number(e.target.value))}
                   />
                 </div>
-
                 <div>
-                  <label className="block text-sm font-medium">Descrição</label>
+                  <label className="block text-sm font-medium">Lucro</label>
                   <input
                     type="text"
-                    name="description"
-                    className="mt-1 w-full border px-3 py-2 rounded"
-                    defaultValue="N/A"
+                    className="mt-1 w-full border px-3 py-2 rounded bg-gray-100 text-gray-700 cursor-not-allowed"
+                    value={profit !== null ? `R$ ${profit.toFixed(2).replace('.', ',')}` : ''}
+                    readOnly
                   />
+                  <input type="hidden" name="profit" value={profit ?? ''} />
                 </div>
 
                 <Accordion type="single" collapsible className="w-full">
@@ -96,6 +129,14 @@ export const Create = ({ onCreateSuccess }: CreateProductDialogProps) => {
                           name="quantity"
                           className="mt-1 w-full border px-3 py-2 rounded"
                           defaultValue={0}
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium">Descrição</label>
+                        <input
+                          type="text"
+                          name="description"
+                          className="mt-1 w-full border px-3 py-2 rounded"
                         />
                       </div>
                       <div>

@@ -51,8 +51,7 @@ export const FilterReportDialog: FC<FilterReportDialogProps> = ({ onSubmit }) =>
 
               <div>
                 <label className="block text-sm font-medium">Tipo</label>
-                <select name="type" className="mt-1 w-full border px-3 py-2 rounded" defaultValue="all">  
-                <option value="all">Todos</option>
+                <select name="type" className="mt-1 w-full border px-3 py-2 rounded" defaultValue="in">  
                 <option value="in">Entrada</option>
                   <option value="out">Saída</option>
                 </select>
@@ -70,14 +69,6 @@ export const FilterReportDialog: FC<FilterReportDialogProps> = ({ onSubmit }) =>
                       <input
                         type="number"
                         name="quantity"
-                        className="mt-1 w-full border px-3 py-2 rounded"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium">Valor</label>
-                      <input
-                        type="number"
-                        name="amount"
                         className="mt-1 w-full border px-3 py-2 rounded"
                       />
                     </div>

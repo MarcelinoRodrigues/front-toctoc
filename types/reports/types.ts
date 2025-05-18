@@ -3,6 +3,5 @@ export type Report = {
   type: 'In' | 'Out';
   productName: string
   quantity: number;
-  amount: number
   createDateTime: string
 }
