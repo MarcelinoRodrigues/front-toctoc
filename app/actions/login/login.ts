@@ -48,9 +48,9 @@ export async function loginAction(formData: FormData): Promise<{ success?: boole
     const error = err as AxiosError;
 
     const errorMessage =
-      error.response?.data && typeof error.response.data === "object"
-        ? (error.response.data as any).message || "Email ou senha inválidos."
-        : "Erro ao realizar login.";
+    axios.isAxiosError(error) && error.response?.data && typeof error.response.data === "object"
+      ? (error.response.data as { message?: string }).message || "Email ou senha inválidos."
+      : "Erro ao realizar login.";
 
     return { error: errorMessage };
   }
