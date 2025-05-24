@@ -3,12 +3,15 @@
 import axios, { AxiosError } from "axios";
 import { agent, API_BASE_URL } from "@/lib/api";
 import { revalidatePath } from "next/cache";
+import { formatTaxNumber } from "@/utils/user";
 
 export async function handleCreateUser(form: FormData) {
   try {
+    const taxNumber = formatTaxNumber(form.get("taxNumber")?.toString() || "")
+    
     const data = {
       name: form.get("name")?.toString() || "",
-      taxNumber: form.get("taxNumber")?.toString() || "",
+      taxNumber: taxNumber,
       tel: form.get("tel")?.toString() || "",
       email: form.get("email")?.toString() || "",
       passwordHash: form.get("password")?.toString() || ""

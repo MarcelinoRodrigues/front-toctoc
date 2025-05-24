@@ -8,6 +8,7 @@ import Link from "next/link";
 import { handleCreateUser } from "../actions/user/create";
 import { InitialTitleLogin } from "@/components/Login/title";
 import { cpf, cnpj } from 'cpf-cnpj-validator'; // 👈 adicionado aqui
+import { formatTaxNumber } from "@/utils/user";
 
 export default function UserSignupPage() {
   const [isPending, startTransition] = useTransition();
@@ -22,7 +23,7 @@ export default function UserSignupPage() {
     e.preventDefault();
     setErrorMessage('');
 
-    const cleaned = taxNumber.replace(/\D/g, '');
+    const cleaned = formatTaxNumber(taxNumber)
     const isCpfValid = cleaned.length === 11 && cpf.isValid(cleaned);
     const isCnpjValid = cleaned.length === 14 && cnpj.isValid(cleaned);
 
