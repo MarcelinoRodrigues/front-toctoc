@@ -7,6 +7,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { handleCreateUser } from "../actions/user/create";
 import { InitialTitleLogin } from "@/components/Login/title";
+import { cpf, cnpj } from 'cpf-cnpj-validator'; // 👈 adicionado aqui
 
 export default function UserSignupPage() {
   const [isPending, startTransition] = useTransition();
@@ -19,6 +20,17 @@ export default function UserSignupPage() {
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrorMessage('');
+
+    const cleaned = taxNumber.replace(/\D/g, '');
+    const isCpfValid = cleaned.length === 11 && cpf.isValid(cleaned);
+    const isCnpjValid = cleaned.length === 14 && cnpj.isValid(cleaned);
+
+    if (!isCpfValid && !isCnpjValid) {
+      setErrorMessage('CPF ou CNPJ inválido.');
+      return;
+    }
+
     const formData = new FormData(e.currentTarget);
 
     startTransition(async () => {
