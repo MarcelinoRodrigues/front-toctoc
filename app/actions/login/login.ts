@@ -4,12 +4,18 @@ import { cookies } from "next/headers";
 import { agent, API_BASE_URL } from "@/lib/api";
 import axios, { AxiosError } from "axios";
 
-export async function loginAction(formData: FormData): Promise<{ success?: boolean; error?: string }> {
+interface LoginResponseProsps {
+  Token: string
+  Paid: boolean
+  Expired: boolean
+}
+
+export async function loginAction(formData: FormData): Promise<LoginResponseProsps & { error?: string }> {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
   if (!email || !password) {
-    return { error: "Email e senha são obrigatórios." };
+    return { Token: "", Paid: false, Expired: false, error: "Email e senha são obrigatórios." };
   }
 
   try {
@@ -25,7 +31,7 @@ export async function loginAction(formData: FormData): Promise<{ success?: boole
     );
 
     if (!response.data.token) {
-      return { error: "Token inválido recebido da API." };
+      return { Token: "", Paid: false, Expired: false, error: "Token inválido recebido da API." };
     }
 
     const token = response.data.token;
@@ -43,15 +49,19 @@ export async function loginAction(formData: FormData): Promise<{ success?: boole
       path: "/",
     });
 
-    return { success: true }; 
+    return {
+      Token: response?.data?.token,
+      Paid: response?.data?.paid,
+      Expired: response?.data?.expired,
+    };
   } catch (err) {
     const error = err as AxiosError;
 
     const errorMessage =
-    axios.isAxiosError(error) && error.response?.data && typeof error.response.data === "object"
-      ? (error.response.data as { message?: string }).message || "Email ou senha inválidos."
-      : "Erro ao realizar login.";
+      axios.isAxiosError(error) && error.response?.data && typeof error.response.data === "object"
+        ? (error.response.data as { message?: string }).message || "Email ou senha inválidos."
+        : "Erro ao realizar login.";
 
-    return { error: errorMessage };
+    return { Token: "", Paid: false, Expired: false, error: errorMessage };
   }
 }

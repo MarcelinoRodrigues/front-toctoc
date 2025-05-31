@@ -28,7 +28,9 @@ export default function Content() {
 
       if (result?.error) {
         setErrorMessage(result.error);
-      } else if (result?.success) {
+      } else if (result?.Expired && !result?.Paid) {
+        window.location.href = "/payment";
+      }else{
         window.location.href = "/dashboard";
       }
     });

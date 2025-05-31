@@ -1,5 +1,5 @@
+import Content from "@/components/payment/content";
 import { Suspense } from "react";
-import Content from "@/components/Login/content";
 
 export default function Page() {
    return (
