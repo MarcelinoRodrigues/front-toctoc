@@ -21,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
-  const showSidebar = pathname !== "/login" && pathname !== "/" && pathname !== "/user";
+  const showSidebar = pathname !== "/login" && pathname !== "/" && pathname !== "/user" && pathname !== "/payment";
 
   return (
     <html lang="en" className="w-screen h-screen">
