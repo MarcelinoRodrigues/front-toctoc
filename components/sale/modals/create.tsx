@@ -156,7 +156,7 @@ export const CreateSaleDialog = ({ products, onCreateSuccess }: CreateSaleDialog
                         Campos opcionais
                       </AccordionTrigger>
                       <AccordionContent className="space-y-4">
-                        <div>
+                        <div className="hidden">
                           <label className="block text-sm font-medium">Desconto</label>
                           <input
                             type="number"
@@ -165,7 +165,7 @@ export const CreateSaleDialog = ({ products, onCreateSuccess }: CreateSaleDialog
                             defaultValue={0}
                           />
                         </div>
-                        <div>
+                        <div className="hidden">
                           <label className="block text-sm font-medium">Custo adicional</label>
                           <input
                             type="number"
