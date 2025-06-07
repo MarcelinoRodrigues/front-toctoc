@@ -23,8 +23,6 @@ export async function handleCreteSale(form: FormData): Promise<{ success: boolea
       unitMeasure: Number(form.get("unitMeasure")),
     };
 
-    console.log(data)
-
     await axios.post(`${API_BASE_URL}/Sale/create`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
