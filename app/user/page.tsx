@@ -7,7 +7,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { handleCreateUser } from "../actions/user/create";
 import { InitialTitleLogin } from "@/components/Login/title";
-import { cpf, cnpj } from 'cpf-cnpj-validator'; // 👈 adicionado aqui
+import { cpf, cnpj } from 'cpf-cnpj-validator'; 
 import { formatTaxNumber } from "@/utils/user";
 
 export default function UserSignupPage() {
