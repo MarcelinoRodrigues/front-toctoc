@@ -12,6 +12,7 @@ import { formatTaxNumber } from "@/utils/user";
 
 export default function UserSignupPage() {
   const [isPending, startTransition] = useTransition();
+  const [pin, setPin] = useState('');
   const [name, setName] = useState('');
   const [taxNumber, setTaxNumber] = useState('');
   const [tel, setTel] = useState('');
@@ -58,6 +59,7 @@ export default function UserSignupPage() {
           <h2 className="text-2xl font-bold text-center text-gray-800">Criar sua conta</h2>
           <p className="text-center text-sm text-gray-500">Você terá 14 dias gratuitos de acesso</p>
 
+          <Input name="pin" value={pin} onChange={(e) => setPin(e.target.value)} placeholder="Insira um Pin Válido" required />
           <Input name="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Nome completo" required />
           <Input name="taxNumber" value={taxNumber} onChange={(e) => setTaxNumber(e.target.value)} placeholder="CPF ou CNPJ" required />
           <Input name="tel" value={tel} onChange={(e) => setTel(e.target.value)} placeholder="Telefone" required />

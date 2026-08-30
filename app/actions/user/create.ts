@@ -10,6 +10,7 @@ export async function handleCreateUser(form: FormData) {
     const taxNumber = formatTaxNumber(form.get("taxNumber")?.toString() || "")
     
     const data = {
+      pin: form.get("pin")?.toString() || "",
       name: form.get("name")?.toString() || "",
       taxNumber: taxNumber,
       tel: form.get("tel")?.toString() || "",
